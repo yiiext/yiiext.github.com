@@ -1,0 +1,247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="language" content="en" />
+
+	<!-- blueprint CSS framework -->
+	<link rel="stylesheet" type="text/css" href="/css/screen.css" media="screen, projection" />
+	<link rel="stylesheet" type="text/css" href="/css/print.css" media="print" />
+	<!--[if lt IE 8]>
+	<link rel="stylesheet" type="text/css" href="/css/ie.css" media="screen, projection" />
+	<![endif]-->
+
+	<link rel="stylesheet" type="text/css" href="/css/web.css" />
+	<link rel="stylesheet" type="text/css" href="/css/form.css" />
+
+	<title>yiiext - RepoReadme Site</title>
+</head>
+
+<body>
+
+<a href="https://github.com/yiiext/webshell-module"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
+
+<div class="container" id="page">
+
+	<div id="header">
+        <div class="extensions-count"><b>50</b> great Yii extensions!</div>
+		<div id="logo">
+            <h1>yiiext</h1>
+            unofficial Yii extension repository
+        </div>
+	</div><!-- header -->
+
+	<div id="mainmenu">
+		<ul id="yw0">
+<li><a href="/index.html">Extensions</a></li>
+<li><a href="/faq.html">FAQ</a></li>
+<li><a href="/contact.html">Contact</a></li>
+</ul>
+	</div><!-- mainmenu -->
+
+    <div id="content">
+        <div id="repo">
+            <h1>Yii web shell</h1>
+
+<p>Веб-консоль для Yii. Позволяет запускать консольные команды из браузера. Полезна на
+серверах без SSH и в админках консольного стиля.</p>
+
+<p>Для работы используется та же конфигурация, что и у основного приложения,
+то есть если работает приложение, будет работать и консоль.</p>
+
+<h2>Установка</h2>
+
+<p>Для использования веб-консоли необходимо подключить модуль в настройках
+приложения:</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-reserved">return</span> <span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-code">
+    …
+    </span><span class="php-hl-quotes">'</span><span class="php-hl-string">modules</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+        <span class="php-hl-quotes">'</span><span class="php-hl-string">webshell</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">class</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">ext.yiiext.modules.webshell.WebShellModule</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> URL, на который будет редирект после ввода 'exit'</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">exitUrl</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">/</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> опции для wterm</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">wtermOptions</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+                <span class="php-hl-comment">//</span><span class="php-hl-comment"> строка запроса в стиле linux</span>
+                <span class="php-hl-quotes">'</span><span class="php-hl-string">PS1</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">%</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+            </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> дополнительные команды (см. далее)</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">commands</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+                <span class="php-hl-quotes">'</span><span class="php-hl-string">test</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">js:function(){return &quot;Hello, world!&quot;;}</span><span class="php-hl-quotes">'</span><span class="php-hl-code">, </span><span class="php-hl-quotes">'</span><span class="php-hl-string">Just a test.</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+            </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> раскомментировать для отключения yiic</span>
+            <span class="php-hl-comment">//</span><span class="php-hl-comment"> 'useYiic' =&gt; false,</span>
+ 
+            <span class="php-hl-comment">//</span><span class="php-hl-comment"> добавляем команды yiic из нестандартных директорий</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">yiicCommandMap</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+                <span class="php-hl-quotes">'</span><span class="php-hl-string">email</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+                    <span class="php-hl-quotes">'</span><span class="php-hl-string">class</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">ext.mailer.MailerCommand</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+                    </span><span class="php-hl-quotes">'</span><span class="php-hl-string">from</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">sam@rmcreative.ru</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+                </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+            </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+        </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+    </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+</span><span class="php-hl-brackets">)</span></pre></div></div>
+
+<p>Консоль будет доступна по адресу:</p>
+
+<p>http://localhost/path/to/index.php?r=webshell</p>
+
+<p>Если используются красивые URL, и написаны свои правила роутинга, может понадобится
+добавить несколько правил для веб-консоли:</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-quotes">'</span><span class="php-hl-string">components</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+    <span class="php-hl-quotes">'</span><span class="php-hl-string">urlManager</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+        <span class="php-hl-quotes">'</span><span class="php-hl-string">urlFormat</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">path</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+            </span><span class="php-hl-quotes">'</span><span class="php-hl-string">rules</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+                <span class="php-hl-quotes">'</span><span class="php-hl-string">webshell</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">webshell</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+                </span><span class="php-hl-quotes">'</span><span class="php-hl-string">webshell/&lt;controller:\w+&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">webshell/&lt;controller&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+                </span><span class="php-hl-quotes">'</span><span class="php-hl-string">webshell/&lt;controller:\w+&gt;/&lt;action:\w+&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">webshell/&lt;controller&gt;/&lt;action&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+                …остальне правила…
+        </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+    </span><span class="php-hl-brackets">)</span>
+<span class="php-hl-brackets">)</span></pre></div></div>
+
+<p>После этого можно будет обращаться к веб-консоли так:</p>
+
+<p>http://localhost/path_to_webroot/webshell</p>
+
+<h2>Добавляем свои команды</h2>
+
+<p>К веб-консоли можно добавить как общие команды, так и команды yiic.</p>
+
+<p>Общие команды добавляются чере свойство commands модуля <code>WebShellModule</code>:</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-quotes">'</span><span class="php-hl-string">commands</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+    <span class="php-hl-comment">//</span><span class="php-hl-comment"> js callback в качестве команды</span>
+    <span class="php-hl-quotes">'</span><span class="php-hl-string">test</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">js:function(tokens){return &quot;Hello, world!&quot;;}</span><span class="php-hl-quotes">'</span><span class="php-hl-code">, </span><span class="php-hl-quotes">'</span><span class="php-hl-string">Just a test.</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+ 
+    </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> ajax-команда с URL </span><span class="php-hl-url">http://yourwebsite/post/index?action=cli</span><span class="php-hl-comment"> (при наличии правил маршрутизации URL будет изменён соответственно)</span>
+    <span class="php-hl-quotes">'</span><span class="php-hl-string">postlist</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">/post/index</span><span class="php-hl-quotes">'</span><span class="php-hl-code">, </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">action</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">cli</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">, </span><span class="php-hl-quotes">'</span><span class="php-hl-string">Описание.</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+ 
+    </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> «залипающая» команда. Для выхода из неё надо набрать 'exit'.</span>
+    <span class="php-hl-quotes">'</span><span class="php-hl-string">stickyhandler</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+        <span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+            <span class="php-hl-comment">//</span><span class="php-hl-comment"> необязательно: вызывается при наборе 'stickyhandler'. Может быть как URL, так и callback JavaScript.</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">START_HOOK</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">/post/index</span><span class="php-hl-quotes">'</span><span class="php-hl-code">, </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">action</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">start</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> необязательно: вызывается при наборе 'exit'. Может быть как URL, так и callback JavaScript.</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">EXIT_HOOK</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">&quot;</span><span class="php-hl-string">js:function(){ return 'bye!'; }</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-code">,
+            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> требуется: cвызывается при наборе параметра. Может быть как URL, так и callback JavaScript.</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">DISPATCH</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">&quot;</span><span class="php-hl-string">js:function(tokens){ return </span><span class="php-hl-quotes">&quot;</span><span class="php-hl-identifier">Hi</span><span class="php-hl-code">, </span><span class="php-hl-identifier">Jack</span><span class="php-hl-code">!</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-string">; }</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-code">,
+            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> необязательно: своя строка запроса</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">PS1</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">advanced &gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+        </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+        </span><span class="php-hl-quotes">'</span><span class="php-hl-string">Advanced command.</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+    </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+</span><span class="php-hl-brackets">)</span><span class="php-hl-code">,</span></pre></div></div>
+
+<p>Обработчик общей команды должен выглядеть примерно так:</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-reserved">function</span> <span class="php-hl-identifier">actionMyCommandHandler</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">{</span>
+    <span class="php-hl-var">$tokens</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">explode</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">&quot;</span> <span class="php-hl-quotes">&quot;</span><span class="php-hl-code">, </span><span class="php-hl-var">$_GET</span><span class="php-hl-brackets">[</span><span class="php-hl-quotes">'</span><span class="php-hl-string">tokens</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">]</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+    </span><span class="php-hl-identifier">print_r</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$tokens</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-brackets">}</span></pre></div></div>
+
+<p>Создание команд yiic описано в руководстве в разделе «<a href="http://yiiframework.ru/doc/guide/ru/topics.console">Консольные приложения</a>».</p>
+
+<h2>Безопасность</h2>
+
+<p>Для обеспечения безопасности консоли в модуле есть два свойства:</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-comment">//</span><span class="php-hl-comment"> IP, с которых доступна консоль. По умолчанию доступен только запуск с локальной машины. Для доступа со всех IP выставить в false.</span>
+<span class="php-hl-quotes">'</span><span class="php-hl-string">ipFilters</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">127.0.0.1</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,</span><span class="php-hl-quotes">'</span><span class="php-hl-string">::1</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+</span><span class="php-hl-comment">//</span><span class="php-hl-comment"> PHP callback, возвращающий true/false и определяющий, есть ли доступ к веб-консоли.</span>
+<span class="php-hl-comment">//</span><span class="php-hl-comment"> Привер приведён для PHP 5.3.</span>
+<span class="php-hl-quotes">'</span><span class="php-hl-string">checkAccessCallback</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">function</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$controller</span><span class="php-hl-code">, </span><span class="php-hl-var">$action</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">{</span>
+    <span class="php-hl-reserved">return</span><span class="php-hl-code"> !</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">user</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">isGuest</span><span class="php-hl-code">;
+</span><span class="php-hl-brackets">}</span></pre></div></div>
+
+<h2>Большое спасибо</h2>
+
+<ul>
+<li><p><a href="http://www.yiiframework.com/forum/index.php?/user/4786-tydeas-dr/">Dimitrios Meggidis</a> за
+отличную идею и за то, что показал wterm.
+Кстати, у него есть <a href="http://github.com/dmtrs/EWebTerm">неплохой виджет для Yii, позволяющий использовать wterm</a>.</p></li>
+<li><p><a href="http://www.yiiframework.com/about/">Qiang Xue</a> за Yii и код ipFilters.</p></li>
+</ul>
+
+    
+    <h2 id="changelog">Changelog</h2>
+
+    <h3>1.2</h3>
+
+<ul>
+<li>Changed charset to application default (Sam Dark).</li>
+<li>Moved all JS code into own namespace (Sam Dark).</li>
+</ul>
+
+<h3>1.1</h3>
+
+<ul>
+<li>Changed shorttags to echo (Sam Dark).</li>
+</ul>
+
+<h3>1.0</h3>
+
+<ul>
+<li>Initial release (Sam Dark).</li>
+</ul>
+
+
+</div>
+
+<div id="repo-sidebar">
+    <div class="repo noreadme">
+    <div class="repo-head">
+        
+        <h3><a href="/extensions/webshell-module/index.html">webshell-module</a></h3>
+    </div>
+    <p>A web shell that allows to run yiic commands and create your own commands.</p>
+
+    <div class="contributors">
+            <a href="https://github.com/samdark" title="samdark">
+            <img src="https://secure.gravatar.com/avatar/c13375ba1016846e39bc0e48260d0bb1?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="samdark" style="height: 24px; width: 24px;"/>
+        </a>
+            <a href="https://github.com/cebe" title="cebe">
+            <img src="https://secure.gravatar.com/avatar/2ebfe57beabd0b9f8eb9ded1237a275d?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="cebe" style="height: 24px; width: 24px;"/>
+        </a>
+        </div>
+</div>
+
+
+    <h2>Documentation</h2>
+    <ul>
+            <li><a href="/extensions/webshell-module/readme.en.html">readme en</a></li>
+            <li><a href="/extensions/webshell-module/readme.ru.html">readme ru</a></li>
+        <li><a href="/extensions/webshell-module/index.html#changelog">changelog </a></li>
+    </ul>
+
+    <h2>Downloads (Tags)</h2>
+    <ul>
+            <li>v1.2 -
+        <a href="https://github.com/yiiext/webshell-module/tarball/v1.2">tar</a>,
+        <a href="https://github.com/yiiext/webshell-module/zipball/v1.2">zip</a>
+        </li>
+        </ul>
+
+    <h2>Resources</h2>
+    <ul>
+        <li><a href="https://github.com/yiiext/webshell-module">Browse Code</a></li>
+        <li><a href="https://github.com/yiiext/webshell-module/issues">Issues</a> (0)</li>        <li><a href="https://github.com/yiiext/webshell-module/wiki">Wiki</a></li>        <li>...</li>
+    </ul>
+
+</div>
+
+<br style="clear: both;"/>
+
+
+    </div>
+
+    <div id="footer">
+        Powered by <a href="http://www.yiiframework.com/" rel="external">Yii Framework</a>.
+    </div><!-- footer -->
+
+</div><!-- page -->
+</body>
+</html>

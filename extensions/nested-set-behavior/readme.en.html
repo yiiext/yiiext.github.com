@@ -1,0 +1,526 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="language" content="en" />
+
+	<!-- blueprint CSS framework -->
+	<link rel="stylesheet" type="text/css" href="/css/screen.css" media="screen, projection" />
+	<link rel="stylesheet" type="text/css" href="/css/print.css" media="print" />
+	<!--[if lt IE 8]>
+	<link rel="stylesheet" type="text/css" href="/css/ie.css" media="screen, projection" />
+	<![endif]-->
+
+	<link rel="stylesheet" type="text/css" href="/css/web.css" />
+	<link rel="stylesheet" type="text/css" href="/css/form.css" />
+
+	<title>yiiext - RepoReadme Site</title>
+</head>
+
+<body>
+
+<a href="https://github.com/yiiext/nested-set-behavior"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
+
+<div class="container" id="page">
+
+	<div id="header">
+        <div class="extensions-count"><b>50</b> great Yii extensions!</div>
+		<div id="logo">
+            <h1>yiiext</h1>
+            unofficial Yii extension repository
+        </div>
+	</div><!-- header -->
+
+	<div id="mainmenu">
+		<ul id="yw0">
+<li><a href="/index.html">Extensions</a></li>
+<li><a href="/faq.html">FAQ</a></li>
+<li><a href="/contact.html">Contact</a></li>
+</ul>
+	</div><!-- mainmenu -->
+
+    <div id="content">
+        <div id="repo">
+            <h1>Nested Set</h1>
+
+<p>This extension allows managing trees stored in database as nested sets.
+It's implemented as Active Record behavior.</p>
+
+<h2>Installing and configuring</h2>
+
+<p>First you need to configure model as follows:</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-reserved">public</span> <span class="php-hl-reserved">function</span> <span class="php-hl-identifier">behaviors</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span>
+<span class="php-hl-brackets">{</span>
+    <span class="php-hl-reserved">return</span> <span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+        <span class="php-hl-quotes">'</span><span class="php-hl-string">NestedSetBehavior</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">class</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">ext.yiiext.behaviors.model.trees.NestedSetBehavior</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+            </span><span class="php-hl-quotes">'</span><span class="php-hl-string">leftAttribute</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">lft</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+            </span><span class="php-hl-quotes">'</span><span class="php-hl-string">rightAttribute</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">rgt</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+            </span><span class="php-hl-quotes">'</span><span class="php-hl-string">levelAttribute</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">level</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+    </span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+}</span></pre></div></div>
+
+<p>There is no need to validate fields specified in <code>leftAttribute</code>,
+<code>rightAttribute</code>, <code>rootAttribute</code> and <code>levelAttribute</code> options. Moreover,
+there could be problems if there are validation rules for these. Please
+check if there are no rules for fields mentioned in model's rules() method.</p>
+
+<p>In case of storing a single tree per database, DB structure can be built with
+<code>extensions/yiiext/behaviors/trees/schema.sql</code>. If you're going to store multiple
+trees you'll need <code>extensions/yiiext/behaviors/trees/schema_many_roots.sql</code>.</p>
+
+<p>By default <code>leftAttribute</code>, <code>rightAttribute</code> and <code>levelAttribute</code> values are
+matching filed names in default DB schemas so you can skip configuring these.</p>
+
+<p>There are two ways this behavior can work: one tree per table and multiple trees
+per table. The mode is selected based on the value of <code>hasManyRoots</code> option that
+is <code>false</code> by default meaning single tree mode. In multiple trees mode you can
+set <code>rootAttribute</code> option to match existing filed in the table storing the tree.</p>
+
+<h2>Selecting from a tree</h2>
+
+<p>In the following we'll use an example model <code>Category</code> with the following in its
+DB:</p>
+
+<pre>- 1. Mobile phones
+    - 2. iPhone
+    - 3. Samsung
+        - 4. X100
+        - 5. C200
+        - 6. Motorola
+- 7. Cars
+    - 8. Audi
+    - 9. Ford
+    - 10. Mercedes
+</pre>
+
+<p>In this example we have two trees. Tree roots are ones with ID=1 and ID=7.</p>
+
+<h3>Getting all roots</h3>
+
+<p>Using <code>NestedSetBehavior::roots()</code>:</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$roots</span><span class="php-hl-code">=</span><span class="php-hl-identifier">Category</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">roots</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findAll</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
+
+<p>Result:</p>
+
+<p>Array of Active Record objects corresponding to Mobile phones and Cars nodes.</p>
+
+<h3>Getting all descendants of a node</h3>
+
+<p>Using <code>NestedSetBehavior::descendants()</code>:</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$category</span><span class="php-hl-code">=</span><span class="php-hl-identifier">Category</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$descendants</span><span class="php-hl-code">=</span><span class="php-hl-var">$category</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">descendants</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findAll</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
+
+<p>Result:</p>
+
+<p>Array of Active Record objects corresponding to iPhone, Samsung, X100, C200 and Motorola.</p>
+
+<h3>Getting all children of a node</h3>
+
+<p>Using <code>NestedSetBehavior::children()</code>:</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$category</span><span class="php-hl-code">=</span><span class="php-hl-identifier">Category</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$descendants</span><span class="php-hl-code">=</span><span class="php-hl-var">$category</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">children</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findAll</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
+
+<p>Result:</p>
+
+<p>Array of Active Record objects corresponding to iPhone, Samsung and Motorola.</p>
+
+<h3>Getting all ancestors of a node</h3>
+
+<p>Using <code>NestedSetBehavior::ancestors()</code>:</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$category</span><span class="php-hl-code">=</span><span class="php-hl-identifier">Category</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">5</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$descendants</span><span class="php-hl-code">=</span><span class="php-hl-var">$category</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">ancestors</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findAll</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
+
+<p>Result:</p>
+
+<p>Array of Active Record objects corresponding to Samsung and Mobile phones.</p>
+
+<h3>Getting parent of a node</h3>
+
+<p>Using <code>NestedSetBehavior::getParent()</code>:</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$category</span><span class="php-hl-code">=</span><span class="php-hl-identifier">Category</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">9</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$parent</span><span class="php-hl-code">=</span><span class="php-hl-var">$category</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">parent</span><span class="php-hl-code">;</span></pre></div></div>
+
+<p>Result:</p>
+
+<p>Array of Active Record objects corresponding to Cars.</p>
+
+<h3>Getting node siblings</h3>
+
+<p>Using <code>NestedSetBehavior::getPrevSibling()</code> or
+<code>NestedSetBehavior::getNextSibling()</code>:</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$category</span><span class="php-hl-code">=</span><span class="php-hl-identifier">Category</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">9</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$nextSibling</span><span class="php-hl-code">=</span><span class="php-hl-var">$category</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">nextSibling</span><span class="php-hl-code">;</span></pre></div></div>
+
+<p>Result:</p>
+
+<p>Array of Active Record objects corresponding to Mercedes.</p>
+
+<h3>Getting the whole tree</h3>
+
+<p>You can get the whole tree using standard AR methods like the following.</p>
+
+<p>For single tree per table:</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-identifier">Category</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findAll</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">order</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">lft</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
+
+<p>For multiple trees per table:</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-identifier">Category</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findAll</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">condition</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">root_id=?</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,</span><span class="php-hl-quotes">'</span><span class="php-hl-string">order</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">lft</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">,</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$root_id</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
+
+<h2>Modifying a tree</h2>
+
+<p>In this section we'll build a tree like the one used in the previous section.</p>
+
+<h3>Creating root nodes</h3>
+
+<p>You can create a root node using <code>NestedSetBehavior::saveNode()</code>.
+In a single tree per table mode you can create only one root node. If you'll attempt
+to create more there will be CException thrown.</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$root</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Category</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$root</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">title</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Mobile Phones</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$root</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">saveNode</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$root</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Category</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$root</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">title</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Cars</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$root</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">saveNode</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
+
+<p>Result:</p>
+
+<pre>- 1. Mobile Phones
+- 2. Cars
+</pre>
+
+<h3>Adding child nodes</h3>
+
+<p>There are multiple methods allowing you adding child nodes. To get more info
+about these refer to API. Let's use these
+to add nodes to the tree we have:</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$category1</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Category</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$category1</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">title</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Ford</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$category2</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Category</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$category2</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">title</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Mercedes</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$category3</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Category</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$category3</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">title</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Audi</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$root</span><span class="php-hl-code">=</span><span class="php-hl-identifier">Category</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$category1</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">appendTo</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$root</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$category2</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">insertAfter</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$category1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$category3</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">insertBefore</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$category1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
+
+<p>Result:</p>
+
+<pre>- 1. Mobile phones
+    - 3. Audi
+    - 4. Ford
+    - 5. Mercedes
+- 2. Cars
+</pre>
+
+<p>Logically the tree above doesn't looks correct. We'll fix it later.</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$category1</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Category</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$category1</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">title</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Samsung</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$category2</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Category</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$category2</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">title</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Motorola</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$category3</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Category</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$category3</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">title</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">iPhone</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$root</span><span class="php-hl-code">=</span><span class="php-hl-identifier">Category</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">2</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$category1</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">appendTo</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$root</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$category2</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">insertAfter</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$category1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$category3</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">prependTo</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$root</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
+
+<p>Result:</p>
+
+<pre>- 1. Mobile phones
+    - 3. Audi
+    - 4. Ford
+    - 5. Mercedes
+- 2. Cars
+    - 6. iPhone
+    - 7. Samsung
+    - 8. Motorola
+</pre>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$category1</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Category</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$category1</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">title</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">X100</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$category2</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Category</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$category2</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">title</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">C200</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$node</span><span class="php-hl-code">=</span><span class="php-hl-identifier">Category</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">3</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$category1</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">appendTo</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$node</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$category2</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">prependTo</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$node</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
+
+<p>Result:</p>
+
+<pre>- 1. Mobile phones
+    - 3. Audi
+        - 9. С200
+        - 10. X100
+    - 4. Ford
+    - 5. Mercedes
+- 2. Cars
+    - 6. iPhone
+    - 7. Samsung
+    - 8. Motorola
+</pre>
+
+<h2>Modifying a tree</h2>
+
+<p>In this section we'll finally make our tree logical.</p>
+
+<h3>Tree modification methods</h3>
+
+<p>There are several methods allowing you to modify a tree. To get more info
+about these refer to API.</p>
+
+<p>Let's start:</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-comment">//</span><span class="php-hl-comment"> move phones to the proper place</span>
+<span class="php-hl-var">$x100</span><span class="php-hl-code">=</span><span class="php-hl-identifier">Category</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">10</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$c200</span><span class="php-hl-code">=</span><span class="php-hl-identifier">Category</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">9</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$samsung</span><span class="php-hl-code">=</span><span class="php-hl-identifier">Category</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">7</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$x100</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">moveAsFirst</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$samsung</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$c200</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">moveBefore</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$x100</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-comment">//</span><span class="php-hl-comment"> now move all Samsung phones branch</span>
+<span class="php-hl-var">$mobile_phones</span><span class="php-hl-code">=</span><span class="php-hl-identifier">Category</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$samsung</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">moveAsFirst</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$mobile_phones</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-comment">//</span><span class="php-hl-comment"> move the rest of phone models</span>
+<span class="php-hl-var">$iphone</span><span class="php-hl-code">=</span><span class="php-hl-identifier">Category</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">6</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$iphone</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">moveAsFirst</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$mobile_phones</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$motorola</span><span class="php-hl-code">=</span><span class="php-hl-identifier">Category</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">8</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$motorola</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">moveAfter</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$samsung</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-comment">//</span><span class="php-hl-comment"> move car models to appropriate place</span>
+<span class="php-hl-var">$cars</span><span class="php-hl-code">=</span><span class="php-hl-identifier">Category</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">2</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$audi</span><span class="php-hl-code">=</span><span class="php-hl-identifier">Category</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">3</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$ford</span><span class="php-hl-code">=</span><span class="php-hl-identifier">Category</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">4</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$mercedes</span><span class="php-hl-code">=</span><span class="php-hl-identifier">Category</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">5</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+ 
+</span><span class="php-hl-reserved">foreach</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$audi</span><span class="php-hl-code">,</span><span class="php-hl-var">$ford</span><span class="php-hl-code">,</span><span class="php-hl-var">$mercedes</span><span class="php-hl-brackets">)</span> <span class="php-hl-reserved">as</span> <span class="php-hl-var">$category</span><span class="php-hl-brackets">)</span>
+    <span class="php-hl-var">$category</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">moveAsLast</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$cars</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
+
+<p>Result:</p>
+
+<pre>- 1. Mobile phones
+    - 6. iPhone
+    - 7. Samsung
+        - 10. X100
+        - 9. С200
+    - 8. Motorola
+- 2. Cars
+    - 3. Audi
+    - 4. Ford
+    - 5. Mercedes
+</pre>
+
+<h3>Moving a node making it a new root</h3>
+
+<p>There is a special <code>moveAsRoot()</code> method that allows moving a node and making it
+a new root. All descendants are moved as well in this case.</p>
+
+<p>Example:</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$node</span><span class="php-hl-code">=</span><span class="php-hl-identifier">Category</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">10</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$node</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">moveAsRoot</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
+
+<h3>Identifying node type</h3>
+
+<p>There are three methods to get node type: <code>isRoot()</code>, <code>isLeaf()</code>, <code>isDescendantOf()</code>.</p>
+
+<p>Example:</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$root</span><span class="php-hl-code">=</span><span class="php-hl-identifier">Category</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-identifier">CVarDumper</span><span class="php-hl-code">::</span><span class="php-hl-identifier">dump</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$root</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">isRoot</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">true;</span>
+<span class="php-hl-identifier">CVarDumper</span><span class="php-hl-code">::</span><span class="php-hl-identifier">dump</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$root</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">isLeaf</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">false;</span>
+<span class="php-hl-var">$node</span><span class="php-hl-code">=</span><span class="php-hl-identifier">Category</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">9</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-identifier">CVarDumper</span><span class="php-hl-code">::</span><span class="php-hl-identifier">dump</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$node</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">isDescendantOf</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$root</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">true;</span>
+<span class="php-hl-identifier">CVarDumper</span><span class="php-hl-code">::</span><span class="php-hl-identifier">dump</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$node</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">isRoot</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">false;</span>
+<span class="php-hl-identifier">CVarDumper</span><span class="php-hl-code">::</span><span class="php-hl-identifier">dump</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$root</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">isLeaf</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">true;</span>
+<span class="php-hl-var">$samsung</span><span class="php-hl-code">=</span><span class="php-hl-identifier">Category</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">7</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-identifier">CVarDumper</span><span class="php-hl-code">::</span><span class="php-hl-identifier">dump</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$node</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">isDescendantOf</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$samsung</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">true;</span></pre></div></div>
+
+<h2>Useful code</h2>
+
+<h3>Non-recursive tree traversal</h3>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$level</span><span class="php-hl-code">=</span><span class="php-hl-number">0</span><span class="php-hl-code">;
+ 
+</span><span class="php-hl-reserved">foreach</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$categories</span> <span class="php-hl-reserved">as</span> <span class="php-hl-var">$n</span><span class="php-hl-code">=&gt;</span><span class="php-hl-var">$category</span><span class="php-hl-brackets">)</span>
+<span class="php-hl-brackets">{</span>
+    <span class="php-hl-reserved">if</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$category</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">level</span><span class="php-hl-code">==</span><span class="php-hl-var">$level</span><span class="php-hl-brackets">)</span>
+        <span class="php-hl-reserved">echo</span> <span class="php-hl-identifier">CHtml</span><span class="php-hl-code">::</span><span class="php-hl-identifier">closeTag</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">li</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">.</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-special">\n</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-code">;
+    </span><span class="php-hl-reserved">else</span> <span class="php-hl-reserved">if</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$category</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">level</span><span class="php-hl-code">&gt;</span><span class="php-hl-var">$level</span><span class="php-hl-brackets">)</span>
+        <span class="php-hl-reserved">echo</span> <span class="php-hl-identifier">CHtml</span><span class="php-hl-code">::</span><span class="php-hl-identifier">openTag</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">ul</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">.</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-special">\n</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-code">;
+    </span><span class="php-hl-reserved">else</span>
+    <span class="php-hl-brackets">{</span>
+        <span class="php-hl-reserved">echo</span> <span class="php-hl-identifier">CHtml</span><span class="php-hl-code">::</span><span class="php-hl-identifier">closeTag</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">li</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">.</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-special">\n</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-code">;
+ 
+        </span><span class="php-hl-reserved">for</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$i</span><span class="php-hl-code">=</span><span class="php-hl-var">$level</span><span class="php-hl-code">-</span><span class="php-hl-var">$model</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">level</span><span class="php-hl-code">;</span><span class="php-hl-var">$i</span><span class="php-hl-code">;</span><span class="php-hl-var">$i</span><span class="php-hl-code">--</span><span class="php-hl-brackets">)</span>
+        <span class="php-hl-brackets">{</span>
+            <span class="php-hl-reserved">echo</span> <span class="php-hl-identifier">CHtml</span><span class="php-hl-code">::</span><span class="php-hl-identifier">closeTag</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">ul</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">.</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-special">\n</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-code">;
+            </span><span class="php-hl-reserved">echo</span> <span class="php-hl-identifier">CHtml</span><span class="php-hl-code">::</span><span class="php-hl-identifier">closeTag</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">li</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">.</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-special">\n</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-code">;
+        </span><span class="php-hl-brackets">}</span>
+    <span class="php-hl-brackets">}</span>
+ 
+    <span class="php-hl-reserved">echo</span> <span class="php-hl-identifier">CHtml</span><span class="php-hl-code">::</span><span class="php-hl-identifier">openTag</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">li</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+    </span><span class="php-hl-reserved">echo</span> <span class="php-hl-identifier">CHtml</span><span class="php-hl-code">::</span><span class="php-hl-identifier">encode</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$category</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">title</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+    </span><span class="php-hl-var">$level</span><span class="php-hl-code">=</span><span class="php-hl-var">$category</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">level</span><span class="php-hl-code">;
+</span><span class="php-hl-brackets">}</span>
+ 
+<span class="php-hl-reserved">for</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$i</span><span class="php-hl-code">=</span><span class="php-hl-var">$level</span><span class="php-hl-code">;</span><span class="php-hl-var">$i</span><span class="php-hl-code">;</span><span class="php-hl-var">$i</span><span class="php-hl-code">--</span><span class="php-hl-brackets">)</span>
+<span class="php-hl-brackets">{</span>
+    <span class="php-hl-reserved">echo</span> <span class="php-hl-identifier">CHtml</span><span class="php-hl-code">::</span><span class="php-hl-identifier">closeTag</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">li</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">.</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-special">\n</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-code">;
+    </span><span class="php-hl-reserved">echo</span> <span class="php-hl-identifier">CHtml</span><span class="php-hl-code">::</span><span class="php-hl-identifier">closeTag</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">ul</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">.</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-special">\n</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-code">;
+</span><span class="php-hl-brackets">}</span></pre></div></div>
+
+    
+    <h2 id="changelog">Changelog</h2>
+
+    <h3>1.05</h3>
+
+<ul>
+<li>External transaction support for NestedSetBehavior::delete() method (creocoder)</li>
+</ul>
+
+<h3>1.04</h3>
+
+<ul>
+<li>Fix for $depth parameter of NestedSetBehavior::ancestors() method (creocoder)</li>
+</ul>
+
+<h3>1.03</h3>
+
+<ul>
+<li>Class renamed to NestedSetBehavior (creocoder)</li>
+<li>Rare bug with cache correction after NestedSetBehavior::addNode() fixed (creocoder)</li>
+<li>Readmes non-recursive tree traversal algorithm fix (creocoder)</li>
+</ul>
+
+<h3>1.02</h3>
+
+<ul>
+<li>Added moveAsRoot() method (creocoder)</li>
+<li>Updated readmes (Sam Dark)</li>
+</ul>
+
+<h3>1.01</h3>
+
+<ul>
+<li>Added not integer pk support (creocoder)</li>
+<li>Remove <code>final</code> from class (creocoder)</li>
+</ul>
+
+<h3>1.00</h3>
+
+<ul>
+<li>Some behavior refactoring before release (creocoder)</li>
+<li>Advanced doc added (creocoder)</li>
+</ul>
+
+<h3>0.99b</h3>
+
+<ul>
+<li>Allow to use multiply change tree operations (creocoder)</li>
+<li>Method saveNode() now create root in "single root mode" (creocoder)</li>
+<li>Unit tests refactored (creocoder)</li>
+<li>Some behavior refactoring (creocoder)</li>
+</ul>
+
+<h3>0.99</h3>
+
+<ul>
+<li>Added note about removing fields from <code>rules</code> (Sam Dark)</li>
+<li>Added Unit tests for single root mode (creocoder)</li>
+<li>All attributes are now correctly quoted (creocoder)</li>
+<li>Renamed fields: 'root'=>'rootAttribute', 'left'=>'leftAttribute', 'right'=>'rightAttribute', 'level'=>'levelAttribute' (creocoder)</li>
+<li>Renamed method parent() => getParent() (creocoder)</li>
+</ul>
+
+<h3>0.95</h3>
+
+<ul>
+<li>Unit tests added (creocoder)</li>
+<li>Incorrect usage of save() and delete() instead of behavior's saveNode() and deleteNode() is now detected (creocoder)</li>
+</ul>
+
+<h3>0.90</h3>
+
+<ul>
+<li>Moving a node to a different root is now supported (creocoder)</li>
+</ul>
+
+<h3>0.85</h3>
+
+<ul>
+<li>Initial public release (creocoder)</li>
+</ul>
+
+
+</div>
+
+<div id="repo-sidebar">
+    <div class="repo noreadme">
+    <div class="repo-head">
+        
+        <h3><a href="/extensions/nested-set-behavior/index.html">nested-set-behavior</a></h3>
+    </div>
+    <p>AR models behavior that allows to work with nested sets tree.</p>
+
+    <div class="contributors">
+            <a href="https://github.com/samdark" title="samdark">
+            <img src="https://secure.gravatar.com/avatar/c13375ba1016846e39bc0e48260d0bb1?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="samdark" style="height: 24px; width: 24px;"/>
+        </a>
+            <a href="https://github.com/creocoder" title="creocoder">
+            <img src="https://secure.gravatar.com/avatar/f64f1abec364538cdc727fd154f18e71?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="creocoder" style="height: 24px; width: 24px;"/>
+        </a>
+            <a href="https://github.com/cebe" title="cebe">
+            <img src="https://secure.gravatar.com/avatar/2ebfe57beabd0b9f8eb9ded1237a275d?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="cebe" style="height: 24px; width: 24px;"/>
+        </a>
+            <a href="https://github.com/slavcopost" title="slavcopost">
+            <img src="https://secure.gravatar.com/avatar/7df99512d7e4f2c81f9441650c89025f?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="slavcopost" style="height: 24px; width: 24px;"/>
+        </a>
+        </div>
+</div>
+
+
+    <h2>Documentation</h2>
+    <ul>
+            <li><a href="/extensions/nested-set-behavior/readme.en.html">readme en</a></li>
+            <li><a href="/extensions/nested-set-behavior/readme.ru.html">readme ru</a></li>
+        <li><a href="/extensions/nested-set-behavior/index.html#changelog">changelog </a></li>
+    </ul>
+
+    <h2>Downloads (Tags)</h2>
+    <ul>
+            <li>v1.0.5 -
+        <a href="https://github.com/yiiext/nested-set-behavior/tarball/v1.0.5">tar</a>,
+        <a href="https://github.com/yiiext/nested-set-behavior/zipball/v1.0.5">zip</a>
+        </li>
+        </ul>
+
+    <h2>Resources</h2>
+    <ul>
+        <li><a href="https://github.com/yiiext/nested-set-behavior">Browse Code</a></li>
+        <li><a href="https://github.com/yiiext/nested-set-behavior/issues">Issues</a> (0)</li>        <li><a href="https://github.com/yiiext/nested-set-behavior/wiki">Wiki</a></li>        <li>...</li>
+    </ul>
+
+</div>
+
+<br style="clear: both;"/>
+
+
+    </div>
+
+    <div id="footer">
+        Powered by <a href="http://www.yiiframework.com/" rel="external">Yii Framework</a>.
+    </div><!-- footer -->
+
+</div><!-- page -->
+</body>
+</html>

@@ -1,0 +1,428 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="language" content="en" />
+
+	<!-- blueprint CSS framework -->
+	<link rel="stylesheet" type="text/css" href="/css/screen.css" media="screen, projection" />
+	<link rel="stylesheet" type="text/css" href="/css/print.css" media="print" />
+	<!--[if lt IE 8]>
+	<link rel="stylesheet" type="text/css" href="/css/ie.css" media="screen, projection" />
+	<![endif]-->
+
+	<link rel="stylesheet" type="text/css" href="/css/web.css" />
+	<link rel="stylesheet" type="text/css" href="/css/form.css" />
+
+	<title>yiiext - RepoReadme Site</title>
+</head>
+
+<body>
+
+<a href="https://github.com/yiiext/shopping-cart-component"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
+
+<div class="container" id="page">
+
+	<div id="header">
+        <div class="extensions-count"><b>50</b> great Yii extensions!</div>
+		<div id="logo">
+            <h1>yiiext</h1>
+            unofficial Yii extension repository
+        </div>
+	</div><!-- header -->
+
+	<div id="mainmenu">
+		<ul id="yw0">
+<li><a href="/index.html">Extensions</a></li>
+<li><a href="/faq.html">FAQ</a></li>
+<li><a href="/contact.html">Contact</a></li>
+</ul>
+	</div><!-- mainmenu -->
+
+    <div id="content">
+        <div id="repo">
+            <h1>Shopping Cart</h1>
+
+<p>Компонент для реализации корзины моделей.</p>
+
+<p>Корзина - объект контейнер, для хранения коллекции позиций, и методами для работы с этой коллекцией.</p>
+
+<p>Состояние корзины между запросами хранится в сессии пользователя.</p>
+
+<h2>Установка и настройка</h2>
+
+<h3>1 вариант: Подключение через конфиг</h3>
+
+<p>В <code>protected/config/main.php</code> добавить:</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-quotes">'</span><span class="php-hl-string">import</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+    <span class="php-hl-quotes">'</span><span class="php-hl-string">ext.yiiext.components.shoppingCart.*</span><span class="php-hl-quotes">'</span>
+<span class="php-hl-brackets">)</span><span class="php-hl-code">,
+ 
+</span><span class="php-hl-quotes">'</span><span class="php-hl-string">components</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+  <span class="php-hl-quotes">'</span><span class="php-hl-string">shoppingCart</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt;
+    </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+        <span class="php-hl-quotes">'</span><span class="php-hl-string">class</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">ext.yiiext.components.shoppingCart.EShoppingCart</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+    </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+</span><span class="php-hl-brackets">)</span></pre></div></div>
+
+<h3>2 вариант: Подключение по необходимости</h3>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$cart</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">createComponent</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+    <span class="php-hl-quotes">'</span><span class="php-hl-string">class</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">ext.yiiext.components.shoppingCart.EShoppingCart</span><span class="php-hl-quotes">'</span>
+<span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-comment">//</span><span class="php-hl-comment">Важно</span>
+<span class="php-hl-var">$cart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">init</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+ 
+</span><span class="php-hl-var">$book</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Book</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$cart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
+
+<h2>Подготавливаем модель</h2>
+
+<p>Модели, которым необходимо дать возможность добавления в корзину,
+должны реализовать интерфейс <code>IECartPosition</code>:</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-reserved">class</span> <span class="php-hl-identifier">Book</span> <span class="php-hl-reserved">extends</span> <span class="php-hl-identifier">CActiveRecord</span> <span class="php-hl-reserved">implements</span> <span class="php-hl-identifier">IECartPosition</span> <span class="php-hl-brackets">{</span>
+    <span class="php-hl-reserved">public</span> <span class="php-hl-reserved">static</span> <span class="php-hl-reserved">function</span> <span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$className</span><span class="php-hl-code"> = </span><span class="php-hl-reserved">__CLASS__</span><span class="php-hl-brackets">)</span> <span class="php-hl-brackets">{</span>
+        <span class="php-hl-reserved">return</span> <span class="php-hl-identifier">parent</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$className</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+    </span><span class="php-hl-brackets">}</span>
+ 
+    <span class="php-hl-reserved">function</span> <span class="php-hl-identifier">getId</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">{</span>
+        <span class="php-hl-reserved">return</span> <span class="php-hl-quotes">'</span><span class="php-hl-string">Book</span><span class="php-hl-quotes">'</span><span class="php-hl-code">.</span><span class="php-hl-var">$this</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">id</span><span class="php-hl-code">;
+    </span><span class="php-hl-brackets">}</span>
+ 
+    <span class="php-hl-reserved">function</span> <span class="php-hl-identifier">getPrice</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">{</span>
+        <span class="php-hl-reserved">return</span> <span class="php-hl-var">$this</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">price</span><span class="php-hl-code">;
+    </span><span class="php-hl-brackets">}</span>
+<span class="php-hl-brackets">}</span></pre></div></div>
+
+<h2>API</h2>
+
+<h3>EShoppingCart::put($position, $quantity)</h3>
+
+<p>Добавляет в корзину позицию товара в количестве $quantity.
+Если позиция товара уже была в корзине, то данные модели обновляются, а количество увеличивается на $quantity</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$book</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Book</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">в корзине 1 позиция с id=1 в количестве 1 единица.</span>
+<span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book</span><span class="php-hl-code">,</span><span class="php-hl-number">2</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">в корзине 1 позиция с id=1 в количестве 3 единицы.</span>
+<span class="php-hl-var">$book2</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Book</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">2</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book2</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">в корзине 2 позиции с id=1 и id=2</span></pre></div></div>
+
+<h3>EShoppingCart::update($position, $quantity)</h3>
+
+<p>Обновляет в корзине позицию товара.
+Если позиция товара уже была в корзине, то данные модели обновляются, а количество установится в $quantity.
+Если позиции не было в корзине, то она добавляется в ней.
+Если установлено $quantity&lt;1, то позиция удаляется из корзины</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$book</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Book</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">в корзине 1 позиция с id=1 в количестве 1 единица.</span>
+<span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">update</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book</span><span class="php-hl-code">,</span><span class="php-hl-number">2</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">в корзине 1 позиция с id=1 в количестве 2 единицы.</span></pre></div></div>
+
+<h3>EShoppingCart::remove($key)</h3>
+
+<p>Удаляет позицию из корзины</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$book</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Book</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book</span><span class="php-hl-code">,</span><span class="php-hl-number">2</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">в корзине 1 позиция с id=1 в количестве 2 единицы.</span>
+<span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">remove</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getId</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">в корзине нет позиций</span></pre></div></div>
+
+<h3>EShoppingCart::clear()</h3>
+
+<p>Очищает корзину</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">clear</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
+
+<h3>EShoppingCart::itemAt($key)</h3>
+
+<p>Возвращает позицию по ключу</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$position</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">itemAt</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
+
+<h3>EShoppingCart::contains($key)</h3>
+
+<p>Возвращает boolean: есть ли в корзине позиция с id=$key?</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$position</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">itemAt</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
+
+<h3>EShoppingCart::isEmpty()</h3>
+
+<p>Возвращает true, если корзина пустая.</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$position</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">isEmpty</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
+
+<h3>EShoppingCart::getCount()</h3>
+
+<p>Возвращает количество позиций</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book</span><span class="php-hl-code">,</span><span class="php-hl-number">2</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book2</span><span class="php-hl-code">,</span><span class="php-hl-number">3</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getCount</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">2</span></pre></div></div>
+
+<h3>EShoppingCart::getItemsCount()</h3>
+
+<p>Возвращает количество товаров</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book</span><span class="php-hl-code">,</span><span class="php-hl-number">2</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book2</span><span class="php-hl-code">,</span><span class="php-hl-number">3</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getItemsCount</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">5</span></pre></div></div>
+
+<h3>EShoppingCart::getCost($withDiscount)</h3>
+
+<p>Возвращает стоимость всей корзины</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book</span><span class="php-hl-code">,</span><span class="php-hl-number">2</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">price=100</span>
+<span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book2</span><span class="php-hl-code">,</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">price=200</span>
+<span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getCost</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">400</span></pre></div></div>
+
+<h3>EShoppingCart::getPositions()</h3>
+
+<p>Возвращает массив позиций</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$positions</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getPositions</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-reserved">foreach</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$positions</span> <span class="php-hl-reserved">as</span> <span class="php-hl-var">$position</span><span class="php-hl-brackets">)</span> <span class="php-hl-brackets">{</span><span class="php-hl-code">
+...
+</span><span class="php-hl-brackets">}</span></pre></div></div>
+
+<h3>IECartPosition::getPrice()</h3>
+
+<p>Возвращает цену одной единицы позиции</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$positions</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getPositions</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-reserved">foreach</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$positions</span> <span class="php-hl-reserved">as</span> <span class="php-hl-var">$position</span><span class="php-hl-brackets">)</span> <span class="php-hl-brackets">{</span>
+<span class="php-hl-var">$price</span><span class="php-hl-code"> = </span><span class="php-hl-var">$position</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getPrice</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-brackets">}</span></pre></div></div>
+
+<h3>IECartPosition::getSumPrice($withDiscount)</h3>
+
+<p>Возвращает стоимость позиции = стоимость одной единицы*кол-во</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$book</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Book</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">цена товара = 100</span>
+<span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book</span><span class="php-hl-code">,</span><span class="php-hl-number">2</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">положим 2 единицы товара</span>
+<span class="php-hl-var">$positions</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getPositions</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-reserved">foreach</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$positions</span> <span class="php-hl-reserved">as</span> <span class="php-hl-var">$position</span><span class="php-hl-brackets">)</span> <span class="php-hl-brackets">{</span>
+<span class="php-hl-var">$price</span><span class="php-hl-code"> = </span><span class="php-hl-var">$position</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getSumPrice</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">200 (2*100)</span>
+<span class="php-hl-brackets">}</span></pre></div></div>
+
+<h3>IECartPosition::getQuantity()</h3>
+
+<p>Возвращает кол-во единиц в позиции</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$book</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Book</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">цена товара = 100</span>
+<span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book</span><span class="php-hl-code">,</span><span class="php-hl-number">2</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">положим 2 единицы товара</span>
+<span class="php-hl-var">$positions</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getPositions</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-reserved">foreach</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$positions</span> <span class="php-hl-reserved">as</span> <span class="php-hl-var">$position</span><span class="php-hl-brackets">)</span> <span class="php-hl-brackets">{</span>
+<span class="php-hl-var">$price</span><span class="php-hl-code"> = </span><span class="php-hl-var">$position</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getQuantity</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">2</span>
+<span class="php-hl-brackets">}</span></pre></div></div>
+
+<h2>Система скидок</h2>
+
+<p>Для компонента корзины, реализована простая система скидок.</p>
+
+<p>Система скидок позволяет применять к корзине набор правил для изменения стоимости как корзины в целом так и отдельных позиций.</p>
+
+<p>Скидка - класс наследуемый от IEDiscount и реализующий метод apply.</p>
+
+<p>В методе apply должен быть описан механизм применения скидки.</p>
+
+<p>Применяется она путем вызова метода Position::addDiscountPrice/Position::setDiscountPrice у позиции,
+либо EShoppingCart::addDiscountPrice/EShoppingCart::setDiscountPrice у корзины.
+В метод передается значение на которое будет уменьшена стоимость(всей корзины или отдельной позиции соответственно).</p>
+
+<p>Пример класса скидки:</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-reserved">class</span> <span class="php-hl-identifier">TestDiscount</span> <span class="php-hl-reserved">extends</span> <span class="php-hl-identifier">IEDiscount</span> <span class="php-hl-brackets">{</span>
+    <span class="php-hl-comment">/*</span><span class="php-hl-comment">*
+     * Скидка в %
+     </span><span class="php-hl-comment">*/</span>
+    <span class="php-hl-reserved">public</span> <span class="php-hl-var">$rate</span><span class="php-hl-code"> = </span><span class="php-hl-number">30</span><span class="php-hl-code">;
+ 
+    </span><span class="php-hl-reserved">public</span> <span class="php-hl-reserved">function</span> <span class="php-hl-identifier">apply</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span> <span class="php-hl-brackets">{</span>
+        <span class="php-hl-reserved">foreach</span> <span class="php-hl-brackets">(</span><span class="php-hl-var">$this</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span> <span class="php-hl-reserved">as</span> <span class="php-hl-var">$position</span><span class="php-hl-brackets">)</span> <span class="php-hl-brackets">{</span>
+            <span class="php-hl-var">$quantity</span><span class="php-hl-code"> = </span><span class="php-hl-var">$position</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getQuantity</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+            </span><span class="php-hl-reserved">if</span> <span class="php-hl-brackets">(</span><span class="php-hl-var">$quantity</span><span class="php-hl-code"> &gt; </span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span> <span class="php-hl-brackets">{</span>
+                <span class="php-hl-var">$discountPrice</span><span class="php-hl-code"> = </span><span class="php-hl-var">$this</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">rate</span><span class="php-hl-code"> * </span><span class="php-hl-var">$position</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getPrice</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code"> / </span><span class="php-hl-number">100</span><span class="php-hl-code">;
+                </span><span class="php-hl-var">$position</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">addDiscountPrice</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$discountPrice</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+            </span><span class="php-hl-brackets">}</span>
+        <span class="php-hl-brackets">}</span>
+    <span class="php-hl-brackets">}</span>
+<span class="php-hl-brackets">}</span></pre></div></div>
+
+<p>Данная скидка делает следующее: если в корзину был добавлен товар в количестве больше 1, то к одной единице применяется скидка в $rate % , и на эту стоимость уменьшается суммарная стоимость позиции.</p>
+
+<p>К корзине может быть применен не ограниченный набор скидок, которые будут вызываться по цепочке.</p>
+
+<p>Список скидок должен быть описан в конфиге:</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-quotes">'</span><span class="php-hl-string">shoppingCart</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt;
+        </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">class</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">ext.yiiext.components.shoppingCart.EShoppingCart</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+            </span><span class="php-hl-quotes">'</span><span class="php-hl-string">discounts</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt;
+            </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+                <span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+                    <span class="php-hl-quotes">'</span><span class="php-hl-string">class</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">ext.yiiext.components.shoppingCart.discounts.TestDiscount</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+                    </span><span class="php-hl-quotes">'</span><span class="php-hl-string">rate</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-number">40</span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+                </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">class</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">otherDiscount</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+            </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+ 
+        </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,</span></pre></div></div>
+
+<h2>События.</h2>
+
+<p>В ShoppingCart зарегистрированы 2 события.
+Механизм событий реализован согласно API Yii.</p>
+
+<p>1) onUpdatePosition - срабатывает при добавлении или обновлении позиции в корзину.</p>
+
+<p>2) onRemovePosition - срабатывает при удалении позиции из корзины.</p>
+
+<p>Пример использования:</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$cN</span><span class="php-hl-code"> = </span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">CallCenterNotifier</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">attachEventHandler</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">onUpdatePosition</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$cN</span><span class="php-hl-code">, </span><span class="php-hl-quotes">'</span><span class="php-hl-string">updatePositionInShoppingCart</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+ 
+</span><span class="php-hl-var">$book</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Book</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
+
+<p>При срабатывание события onUpdatePosition, об этом будет оповещен call center.</p>
+
+<h2>CMap - работаем с корзиной, как с массивом.</h2>
+
+<p>Класс ShoppingCart наследует CMap, это позволяет работать с корзиной как с массивом.</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$book</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Book</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-brackets">[</span><span class="php-hl-brackets">]</span><span class="php-hl-code"> = </span><span class="php-hl-var">$book</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">добавляем в корзину позицию.</span>
+ 
+<span class="php-hl-comment">//</span><span class="php-hl-comment">обходим все позиции в корзине циклом.</span>
+<span class="php-hl-reserved">foreach</span><span class="php-hl-brackets">(</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span> <span class="php-hl-reserved">as</span> <span class="php-hl-var">$position</span><span class="php-hl-brackets">)</span>
+<span class="php-hl-brackets">{</span><span class="php-hl-code">
+...
+</span><span class="php-hl-brackets">}</span></pre></div></div>
+
+    
+    <h2 id="changelog">Changelog</h2>
+
+    <h3>0.9</h3>
+
+<ul>
+<li>Added optional cartId property to EShoppingCart (rak)</li>
+<li>Renamed onUpdatePoistion to onUpdatePosition (rak)</li>
+<li>Fixed the bug when ECartPositionBehaviour is attached multiple times (rak)</li>
+<li>Added ability to connect EShoppingCart by necessity (rak)</li>
+</ul>
+
+<h3>0.8</h3>
+
+<ul>
+<li>Added ECartPositionBehavior::setDiscountPrice (Sam Dark)</li>
+<li>Added EShoppingCart::setDiscountPrice (Sam Dark)</li>
+</ul>
+
+<h3>0.7</h3>
+
+<ul>
+<li>Updated English readme (Sam Dark)</li>
+<li>Refactor: renamed variables and methods.</li>
+<li>Updated documentation.</li>
+<li>Add Discounts.</li>
+<li>Add new Methods.</li>
+<li>Add Events.</li>
+<li>New Unit tests.</li>
+</ul>
+
+<h3>0.6</h3>
+
+<ul>
+<li>New naming conventions.</li>
+<li>English readme.</li>
+</ul>
+
+<h3>0.5rc2</h3>
+
+<ul>
+<li>Fixed bug when product count was set to zero when restoring from session.</li>
+<li>Changed behaviour of put() method.</li>
+<li>Added update() method. Updates cart object info.</li>
+</ul>
+
+<h3>0.5</h3>
+
+<ul>
+<li>Now only IECartPosition object could be put into cart.</li>
+<li>Method names changed.</li>
+<li>Unit tests.</li>
+<li>PHP native interface checks.</li>
+<li>Renamed cart class to CShoppingCart.</li>
+<li>Single model can be put in array style.</li>
+</ul>
+
+<h3>0.2</h3>
+
+<ul>
+<li>Initial relase.</li>
+</ul>
+
+
+</div>
+
+<div id="repo-sidebar">
+    <div class="repo noreadme">
+    <div class="repo-head">
+        
+        <h3><a href="/extensions/shopping-cart-component/index.html">shopping-cart-component</a></h3>
+    </div>
+    <p>Allows to put models into shopping cart and do various operations with it.</p>
+
+    <div class="contributors">
+            <a href="https://github.com/samdark" title="samdark">
+            <img src="https://secure.gravatar.com/avatar/c13375ba1016846e39bc0e48260d0bb1?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="samdark" style="height: 24px; width: 24px;"/>
+        </a>
+            <a href="https://github.com/PirratStudio" title="PirratStudio">
+            <img src="https://secure.gravatar.com/avatar/e174c3fa50415a9e248c7d02c4ade495?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-orgs.png" alt="PirratStudio" style="height: 24px; width: 24px;"/>
+        </a>
+            <a href="https://github.com/cebe" title="cebe">
+            <img src="https://secure.gravatar.com/avatar/2ebfe57beabd0b9f8eb9ded1237a275d?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="cebe" style="height: 24px; width: 24px;"/>
+        </a>
+            <a href="https://github.com/rakkture" title="rakkture">
+            <img src="https://secure.gravatar.com/avatar/6b21558d59f9b0ecc179c9a19ae57cdc?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="rakkture" style="height: 24px; width: 24px;"/>
+        </a>
+        </div>
+</div>
+
+
+    <h2>Documentation</h2>
+    <ul>
+            <li><a href="/extensions/shopping-cart-component/readme.en.html">readme en</a></li>
+            <li><a href="/extensions/shopping-cart-component/readme.ru.html">readme ru</a></li>
+        <li><a href="/extensions/shopping-cart-component/index.html#changelog">changelog </a></li>
+    </ul>
+
+    <h2>Downloads (Tags)</h2>
+    <ul>
+            <li>v0.9 -
+        <a href="https://github.com/yiiext/shopping-cart-component/tarball/v0.9">tar</a>,
+        <a href="https://github.com/yiiext/shopping-cart-component/zipball/v0.9">zip</a>
+        </li>
+        </ul>
+
+    <h2>Resources</h2>
+    <ul>
+        <li><a href="https://github.com/yiiext/shopping-cart-component">Browse Code</a></li>
+        <li><a href="https://github.com/yiiext/shopping-cart-component/issues">Issues</a> (0)</li>        <li><a href="https://github.com/yiiext/shopping-cart-component/wiki">Wiki</a></li>        <li>...</li>
+    </ul>
+
+</div>
+
+<br style="clear: both;"/>
+
+
+    </div>
+
+    <div id="footer">
+        Powered by <a href="http://www.yiiframework.com/" rel="external">Yii Framework</a>.
+    </div><!-- footer -->
+
+</div><!-- page -->
+</body>
+</html>

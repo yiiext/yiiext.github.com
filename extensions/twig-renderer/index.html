@@ -1,0 +1,268 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="language" content="en" />
+
+	<!-- blueprint CSS framework -->
+	<link rel="stylesheet" type="text/css" href="/css/screen.css" media="screen, projection" />
+	<link rel="stylesheet" type="text/css" href="/css/print.css" media="print" />
+	<!--[if lt IE 8]>
+	<link rel="stylesheet" type="text/css" href="/css/ie.css" media="screen, projection" />
+	<![endif]-->
+
+	<link rel="stylesheet" type="text/css" href="/css/web.css" />
+	<link rel="stylesheet" type="text/css" href="/css/form.css" />
+
+	<title>yiiext - RepoReadme Site</title>
+</head>
+
+<body>
+
+<a href="https://github.com/yiiext/twig-renderer"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
+
+<div class="container" id="page">
+
+	<div id="header">
+        <div class="extensions-count"><b>50</b> great Yii extensions!</div>
+		<div id="logo">
+            <h1>yiiext</h1>
+            unofficial Yii extension repository
+        </div>
+	</div><!-- header -->
+
+	<div id="mainmenu">
+		<ul id="yw0">
+<li><a href="/index.html">Extensions</a></li>
+<li><a href="/faq.html">FAQ</a></li>
+<li><a href="/contact.html">Contact</a></li>
+</ul>
+	</div><!-- mainmenu -->
+
+    <div id="content">
+        <div id="repo">
+            <h1>Twig view renderer</h1>
+
+<p>This extension allows you to use <a href="http://twig.sensiolabs.org">Twig</a> templates in Yii.</p>
+
+<h3>Resources</h3>
+
+<ul>
+<li><a href="https://github.com/yiiext/twig-renderer">This extension</a></li>
+<li><a href="https://github.com/fabpot/twig">Twig</a></li>
+<li><a href="http://www.yiiframework.com/forum/index.php?/topic/4919-twig-view-renderer/">Discuss</a></li>
+<li><a href="https://github.com/yiiext/twig-renderer/issues">Report a bug</a></li>
+</ul>
+
+<h3>Requirements</h3>
+
+<ul>
+<li>Yii 1.0 or above</li>
+</ul>
+
+<h3>Installation</h3>
+
+<ul>
+<li>Extract the release file under <code>protected/extensions</code>.</li>
+<li><a href="http://twig.sensiolabs.org/installation">Download</a> and extract all Twig files from <code>fabpot-Twig-______.zip\fabpot-Twig-______\lib\Twig\</code> under <code>protected/vendors/Twig</code>.</li>
+<li>Add the following to your config file 'components' section:</li>
+</ul>
+
+<p>```php
+&lt;?php</p>
+
+<pre>&#039;viewRenderer&#039; =&gt; array(
+    &#039;class&#039; =&gt; &#039;ext.ETwigViewRenderer&#039;,
+
+    // All parameters below are optional, change them to your needs
+    &#039;fileExtension&#039; =&gt; &#039;.twig&#039;,
+    &#039;options&#039; =&gt; array(
+        &#039;autoescape&#039; =&gt; true,
+    ),
+    &#039;extentions&#039; =&gt; array(
+        &#039;My_Twig_Extension&#039;,
+    ),
+    &#039;globals&#039; =&gt; array(
+        &#039;html&#039; =&gt; &#039;CHtml&#039;
+    ),
+    &#039;functions&#039; =&gt; array(
+        &#039;rot13&#039; =&gt; &#039;str_rot13&#039;,
+    ),
+    &#039;filters&#039; =&gt; array(
+        &#039;jencode&#039; =&gt; &#039;CJSON::encode&#039;,
+    ),
+    // Change template syntax to Smarty-like (not recommended)
+    &#039;lexerOptions&#039; =&gt; array(
+        &#039;tag_comment&#039;  =&gt; array(&#039;{*&#039;, &#039;*}&#039;),
+        &#039;tag_block&#039;    =&gt; array(&#039;{&#039;, &#039;}&#039;),
+        &#039;tag_variable&#039; =&gt; array(&#039;{$&#039;, &#039;}&#039;)
+    ),
+),
+</pre>
+
+<p>```</p>
+
+<h3>Usage</h3>
+
+<ul>
+<li>See <a href="http://twig.sensiolabs.org/doc/templates.html">Twig syntax</a>.</li>
+<li>Current controller properties are accessible via {{this.pageTitle}}.</li>
+<li>Yii::app() object is accessible via {{App}}.</li>
+<li>Yii's core static classes (for example, CHtml) are accessible via {{C.ClassNameWithoutFirstC.Method}} (example: {{C.Html.textField(name,'value')}})</li>
+<li>To call functions or methods which return non-string result wrap these calls with 'void' function: {{void(App.clientScript.registerScriptFile(...))}}</li>
+</ul>
+
+<h3>Widgets usage example</h3>
+
+<p><code>html
+&lt;div id="mainmenu"&gt;
+    {{ this.widget('zii.widgets.CMenu',{
+        'items':[
+            {'label':'Home', 'url':['/site/index']},
+            {'label':'About', 'url':{0:'/site/page', 'view':'about'} },
+            {'label':'Contact', 'url':['/site/contact']},
+            {'label':'Login', 'url':['/site/login'], 'visible':App.user.isGuest},
+            {'label':'Logout ('~App.user.name~')', 'url':['/site/logout'], 'visible':not App.user.isGuest}
+        ]
+    }, true) }}
+&lt;/div&gt;&lt;!-- mainmenu --&gt;</code></p>
+
+    
+    <h2 id="changelog">Changelog</h2>
+
+    <h3>1.1.2</h3>
+
+<ul>
+<li>Added global 'void' function to make possible to call functions and methods which return non-string result (Leonid Svyatov)</li>
+</ul>
+
+<h3>1.1.1</h3>
+
+<ul>
+<li>Added global 'C' variable from v0.9.5 for accessing Yii core static classes (Leonid Svyatov)</li>
+<li>Added new class 'ETwigViewRendererYiiCoreStaticClassesProxy' to provide global 'C' variable feature (Leonid Svyatov)</li>
+<li>Removed hard-coded global 'Yii' variable from v0.9.5 (it could be done by using 'globals' option) (Leonid Svyatov)</li>
+<li>Removed unnecessary now classes: 'YiiStatic', 'twigC' and 'twigCObj' (Leonid Svyatov)</li>
+</ul>
+
+<h3>1.1.0</h3>
+
+<ul>
+<li>Added an ability to add Twig globals (objects and static classes) (Leonid Svyatov)</li>
+<li>Added an ability to add Twig functions and filters (Leonid Svyatov)</li>
+<li>Added an ability to specify Twig location through path alias (Leonid Svyatov)</li>
+<li>Added an ability to change templates syntax (Leonid Svyatov)</li>
+<li>Default template extension changed to '.twig' (Leonid Svyatov)</li>
+<li>Yii::app() object now can be accessed in templates by name 'App' ({{ App.cache.get('id') }}) (Leonid Svyatov)</li>
+<li>changelog.txt renamed to changelog.md for better look in GitHub (Leonid Svyatov)</li>
+<li>README.md link to readme_en.txt removed (Leonid Svyatov)</li>
+<li>readme_en.txt renamed to README.md (Leonid Svyatov)</li>
+<li>readme_ru.txt renamed to README_RU.md for better look in GitHub (Leonid Svyatov)</li>
+<li>Changed all links in READMEs to point at GitHub (Leonid Svyatov)</li>
+<li>Fixed all markdown in all files for better look in GitHub (Leonid Svyatov)</li>
+<li>Actualized all links to Twig (Leonid Svyatov)</li>
+</ul>
+
+<h3>0.9.5</h3>
+
+<ul>
+<li>Added C, Yii, app vars (Sapphiriq)</li>
+<li>Fixed cache = false in twig options (Spartakus)</li>
+</ul>
+
+<h3>0.9.4</h3>
+
+<ul>
+<li>Added an ability to set Twig environment options (Sam Dark)</li>
+<li>Added an ability to load extensions (Roman, Sam Dark)</li>
+</ul>
+
+<h3>0.9.3</h3>
+
+<ul>
+<li>Fixed renderFile method (AlexandrZ, Sam Dark)</li>
+<li>Extension is now theme-aware (zadoev, Sam Dark)</li>
+</ul>
+
+<h3>0.9.2</h3>
+
+<ul>
+<li>Changed translation category to 'yiiext'.</li>
+<li>New naming conventions.</li>
+</ul>
+
+<h3>0.9.1</h3>
+
+<ul>
+<li>Changes for new version Twig http://blog.twig-project.org/post/266735026/twig-0-9-4-released</li>
+</ul>
+
+<h3>0.9</h3>
+
+<ul>
+<li>Initial public release (Sam Dark)</li>
+</ul>
+
+
+</div>
+
+<div id="repo-sidebar">
+    <div class="repo noreadme">
+    <div class="repo-head">
+        
+        <h3><a href="/extensions/twig-renderer/index.html">twig-renderer</a></h3>
+    </div>
+    <p>Allows to use Twig template engine in Yii framework views</p>
+
+    <div class="contributors">
+            <a href="https://github.com/samdark" title="samdark">
+            <img src="https://secure.gravatar.com/avatar/c13375ba1016846e39bc0e48260d0bb1?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="samdark" style="height: 24px; width: 24px;"/>
+        </a>
+            <a href="https://github.com/Svyatov" title="Svyatov">
+            <img src="https://secure.gravatar.com/avatar/d3d84c9ba5f4ac4f7bb5b8afec5d5783?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="Svyatov" style="height: 24px; width: 24px;"/>
+        </a>
+            <a href="https://github.com/cebe" title="cebe">
+            <img src="https://secure.gravatar.com/avatar/2ebfe57beabd0b9f8eb9ded1237a275d?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="cebe" style="height: 24px; width: 24px;"/>
+        </a>
+            <a href="https://github.com/vaseninm" title="vaseninm">
+            <img src="https://secure.gravatar.com/avatar/12d938a99de4b9dd052cc256d9ed1962?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="vaseninm" style="height: 24px; width: 24px;"/>
+        </a>
+        </div>
+</div>
+
+
+    <h2>Documentation</h2>
+    <ul>
+            <li><a href="/extensions/twig-renderer/readme.en.html">readme en</a></li>
+            <li><a href="/extensions/twig-renderer/readme.ru.html">readme ru</a></li>
+        <li><a href="/extensions/twig-renderer/index.html#changelog">changelog </a></li>
+    </ul>
+
+    <h2>Downloads (Tags)</h2>
+    <ul>
+            <li>v1.1.2 -
+        <a href="https://github.com/yiiext/twig-renderer/tarball/v1.1.2">tar</a>,
+        <a href="https://github.com/yiiext/twig-renderer/zipball/v1.1.2">zip</a>
+        </li>
+        </ul>
+
+    <h2>Resources</h2>
+    <ul>
+        <li><a href="https://github.com/yiiext/twig-renderer">Browse Code</a></li>
+        <li><a href="https://github.com/yiiext/twig-renderer/issues">Issues</a> (0)</li>        <li><a href="https://github.com/yiiext/twig-renderer/wiki">Wiki</a></li>        <li>...</li>
+    </ul>
+
+</div>
+
+<br style="clear: both;"/>
+
+
+    </div>
+
+    <div id="footer">
+        Powered by <a href="http://www.yiiframework.com/" rel="external">Yii Framework</a>.
+    </div><!-- footer -->
+
+</div><!-- page -->
+</body>
+</html>

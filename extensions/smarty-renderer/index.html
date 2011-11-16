@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="language" content="en" />
+
+	<!-- blueprint CSS framework -->
+	<link rel="stylesheet" type="text/css" href="/css/screen.css" media="screen, projection" />
+	<link rel="stylesheet" type="text/css" href="/css/print.css" media="print" />
+	<!--[if lt IE 8]>
+	<link rel="stylesheet" type="text/css" href="/css/ie.css" media="screen, projection" />
+	<![endif]-->
+
+	<link rel="stylesheet" type="text/css" href="/css/web.css" />
+	<link rel="stylesheet" type="text/css" href="/css/form.css" />
+
+	<title>yiiext - RepoReadme Site</title>
+</head>
+
+<body>
+
+<a href="https://github.com/yiiext/smarty-renderer"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
+
+<div class="container" id="page">
+
+	<div id="header">
+        <div class="extensions-count"><b>50</b> great Yii extensions!</div>
+		<div id="logo">
+            <h1>yiiext</h1>
+            unofficial Yii extension repository
+        </div>
+	</div><!-- header -->
+
+	<div id="mainmenu">
+		<ul id="yw0">
+<li><a href="/index.html">Extensions</a></li>
+<li><a href="/faq.html">FAQ</a></li>
+<li><a href="/contact.html">Contact</a></li>
+</ul>
+	</div><!-- mainmenu -->
+
+    <div id="content">
+        <div id="repo">
+            <h1>Smarty view renderer</h1>
+
+<p>This extension allows you to use <a href="http://www.smarty.net/">Smarty</a> version 2 or 3 templates in Yii.</p>
+
+<h3>Resources</h3>
+
+<ul>
+<li><a href="http://code.google.com/p/yiiext/source/browse/trunk/app/extensions#extensions/yiiext/renderers/smarty">SVN</a></li>
+<li><a href="http://www.smarty.net/">Smarty</a></li>
+<li><a href="http://www.yiiframework.com/forum/index.php?/topic/4925-smarty-view-renderer/">Discuss</a></li>
+<li><a href="http://code.google.com/p/yiiext/issues/list">Report a bug</a></li>
+</ul>
+
+<h3>Requirements</h3>
+
+<ul>
+<li>Yii 1.0 or above</li>
+<li>Smarty 3.0.8 or above</li>
+</ul>
+
+<h3>Installation</h3>
+
+<ul>
+<li>Extract the release file under <code>protected/extensions</code>.</li>
+<li><a href="http://www.smarty.net/download.php">Download</a> and extract <code>libs</code> folder contents of Smarty package under <code>protected/vendors/Smarty</code>.</li>
+<li>Add the following to your config file 'components' section:</li>
+</ul>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-quotes">'</span><span class="php-hl-string">viewRenderer</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+  <span class="php-hl-quotes">'</span><span class="php-hl-string">class</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">application.extensions.yiiext.renderers.smarty.ESmartyViewRenderer</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+    </span><span class="php-hl-quotes">'</span><span class="php-hl-string">fileExtension</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">.tpl</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+    </span><span class="php-hl-comment">//</span><span class="php-hl-comment">'pluginsDir' =&gt; 'application.smartyPlugins',</span>
+    <span class="php-hl-comment">//</span><span class="php-hl-comment">'configDir' =&gt; 'application.smartyConfig',</span>
+<span class="php-hl-brackets">)</span><span class="php-hl-code">,</span></pre></div></div>
+
+<p>There are some more options on configuring Smarty properties now. Will add documentation soon.</p>
+
+<h3>Usage</h3>
+
+<ul>
+<li><a href="http://www.smarty.net/docs.php">Smarty documentation</a>.</li>
+<li>Current controller properties are accessible via {$this->pageTitle}.</li>
+<li>Yii properties are available as follows: {$Yii->theme->baseUrl}.</li>
+<li>Used memory is stored in {$MEMORY}, used time is in {$TIME}.</li>
+</ul>
+
+    
+    <h2 id="changelog">Changelog</h2>
+
+    <h3>1.0.1</h3>
+
+<ul>
+<li>Smarty 3.1 compatibility (Sam Dark)</li>
+</ul>
+
+<h3>1.0.0</h3>
+
+<ul>
+<li>changed autoload handling to work also when Yii autoloader has been modified (cebe)</li>
+<li>ensure Smarty does not use SMARTY_SPL_AUTOLOAD (cebe)</li>
+</ul>
+
+<h3>0.9.9</h3>
+
+<ul>
+<li>Added possiblity to configure smarty properties (CAUTION: behavior of $filePermission changed) (cebe)</li>
+<li>Fixed issue with rendering Widgets within a template (cebe)</li>
+</ul>
+
+<h3>0.9.8</h3>
+
+<ul>
+<li>Fixed renderFile method (Sam Dark)</li>
+<li>Fixed bug with autoload Smarty 3 files in *nix (maksimgrib)</li>
+</ul>
+
+<h3>0.9.7</h3>
+
+<ul>
+<li>Code cleanup and minor fixes.</li>
+</ul>
+
+<h3>0.9.6</h3>
+
+<ul>
+<li>Changed translation category to 'yiiext'.</li>
+<li>New naming conventions.</li>
+<li>readme_ru.</li>
+<li>Added $Yii variable.</li>
+</ul>
+
+<h3>0.9.5</h3>
+
+<ul>
+<li>YiiExt naming conventions changed, see readme.</li>
+<li>Smarty 3 comatibility.</li>
+<li>t and link plugin functions.</li>
+</ul>
+
+<h3>0.9</h3>
+
+<ul>
+<li>Initial public release (Sam Dark)</li>
+</ul>
+
+
+</div>
+
+<div id="repo-sidebar">
+    <div class="repo noreadme">
+    <div class="repo-head">
+        
+        <h3><a href="/extensions/smarty-renderer/index.html">smarty-renderer</a></h3>
+    </div>
+    <p>This extension allows you to use Smarty 3 templates in Yii.</p>
+
+    <div class="contributors">
+            <a href="https://github.com/samdark" title="samdark">
+            <img src="https://secure.gravatar.com/avatar/c13375ba1016846e39bc0e48260d0bb1?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="samdark" style="height: 24px; width: 24px;"/>
+        </a>
+            <a href="https://github.com/cebe" title="cebe">
+            <img src="https://secure.gravatar.com/avatar/2ebfe57beabd0b9f8eb9ded1237a275d?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="cebe" style="height: 24px; width: 24px;"/>
+        </a>
+        </div>
+</div>
+
+
+    <h2>Documentation</h2>
+    <ul>
+            <li><a href="/extensions/smarty-renderer/readme.en.html">readme en</a></li>
+            <li><a href="/extensions/smarty-renderer/readme.ru.html">readme ru</a></li>
+        <li><a href="/extensions/smarty-renderer/index.html#changelog">changelog </a></li>
+    </ul>
+
+    <h2>Downloads (Tags)</h2>
+    <ul>
+            <li>1.0.0 -
+        <a href="https://github.com/yiiext/smarty-renderer/tarball/1.0.0">tar</a>,
+        <a href="https://github.com/yiiext/smarty-renderer/zipball/1.0.0">zip</a>
+        </li>
+        </ul>
+
+    <h2>Resources</h2>
+    <ul>
+        <li><a href="https://github.com/yiiext/smarty-renderer">Browse Code</a></li>
+        <li><a href="https://github.com/yiiext/smarty-renderer/issues">Issues</a> (3)</li>        <li><a href="https://github.com/yiiext/smarty-renderer/wiki">Wiki</a></li>        <li>...</li>
+    </ul>
+
+</div>
+
+<br style="clear: both;"/>
+
+
+    </div>
+
+    <div id="footer">
+        Powered by <a href="http://www.yiiframework.com/" rel="external">Yii Framework</a>.
+    </div><!-- footer -->
+
+</div><!-- page -->
+</body>
+</html>
