@@ -1,0 +1,115 @@
+<html>
+    <head>
+        <script type="text/javascript" src="../../../js/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shCore.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushJScript.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushPhp.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushXml.js"></script>
+        <link href="../../../syntax_highlighter/styles/shCore.css" rel="stylesheet" type="text/css" />
+        <link href="../../../syntax_highlighter/styles/shCoreEclipse.css" rel="stylesheet" type="text/css" />
+        <link href="../../../syntax_highlighter/styles/shThemeWordpress.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+/**
+ * EMenuWidget class file.
+ *
+ * @author Veaceslav Medvedev &lt;slavcopost@gmail.com&gt;
+ * @link http://code.google.com/p/yiiext/
+ * @version 0.1
+ * @package yiiext.widgets.menu
+ * @see CMenu
+ */
+Yii::import('zii.widgets.CMenu');
+class EMenuWidget extends CMenu
+{
+	/**
+	 * @var boolean whether active menu item will be rendered as a span text.
+	 * Defaults to false.
+	 */
+	public $activeLinkDisable=false;
+	/**
+	 * @see CMenu::renderMenuRecursive
+	 */
+	protected function renderMenuRecursive($items)
+	{
+		foreach($items as $item)
+		{
+			echo CHtml::openTag('li', isset($item['htmlOptions']) ? $item['htmlOptions'] : array());
+
+			if(isset($item['encodeLabel']) ? $item['encodeLabel'] : $this-&gt;encodeLabel)
+				$item['label']=CHtml::encode($item['label']);
+
+			if(isset($item['url']) &amp;&amp; !($this-&gt;activeLinkDisable &amp;&amp; $item['active']))
+				$menu=CHtml::link($item['label'],$item['url'],isset($item['linkOptions']) ? $item['linkOptions'] : array());
+			else
+				$menu=CHtml::tag('span',isset($item['linkOptions']) ? $item['linkOptions'] : array(), $item['label']);
+
+			if(isset($this-&gt;itemTemplate) || isset($item['template']))
+			{
+				$template=isset($item['template']) ? $item['template'] : $this-&gt;itemTemplate;
+				echo strtr($template,array('{menu}'=&gt;$menu));
+			}
+			else
+				echo $menu;
+
+			if(isset($item['items']) &amp;&amp; count($item['items']))
+			{
+				echo &quot;\n&quot;.CHtml::openTag('ul',CMap::mergeArray($this-&gt;submenuHtmlOptions,$item['submenuHtmlOptions'] ? $item['submenuHtmlOptions'] : array())).&quot;\n&quot;;
+				$this-&gt;renderMenuRecursive($item['items']);
+				echo CHtml::closeTag('ul').&quot;\n&quot;;
+			}
+			echo CHtml::closeTag('li').&quot;\n&quot;;
+		}
+	}
+	/**
+	 * @see CMenu::normalizeItems
+	 */
+	protected function normalizeItems($items,$route,&amp;$active)
+	{
+		foreach($items as $i=&gt;$item)
+		{
+			if(isset($item['visible']) &amp;&amp; !$item['visible'])
+			{
+				unset($items[$i]);
+				continue;
+			}
+			
+			$hasActiveChild=false;
+			if(isset($item['items']))
+			{
+				$items[$i]['items']=$this-&gt;normalizeItems($item['items'],$route,$hasActiveChild);
+				if(empty($items[$i]['items']) &amp;&amp; $this-&gt;hideEmptyItems)
+					unset($items[$i]['items']);
+			}
+			
+			if(!isset($item['active']))
+			{
+				if($this-&gt;activateParents &amp;&amp; $hasActiveChild || $this-&gt;isItemActive($item,$route))
+					$active=$items[$i]['active']=true;
+				else
+					$items[$i]['active']=false;
+			}
+			else if($item['active'])
+				$active=true;
+			
+			if($items[$i]['active'] &amp;&amp; $this-&gt;activeCssClass!='')
+			{
+				if(isset($item['htmlOptions']['class']))
+					$items[$i]['htmlOptions']['class'].=' '.$this-&gt;activeCssClass;
+				else
+					$items[$i]['htmlOptions']['class']=$this-&gt;activeCssClass;
+			}
+		}
+		return array_values($items);
+	}
+}
+</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all()
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>

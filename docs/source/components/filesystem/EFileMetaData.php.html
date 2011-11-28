@@ -1,0 +1,175 @@
+<html>
+    <head>
+        <script type="text/javascript" src="../../../js/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shCore.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushJScript.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushPhp.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushXml.js"></script>
+        <link href="../../../syntax_highlighter/styles/shCore.css" rel="stylesheet" type="text/css" />
+        <link href="../../../syntax_highlighter/styles/shCoreEclipse.css" rel="stylesheet" type="text/css" />
+        <link href="../../../syntax_highlighter/styles/shThemeWordpress.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+/**
+ * EFileMetaData represents the meta-data for an EFile class.
+ *
+ * @author Veaceslav Medvedev &lt;slavcopost@gmail.com&gt;
+ * @version 0.1
+ * @package yiiext.filesystem
+ *
+ * @property $name
+ * @property $path
+ * @property $dirName
+ * @property $type
+ * @property $extension
+ * @property $mime
+ * @property $isDir
+ * @property $size
+ * @property $permission
+ * @property $modifiedTime
+ * @property $accessedTime
+ */
+class EFileMetaData {
+	/**
+	 *
+	 */
+	public static $attributeLabels = array(
+		'name', 'path', 'dirName', 'type', 'extension', 'mime', 'isDir',
+		'size', 'permissions', 'modifiedTime', 'accessedTime'
+	);
+	/**
+	 *
+	 */
+	public $attributes = array();
+	/**
+	 *
+	 */
+	protected $_file;
+	/**
+	 *
+	 */
+	protected $_filePath;
+	/**
+	 * @return array
+	 */
+	public function toArray() {
+		$this-&gt;loadAttributes();
+
+		return $this-&gt;attributes;
+	}
+	/**
+	 * @param $file
+	 * @param boolean $loadAttributes
+	 * @return void
+	 */
+	public function __construct($file, $loadAttributes = FALSE) {
+		$this-&gt;_file = $file;
+		$this-&gt;_filePath = $file-&gt;getFilePath();
+		clearstatcache(TRUE, $this-&gt;_filePath);
+		if ($loadAttributes) {
+			$this-&gt;loadAttributes();
+		}
+	}
+	/**
+	 * @return EFileMetaData
+	 */
+	public function loadAttributes() {
+		foreach (self::$attributeLabels as $attribute) {
+			$this-&gt;getAttribute($attribute);
+		}
+
+		return $this;
+	}
+	/**
+	 * @param $attribute
+	 * @return array
+	 */
+	public function getAttribute($attribute) {
+		if (!isset($this-&gt;attributes[$attribute])) {
+			$getter = 'get' . $attribute;
+			if (method_exists($this, $getter)) {
+				$this-&gt;attributes[$attribute] = $this-&gt;$getter();
+			}
+			else {
+				return NULL;
+			}
+		}
+		return $this-&gt;attributes[$attribute];
+	}
+	/**
+	 * @return string
+	 */
+	public function getIsDir() {
+		return is_dir($this-&gt;_filePath);
+	}
+	/**
+	 * @return string
+	 */
+	public function getName() {
+		return basename($this-&gt;_filePath);
+	}
+	/**
+	 * @return string
+	 */
+	public function getPath() {
+		return $this-&gt;_filePath;
+	}
+	/**
+	 * @return string
+	 */
+	public function getDirName() {
+		return dirname($this-&gt;_filePath);
+	}
+	/**
+	 * @return string
+	 */
+	public function getType() {
+		return filetype($this-&gt;_filePath);
+	}
+	/**
+	 * @return string
+	 */
+	public function getExtension() {
+		return EFileHelper::fileExtension($this-&gt;_filePath);
+	}
+	/**
+	 * @return string
+	 */
+	public function getMime() {
+		return EFileHelper::getMimeType($this-&gt;_filePath);
+	}
+	/**
+	 * @return string
+	 */
+	public function getSize() {
+		return EFileHelper::fileSize($this-&gt;_filePath);
+	}
+	/**
+	 * @return integer
+	 */
+	public function getPermissions() {
+		return fileperms($this-&gt;_filePath);
+	}
+	/**
+	 * @return integer
+	 */
+	public function getModifiedTime() {
+		return filemtime($this-&gt;_filePath);
+	}
+	/**
+	 * @return integer
+	 */
+	public function getAccessedTime() {
+		return fileatime($this-&gt;_filePath);
+	}
+}
+</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all()
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>

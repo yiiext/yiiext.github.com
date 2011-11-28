@@ -1,0 +1,225 @@
+<html>
+    <head>
+        <script type="text/javascript" src="../../../js/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shCore.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushJScript.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushPhp.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushXml.js"></script>
+        <link href="../../../syntax_highlighter/styles/shCore.css" rel="stylesheet" type="text/css" />
+        <link href="../../../syntax_highlighter/styles/shCoreEclipse.css" rel="stylesheet" type="text/css" />
+        <link href="../../../syntax_highlighter/styles/shThemeWordpress.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+/**
+ * EFormModelBehavior class file.
+ *
+ * @author Veaceslav Medvedev &lt;slavcopost@gmail.com&gt;
+ * @link http://code.google.com/p/yiiext/
+ * @license http://www.opensource.org/licenses/mit-license.php
+ */
+/**
+ * EFormModelBehavior attach instance of EForm for model for easy create form.
+ *
+ * Also add helper to generate array of default text elements based of {@link CModel::getAttributes()}.
+ *
+ * @author Maxim Furtuna (Ekstazi)
+ * @version 0.4
+ * @package yiiext.components.form
+ */
+require_once(dirname(__FILE__).'/EForm.php');
+class EFormModelBehavior extends CModelBehavior
+{
+	/**
+	 * @var array initial configuration for form.
+	 */
+	public $config=array();
+	/**
+	 * @var EForm main object
+	 */
+	protected $_form;
+    protected $_coreButtonTypes=array(
+        'htmlButton',       // a normal button generated using CHtml::htmlButton
+        'htmlReset',        // a reset button generated using CHtml::htmlButton
+        'htmlSubmit',       // a submit button generated using CHtml::htmlButton
+        'submit',           // a submit button generated using CHtml::submitButton
+        'button',           // a normal button generated using CHtml::button
+        'image',            // an image button generated using CHtml::imageButton
+        'reset',            // a reset button generated using CHtml::resetButton
+        'link',             // a link button generated using CHtml::linkButton
+    );
+    private $_firstButton;
+    public $id;
+    public $ajaxValidation=true;
+
+	/**
+	 * Get main form.
+	 * @return EForm
+	 */
+	public function getForm()
+	{
+		if($this-&gt;_form===null)
+		{
+            $o=$this-&gt;getOwner();
+            $this-&gt;config=array_merge($this-&gt;config,$this-&gt;getFormElements());
+			$this-&gt;_form=new EForm($this-&gt;config,$o,null);
+            if(!isset($this-&gt;id))
+                $this-&gt;id=sprintf('%x',crc32(serialize(array_keys($this-&gt;_form-&gt;getElements()-&gt;toArray())).$o-&gt;scenario));
+            $this-&gt;_form-&gt;id=$this-&gt;id;
+            $this-&gt;_form-&gt;activeForm=array_merge($this-&gt;_form-&gt;activeForm,array(
+                'enableAjaxValidation'=&gt;$this-&gt;ajaxValidation,
+                'id'=&gt;$this-&gt;id
+            ));
+		}
+		return $this-&gt;_form;
+	}
+	/**
+	 * Render form.
+	 */
+	public function render()
+	{
+		return $this-&gt;getForm()-&gt;render();
+	}
+	/**
+	 * Get array elements based of {@link CModel::getAttributes()}.
+	 * Type of all elements will be text.
+	 * @todo generate other types for inputs
+	 * @return array
+	 */
+	public function getFormElements()
+	{
+		$model=$this-&gt;getOwner();
+		if(method_exists($model,'getFormElements'))
+			$description=$model-&gt;getFormElements();
+		else
+		{
+			$description=array();
+			foreach($model-&gt;getAttributes() as $attribute=&gt;$value)
+				$description[$attribute]=array(
+					'type'=&gt;'text',
+				);
+		}
+        $elements=array();
+        $buttons=array();
+        
+        foreach($description as $element=&gt;$config)
+        {
+            if(is_array($config))
+            {
+                if(!isset($config['type']))
+                    $config['type']='text';
+
+                if(preg_match('~^(button|element|input)\.(.+)$~i',$config['type'],$regs))
+                {
+                    $config['type']=$regs[2];
+                    if(!strcasecmp($regs[1],'button'))
+                        $buttons[$element]=$config;
+                    else
+                        $elements[$element]=$config;
+                }elseif(in_array($config['type'],$this-&gt;_coreButtonTypes))
+                {
+                    $buttons[$element]=$config;
+                }else
+                    $elements[$element]=$config;
+            }else
+                $elements[$element]=$config;
+        }
+        
+        if(empty($buttons))
+        {
+            $isBaseAr=($model instanceof CActiveRecord &amp;&amp; in_array($model-&gt;scenario,array('insert','update','search')));
+            $buttons=array(
+                'submit'=&gt;array(
+                    'type'=&gt;'submit',
+                    'label'=&gt;Yii::t('yiiext',$isBaseAr ? 'Save' : 'Submit'),
+                    'on'=&gt;$isBaseAr ? 'insert,update' : null,
+                ),
+                'reset'=&gt;array(
+                    'type'=&gt;'reset',
+                    'label'=&gt;Yii::t('yiiext','Clear'),
+                    'on'=&gt;$isBaseAr ? 'insert,update' : null,
+                ),
+            );
+            if($isBaseAr)
+            {
+                $buttons['search']=array(
+                    'type'=&gt;'submit',
+                    'label'=&gt;Yii::t('yiiext','Search'),
+                    'on'=&gt;'search'
+                );
+            }
+        }
+        reset($buttons);
+        $this-&gt;_firstButton=key($buttons);
+        return array(
+            'elements'=&gt;$elements,
+            'buttons'=&gt;$buttons,
+        );
+	}
+    /**
+     *
+     * @return bool status of using ajax validation
+     */
+    public function getAjaxValidation()
+    {
+        return $this-&gt;getForm()-&gt;activeForm['enableAjaxValidation'];
+    }
+
+    /**
+     * Performs check for ajax request and generate responce of validation status
+     * @return true to allow use in if condition
+     */
+    protected function performAjax()
+    {
+        $ajaxVar=strcasecmp($this-&gt;getForm()-&gt;method,'get') ? $_POST['ajax'] : $_GET['ajax'];
+        if($this-&gt;getAjaxValidation()&amp;&amp;isset($ajaxVar)&amp;&amp;$ajaxVar===$this-&gt;getForm()-&gt;activeForm['id']){
+            $this-&gt;getForm()-&gt;loadData();
+		// because of renderPartial method needs to clean output buffer
+            ob_get_clean();
+            echo CActiveForm::validate($this-&gt;getOwner(),null,false);
+            Yii::app()-&gt;end();
+        }
+        return true;
+    }
+    /**
+     * Performs check for submission, then process ajax request and
+     * load attributes into model
+     * @param string $button name of clicked button
+     * @return boolean validation status
+     */
+    public function submitted($button=null)
+    {
+        $form=$this-&gt;getForm();
+        $button=isset($button) ? $button : $this-&gt;_firstButton;
+        return $this-&gt;performAjax()&amp;&amp;$form-&gt;submitted($button);
+    }
+    /**
+     * Performs Performs check for submission, then process ajax request,
+     * load attributes into model and save it
+     * @param string $button name of clicked button
+     * @return boolean saving status
+     */
+    public function saved($button=null)
+    {
+        return $this-&gt;submitted($button)&amp;&amp;$this-&gt;getOwner()-&gt;save();
+    }
+    /**
+     * Performs Performs check for submission, then process ajax request,
+     * load attributes into model and validate it
+     * @param string $button name of clicked button
+     * @return boolean validation status
+     */
+    public function validated($button=null)
+    {
+        return $this-&gt;submitted($button)&amp;&amp;$this-&gt;getOwner()-&gt;validate();
+    }
+}
+</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all()
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>

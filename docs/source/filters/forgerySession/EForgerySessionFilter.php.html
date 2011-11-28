@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <script type="text/javascript" src="../../../js/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shCore.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushJScript.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushPhp.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushXml.js"></script>
+        <link href="../../../syntax_highlighter/styles/shCore.css" rel="stylesheet" type="text/css" />
+        <link href="../../../syntax_highlighter/styles/shCoreEclipse.css" rel="stylesheet" type="text/css" />
+        <link href="../../../syntax_highlighter/styles/shThemeWordpress.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+/**
+ * EForgerySessionFilter class file.
+ *
+ * @author Veaceslav Medvedev &lt;slavcopost@gmail.com&gt;
+ * @link http://code.google.com/p/yiiext/
+ * @license http://www.opensource.org/licenses/mit-license.php
+ */
+/**
+ * EForgerySessionFilter performs load session with id which sent with POST or GET parameter.
+ *
+ * @author Veaceslav Medvedev &lt;slavcopost@gmail.com&gt;
+ * @version 0.1
+ * @package yiiext.filters.forgerySession
+ */
+class EForgerySessionFilter extends  CFilter
+{
+	/**
+	 * @var string the name of the parameter that stores session id.
+	 * Defaults to PHP_SESSION_ID
+	 */
+	public $paramName='PHP_SESSION_ID';
+	/**
+	 * @var string the method which sent the data. This should be either 'POST', 'GET' or 'AUTO'.
+	 * Defaults to 'POST'.
+	 */
+	public $method='POST';
+
+	/**
+	 * Performs the pre-action filtering.
+	 * @param CFilterChain the filter chain that the filter is on.
+	 * @return boolean whether the filtering process should continue and the action
+	 * should be executed.
+	 */
+	protected function preFilter($filterChain)
+	{
+		switch(strtoupper($this-&gt;method))
+		{
+			case 'GET':$method='getQuery';break;
+			case 'AUTO':$method='getParam';break;
+			default:$method='getPost';
+		}
+		if(is_string($sessionId=Yii::app()-&gt;getRequest()-&gt;$method($this-&gt;paramName)))
+		{
+			$session=Yii::app()-&gt;getSession();
+			$session-&gt;close();
+			$session-&gt;setSessionId($sessionId);
+			$session-&gt;open();
+		}
+		return true;
+	}
+}
+</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all()
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>

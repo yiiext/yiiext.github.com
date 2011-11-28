@@ -1,0 +1,80 @@
+<html>
+    <head>
+        <script type="text/javascript" src="../../../js/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shCore.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushJScript.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushPhp.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushXml.js"></script>
+        <link href="../../../syntax_highlighter/styles/shCore.css" rel="stylesheet" type="text/css" />
+        <link href="../../../syntax_highlighter/styles/shCoreEclipse.css" rel="stylesheet" type="text/css" />
+        <link href="../../../syntax_highlighter/styles/shThemeWordpress.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+/**
+ * CarouselWidget
+ *
+ * @version 0.01
+ * @author creocoder &lt;creocoder@gmail.com&gt;
+ */
+class ECarouselWidget extends CWidget
+{
+	public $scriptUrl;
+	public $scriptFile;
+	public $themeUrl;
+	public $theme='tango';
+	public $htmlOptions=array();
+	public $options=array();
+	public $tagName='ul';
+	public $cssFile='skin.css';
+
+	public function init()
+	{
+		if(!isset($this-&gt;htmlOptions['id']))
+			$this-&gt;htmlOptions['id']=$this-&gt;getId();
+
+		if(!isset($this-&gt;htmlOptions['class']))
+			$this-&gt;htmlOptions['class']='jcarousel-skin-'.$this-&gt;theme;
+
+		if($this-&gt;scriptUrl===null || $this-&gt;themeUrl===null)
+		{
+			if($this-&gt;scriptUrl===null)
+				$this-&gt;scriptUrl=Yii::app()-&gt;getAssetManager()-&gt;publish(dirname(__FILE__).'/assets');
+
+			if($this-&gt;themeUrl===null)
+				$this-&gt;themeUrl=$this-&gt;scriptUrl.'/skins';
+		}
+
+		if($this-&gt;scriptFile===null)
+			$this-&gt;scriptFile=YII_DEBUG ? '/jquery.jcarousel.js' : '/jquery.jcarousel.min.js';
+
+		$this-&gt;registerClientScript();
+		echo CHtml::openTag($this-&gt;tagName,$this-&gt;htmlOptions).&quot;\n&quot;;
+	}
+
+	public function run()
+	{
+		echo CHtml::closeTag($this-&gt;tagName).&quot;\n&quot;;
+	}
+
+	public function registerClientScript()
+	{
+		$cs=Yii::app()-&gt;getClientScript();
+		$cs-&gt;registerCoreScript('jquery');
+		$cs-&gt;registerScriptFile($this-&gt;scriptUrl.'/'.$this-&gt;scriptFile);
+		$id=$this-&gt;htmlOptions['id'];
+		$options=empty($this-&gt;options) ? '' : CJavaScript::encode($this-&gt;options);
+		$cs-&gt;registerScript(__CLASS__.'#'.$id, &quot;jQuery('#$id').jcarousel($options);&quot;);
+
+		if($this-&gt;cssFile!==false)
+			$cs-&gt;registerCssFile($this-&gt;themeUrl.'/'.$this-&gt;theme.'/'.$this-&gt;cssFile);
+	}
+}</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all()
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>

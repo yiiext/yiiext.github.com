@@ -1,0 +1,708 @@
+<html>
+    <head>
+        <script type="text/javascript" src="../../../../js/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="../../../../syntax_highlighter/scripts/shCore.js"></script>
+        <script type="text/javascript" src="../../../../syntax_highlighter/scripts/shBrushJScript.js"></script>
+        <script type="text/javascript" src="../../../../syntax_highlighter/scripts/shBrushPhp.js"></script>
+        <script type="text/javascript" src="../../../../syntax_highlighter/scripts/shBrushXml.js"></script>
+        <link href="../../../../syntax_highlighter/styles/shCore.css" rel="stylesheet" type="text/css" />
+        <link href="../../../../syntax_highlighter/styles/shCoreEclipse.css" rel="stylesheet" type="text/css" />
+        <link href="../../../../syntax_highlighter/styles/shThemeWordpress.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+/**
+ * ETaggableBehavior class file.
+ *
+ * @author Alexander Makarov
+ * @link http://code.google.com/p/yiiext/
+ */
+/**
+ * Provides tagging ability for a model.
+ *
+ * @version 1.5
+ * @package yiiext.behaviors.model.taggable
+ */
+class ETaggableBehavior extends CActiveRecordBehavior {
+	/**
+	 * @var string tags table name.
+	 */
+	public $tagTable = 'Tag';
+	/**
+	 * @var string tag table field that contains tag name.
+	 */
+	public $tagTableName = 'name';
+	/**
+	 * @var string tag table PK name.
+	 */
+	public $tagTablePk = 'id';
+	/**
+	 * @var string tag to Model binding table name.
+	 * Defaults to `{model table name}Tag`.
+	 */
+	public $tagBindingTable;
+	/**
+	 * @var string binding table tagId name.
+	 */
+	public $tagBindingTableTagId = 'tagId';
+	/**
+	 * @var string|null tag table count field. If null don't uses database.
+	 */
+	public $tagTableCount;
+	/**
+	 * @var string binding table model FK name.
+	 * Defaults to `{model table name with first lowercased letter}Id`.
+	 */
+	public $modelTableFk;
+	/**
+	 * @var boolean which create tags automatically or throw exception if tag does not exist.
+	 */
+	public $createTagsAutomatically = true;
+	/**
+	 * @var string|boolean caching component Id. If false don't use cache.
+	 * Defaults to false.
+	 */
+	public $cacheID = false;
+
+	private $tags = array();
+	private $originalTags = array();
+	/**
+	 * @var CDbConnection
+	 */
+	private $_conn;
+	/**
+	 * @var CCache
+	 */
+	protected $cache;
+	/**
+	 * @var array|CDbCriteria default scope criteria. Used as filter in find, load, create or update tags.
+	 */
+	public $scope = array();
+	/**
+	 * @var array these values are added on inserting tag into DB.
+	 */
+	public $insertValues = array();
+	/**
+	 * @var CDbCriteria|null scope CDbCriteria cache.
+	 */
+	private $scopeCriteria = null;
+
+	/**
+	 * Get DB connection.
+	 * @return CDbConnection
+	 */
+	protected function getConnection() {
+		if(!isset($this-&gt;_conn)){
+			$this-&gt;_conn = $this-&gt;getOwner()-&gt;dbConnection;
+		}
+		return $this-&gt;_conn;
+	}
+	/**
+	 * @throws CException
+	 * @param CComponent $owner
+	 * @return void
+	 */
+	public function attach($owner) {
+		// Prepare cache component
+		if($this-&gt;cacheID!==false)
+			$this-&gt;cache = Yii::app()-&gt;getComponent($this-&gt;cacheID);
+		if(!($this-&gt;cache instanceof ICache)){
+			// If not set cache component, use dummy cache.
+			$this-&gt;cache = new CDummyCache;
+		}
+
+		parent::attach($owner);
+	}
+	/**
+	 * Allows to print object.
+	 * @return string
+	 */
+	public function toString() {
+		$this-&gt;loadTags();
+		return implode(', ', $this-&gt;tags);
+	}
+	/**
+	 * Get tag binding table name.
+	 * @access private
+	 * @return string
+	 */
+	private function getTagBindingTableName() {
+		if($this-&gt;tagBindingTable === null){
+			$this-&gt;tagBindingTable = $this-&gt;getOwner()-&gt;tableName().'Tag';
+		}
+		return $this-&gt;tagBindingTable;
+	}
+	/**
+	 * Get model table FK name.
+	 * @access private
+	 * @return string
+	 */
+	private function getModelTableFkName() {
+		if($this-&gt;modelTableFk === null){
+			$tableName = $this-&gt;getOwner()-&gt;tableName();
+			$tableName[0] = strtolower($tableName[0]);
+			$this-&gt;modelTableFk = $tableName.'Id';
+		}
+		return $this-&gt;modelTableFk;
+	}
+	/**
+	 * Set one or more tags.
+	 * @param string|array $tags
+	 * @return void
+	 */
+	public function setTags($tags) {
+		$tags = $this-&gt;toTagsArray($tags);
+		$this-&gt;tags = array_unique($tags);
+
+		return $this-&gt;getOwner();
+	}
+	/**
+	 * Add one or more tags.
+	 * @param string|array $tags
+	 * @return void
+	 */
+	public function addTags($tags) {
+		$this-&gt;loadTags();
+
+		$tags = $this-&gt;toTagsArray($tags);
+		$this-&gt;tags = array_unique(array_merge($this-&gt;tags, $tags));
+
+		return $this-&gt;getOwner();
+	}
+	/**
+	 * Alias of {@link addTags()}.
+	 * @param string|array $tags
+	 * @return void
+	 */
+	public function addTag($tags) {
+		return $this-&gt;addTags($tags);
+	}
+	/**
+	 * Remove one or more tags.
+	 * @param string|array $tags
+	 * @return void
+	 */
+	public function removeTags($tags) {
+		$this-&gt;loadTags();
+
+		$tags = $this-&gt;toTagsArray($tags);
+		$this-&gt;tags = array_diff($this-&gt;tags, $tags);
+
+		return $this-&gt;getOwner();
+	}
+	/**
+	 * Alias of {@link removeTags}.
+	 * @param string|array $tags
+	 * @return void
+	 */
+	public function removeTag($tags) {
+		return $this-&gt;removeTags($tags);
+	}
+	/**
+	 * Remove all tags.
+	 * @return void
+	 */
+	public function removeAllTags() {
+		$this-&gt;loadTags();
+		$this-&gt;tags = array();
+		return $this-&gt;getOwner();
+	}
+	/**
+	 * Get default scope criteria.
+	 * @return CDbCriteria
+	 */
+	protected function getScopeCriteria() {
+		if(!$this-&gt;scopeCriteria){
+
+			$scope = $this-&gt;scope;
+
+			if(is_array($this-&gt;scope) &amp;&amp; !empty($this-&gt;scope)){
+				$scope = new CDbCriteria($this-&gt;scope);
+			}
+			if($scope instanceof CDbCriteria){
+				$this-&gt;scopeCriteria = $scope;
+			}
+		}
+		return $this-&gt;scopeCriteria;
+	}
+	/**
+	 * Get tags.
+	 * @return array
+	 */
+	public function getTags() {
+		$this-&gt;loadTags();
+		return $this-&gt;tags;
+	}
+	/**
+	 * Get current model's tags with counts.
+	 * @todo: quick implementation, rewrite!
+	 * @param CDbCriteria $criteria
+	 * @return array
+	 */
+	public function getTagsWithModelsCount($criteria = null) {
+		if(!($tags = $this-&gt;cache-&gt;get($this-&gt;getCacheKey().'WithModelsCount'))){
+
+			$builder = $this-&gt;getConnection()-&gt;getCommandBuilder();
+
+			if($this-&gt;tagTableCount !== null){
+				$findCriteria = new CDbCriteria(array(
+					'select' =&gt; &quot;t.{$this-&gt;tagTableName} as `name`, t.{$this-&gt;tagTableCount} as `count` &quot;,
+					'join' =&gt; &quot;INNER JOIN {$this-&gt;getTagBindingTableName()} et on t.{$this-&gt;tagTablePk} = et.{$this-&gt;tagBindingTableTagId} &quot;,
+					'condition' =&gt; &quot;et.{$this-&gt;getModelTableFkName()} = :ownerid &quot;,
+					'params' =&gt; array(
+						':ownerid' =&gt; $this-&gt;getOwner()-&gt;primaryKey,
+					)
+				));
+			} else{
+				$findCriteria = new CDbCriteria(array(
+					'select' =&gt; &quot;t.{$this-&gt;tagTableName} as `name`, count(*) as `count` &quot;,
+					'join' =&gt; &quot;INNER JOIN {$this-&gt;getTagBindingTableName()} et on t.{$this-&gt;tagTablePk} = et.{$this-&gt;tagBindingTableTagId} &quot;,
+					'condition' =&gt; &quot;et.{$this-&gt;getModelTableFkName()} = :ownerid &quot;,
+					'group' =&gt; 't.'.$this-&gt;tagTablePk,
+					'params' =&gt; array(
+						':ownerid' =&gt; $this-&gt;getOwner()-&gt;primaryKey,
+					)
+				));
+			}
+
+			if($criteria){
+				$findCriteria-&gt;mergeWith($criteria);
+			}
+
+			$tags = $builder-&gt;createFindCommand(
+				$this-&gt;tagTable,
+				$findCriteria
+			)-&gt;queryAll();
+
+			$this-&gt;cache-&gt;set($this-&gt;getCacheKey().'WithModelsCount', $tags);
+		}
+
+		return $tags;
+	}
+	/**
+	 * Get tags array from comma separated tags string.
+	 * @access private
+	 * @param string|array $tags
+	 * @return array
+	 */
+	protected function toTagsArray($tags) {
+		if(!is_array($tags)){
+			$tags = explode(',', trim(strip_tags($tags), ' ,'));
+		}
+
+		array_walk($tags, array($this, 'trim'));
+		return $tags;
+	}
+	/**
+	 * Used as a callback to trim tags.
+	 * @access private
+	 * @param string $item
+	 * @param string $key
+	 * @return string
+	 */
+	private function trim(&amp;$item, $key) {
+		$item = trim($item);
+	}
+	/**
+	 * If we need to save tags.
+	 * @access private
+	 * @return boolean
+	 */
+	private function needToSave() {
+		$diff = array_merge(
+			array_diff($this-&gt;tags, $this-&gt;originalTags),
+			array_diff($this-&gt;originalTags, $this-&gt;tags)
+		);
+
+		return !empty($diff);
+	}
+	/**
+	 * Saves model tags on model save.
+	 * @param CModelEvent $event
+	 * @throw Exception
+	 */
+	public function afterSave($event) {
+		if($this-&gt;needToSave()){
+
+			$builder = $this-&gt;getConnection()-&gt;getCommandBuilder();
+
+			if(!$this-&gt;createTagsAutomatically){
+				// checking if all of the tags are existing ones
+				foreach($this-&gt;tags as $tag){
+
+					$findCriteria = new CDbCriteria(array(
+						'select' =&gt; &quot;t.&quot;.$this-&gt;tagTablePk,
+						'condition' =&gt; &quot;t.{$this-&gt;tagTableName} = :tag &quot;,
+						'params' =&gt; array(':tag' =&gt; $tag),
+					));
+					if($this-&gt;getScopeCriteria()){
+						$findCriteria-&gt;mergeWith($this-&gt;getScopeCriteria());
+					}
+					$tagId = $builder-&gt;createFindCommand(
+						$this-&gt;tagTable,
+						$findCriteria
+					)-&gt;queryScalar();
+
+					if(!$tagId){
+						throw new Exception(&quot;Tag \&quot;$tag\&quot; does not exist. Please add it before assigning or enable createTagsAutomatically.&quot;);
+					}
+
+				}
+			}
+
+			if(!$this-&gt;getOwner()-&gt;getIsNewRecord()){
+				// delete all present tag bindings if record is existing one
+				$this-&gt;deleteTags();
+			}
+
+			// add new tag bindings and tags if there are any
+			if(!empty($this-&gt;tags)){
+				foreach($this-&gt;tags as $tag){
+					if(empty($tag)) return;
+
+					// try to get existing tag
+					$findCriteria = new CDbCriteria(array(
+						'select' =&gt; &quot;t.&quot;.$this-&gt;tagTablePk,
+						'condition' =&gt; &quot;t.{$this-&gt;tagTableName} = :tag &quot;,
+						'params' =&gt; array(':tag' =&gt; $tag),
+					));
+					if($this-&gt;getScopeCriteria()){
+						$findCriteria-&gt;mergeWith($this-&gt;getScopeCriteria());
+					}
+					$tagId = $builder-&gt;createFindCommand(
+						$this-&gt;tagTable,
+						$findCriteria
+					)-&gt;queryScalar();
+
+					// if there is no existing tag, create one
+					if(!$tagId){
+						$this-&gt;createTag($tag);
+
+						// reset all tags cache
+						$this-&gt;resetAllTagsCache();
+						$this-&gt;resetAllTagsWithModelsCountCache();
+
+						$tagId = $this-&gt;getConnection()-&gt;getLastInsertID();
+					}
+
+					// bind tag to it's model
+					$builder-&gt;createInsertCommand(
+						$this-&gt;getTagBindingTableName(),
+						array(
+							$this-&gt;getModelTableFkName() =&gt; $this-&gt;getOwner()-&gt;primaryKey,
+							$this-&gt;tagBindingTableTagId =&gt; $tagId
+						)
+					)-&gt;execute();
+				}
+				$this-&gt;updateCount(+1);
+			}
+
+
+			$this-&gt;cache-&gt;set($this-&gt;getCacheKey(), $this-&gt;tags);
+		}
+
+		parent::afterSave($event);
+	}
+	/**
+	 * Reset cache used for {@link getAllTags()}.
+	 * @return void
+	 */
+	public function resetAllTagsCache() {
+		$this-&gt;cache-&gt;delete('Taggable'.$this-&gt;getOwner()-&gt;tableName().'All');
+	}
+	/**
+	 * Reset cache used for {@link getAllTagsWithModelsCount()}.
+	 * @return void
+	 */
+	public function resetAllTagsWithModelsCountCache() {
+		$this-&gt;cache-&gt;delete('Taggable'.$this-&gt;getOwner()-&gt;tableName().'AllWithCount');
+	}
+	/**
+	 * Deletes tag bindings on model delete.
+	 * @param CModelEvent $event
+	 * @return void
+	 */
+	public function afterDelete($event) {
+		// delete all present tag bindings
+		$this-&gt;deleteTags();
+
+		$this-&gt;cache-&gt;delete($this-&gt;getCacheKey());
+		$this-&gt;resetAllTagsWithModelsCountCache();
+
+		parent::afterDelete($event);
+	}
+	/**
+	 * Load tags into model.
+	 * @params array|CDbCriteria $criteria, defaults to null.
+	 * @access protected
+	 * @return void
+	 */
+	protected function loadTags($criteria = null) {
+		if($this-&gt;tags != null) return;
+		if($this-&gt;getOwner()-&gt;getIsNewRecord()) return;
+
+		if(!($tags = $this-&gt;cache-&gt;get($this-&gt;getCacheKey()))){
+
+			$findCriteria = new CDbCriteria(array(
+				'select' =&gt; &quot;t.{$this-&gt;tagTableName} as `name`&quot;,
+				'join' =&gt; &quot;INNER JOIN {$this-&gt;getTagBindingTableName()} et ON t.{$this-&gt;tagTablePk} = et.{$this-&gt;tagBindingTableTagId} &quot;,
+				'condition' =&gt; &quot;et.{$this-&gt;getModelTableFkName()} = :ownerid &quot;,
+				'params' =&gt; array(
+					':ownerid' =&gt; $this-&gt;getOwner()-&gt;primaryKey,
+				)
+			));
+			if($criteria){
+				$findCriteria-&gt;mergeWith($criteria);
+			}
+			if($this-&gt;getScopeCriteria()){
+				$findCriteria-&gt;mergeWith($this-&gt;getScopeCriteria());
+			}
+
+			$tags = $this-&gt;getConnection()-&gt;getCommandBuilder()-&gt;createFindCommand(
+				$this-&gt;tagTable,
+				$findCriteria
+			)-&gt;queryColumn();
+			$this-&gt;cache-&gt;set($this-&gt;getCacheKey(), $tags);
+		}
+
+		$this-&gt;originalTags = $this-&gt;tags = $tags;
+	}
+	/**
+	 * Returns key for caching specific model tags.
+	 * @return string
+	 */
+	private function getCacheKey() {
+		return $this-&gt;getCacheKeyBase().$this-&gt;getOwner()-&gt;primaryKey;
+	}
+	/**
+	 * Returns cache key base.
+	 * @return string
+	 */
+	private function getCacheKeyBase() {
+		return 'Taggable'.
+			$this-&gt;getOwner()-&gt;tableName().
+			$this-&gt;tagTable.
+			$this-&gt;tagBindingTable.
+			$this-&gt;tagTableName.
+			$this-&gt;getModelTableFkName().
+			$this-&gt;tagBindingTableTagId.
+			json_encode($this-&gt;scope);
+	}
+	/**
+	 * Get criteria to limit query by tags.
+	 * @access private
+	 * @param array $tags
+	 * @return CDbCriteria
+	 */
+	protected function getFindByTagsCriteria($tags) {
+		$criteria = new CDbCriteria();
+
+		$pk = $this-&gt;getOwner()-&gt;tableSchema-&gt;primaryKey;
+
+		if(!empty($tags)){
+			$conn = $this-&gt;getConnection();
+			$criteria-&gt;select = 't.*';
+			for($i = 0, $count = count($tags); $i &lt; $count; $i++){
+				$tag = $conn-&gt;quoteValue($tags[$i]);
+				$criteria-&gt;join .=
+					&quot;JOIN {$this-&gt;getTagBindingTableName()} bt$i ON t.{$pk} = bt$i.{$this-&gt;getModelTableFkName()}
+					JOIN {$this-&gt;tagTable} tag$i ON tag$i.{$this-&gt;tagTablePk} = bt$i.{$this-&gt;tagBindingTableTagId} AND tag$i.`{$this-&gt;tagTableName}` = $tag&quot;;
+			}
+		}
+
+		if($this-&gt;getScopeCriteria()){
+			$criteria-&gt;mergeWith($this-&gt;getScopeCriteria());
+		}
+
+		return $criteria;
+	}
+	/**
+	 * Get all possible tags for current model class.
+	 * @param CDbCriteria $criteria
+	 * @return array
+	 */
+	public function getAllTags($criteria = null) {
+		if(!($tags = $this-&gt;cache-&gt;get('Taggable'.$this-&gt;getOwner()-&gt;tableName().'All'))){
+			// getting associated tags
+			$builder = $this-&gt;getOwner()-&gt;getCommandBuilder();
+			$findCriteria = new CDbCriteria();
+			$findCriteria-&gt;select = $this-&gt;tagTableName;
+			if($criteria){
+				$findCriteria-&gt;mergeWith($criteria);
+			}
+			if($this-&gt;getScopeCriteria()){
+				$findCriteria-&gt;mergeWith($this-&gt;getScopeCriteria());
+			}
+			$tags = $builder-&gt;createFindCommand($this-&gt;tagTable, $findCriteria)-&gt;queryColumn();
+
+			$this-&gt;cache-&gt;set('Taggable'.$this-&gt;getOwner()-&gt;tableName().'All', $tags);
+		}
+
+		return $tags;
+	}
+	/**
+	 * Get all possible tags with models count for each for this model class.
+	 * @param CDbCriteria $criteria
+	 * @return array
+	 */
+	public function getAllTagsWithModelsCount($criteria = null) {
+		if(!($tags = $this-&gt;cache-&gt;get('Taggable'.$this-&gt;getOwner()-&gt;tableName().'AllWithCount'))){
+			// getting associated tags
+			$builder = $this-&gt;getOwner()-&gt;getCommandBuilder();
+
+			$tagsCriteria = new CDbCriteria();
+
+			if($this-&gt;tagTableCount !== null){
+				$tagsCriteria-&gt;select = sprintf(
+					&quot;t.%s as `name`, %s as `count`&quot;,
+					$this-&gt;tagTableName,
+					$this-&gt;tagTableCount
+				);
+			}
+			else{
+				$tagsCriteria-&gt;select = sprintf(
+					&quot;t.%s as `name`, count(*) as `count`&quot;,
+					$this-&gt;tagTableName
+				);
+				$tagsCriteria-&gt;join = sprintf(
+					&quot;JOIN `%s` et ON t.{$this-&gt;tagTablePk} = et.%s&quot;,
+					$this-&gt;getTagBindingTableName(),
+					$this-&gt;tagBindingTableTagId
+				);
+				$tagsCriteria-&gt;group = 't.'.$this-&gt;tagTablePk;
+			}
+
+			if($criteria!==null)
+				$tagsCriteria-&gt;mergeWith($criteria);
+
+			if($this-&gt;getScopeCriteria())
+				$tagsCriteria-&gt;mergeWith($this-&gt;getScopeCriteria());
+
+
+			$tags = $builder-&gt;createFindCommand($this-&gt;tagTable, $tagsCriteria)-&gt;queryAll();
+
+			$this-&gt;cache-&gt;set('Taggable'.$this-&gt;getOwner()-&gt;tableName().'AllWithCount', $tags);
+		}
+
+		return $tags;
+	}
+	/**
+	 * Finds out if model has all tags specified.
+	 * @param string|array $tags
+	 * @return boolean
+	 */
+	public function hasTags($tags) {
+		$this-&gt;loadTags();
+
+		$tags = $this-&gt;toTagsArray($tags);
+		foreach($tags as $tag){
+			if(!in_array($tag, $this-&gt;tags)) return false;
+		}
+		return true;
+	}
+	/**
+	 * Alias of {@link hasTags()}.
+	 * @param string|array $tags
+	 * @return boolean
+	 */
+	public function hasTag($tags) {
+		return $this-&gt;hasTags($tags);
+	}
+	/**
+	 * Limit current AR query to have all tags specified.
+	 * @param string|array $tags
+	 * @return CActiveRecord
+	 */
+	public function taggedWith($tags) {
+		$tags = $this-&gt;toTagsArray($tags);
+
+		if(!empty($tags)){
+			$criteria = $this-&gt;getFindByTagsCriteria($tags);
+			$this-&gt;getOwner()-&gt;getDbCriteria()-&gt;mergeWith($criteria);
+		}
+
+		return $this-&gt;getOwner();
+	}
+	/**
+	 * Alias of {@link taggedWith()}.
+	 * @param string|array $tags
+	 * @return CActiveRecord
+	 */
+	public function withTags($tags) {
+		return $this-&gt;taggedWith($tags);
+	}
+	/**
+	 * Delete all present tag bindings.
+	 * @return void
+	 */
+	protected function deleteTags() {
+		$this-&gt;updateCount(-1);
+
+		$conn = $this-&gt;getConnection();
+		$conn-&gt;createCommand(
+			sprintf(
+				&quot;DELETE
+                 FROM `%s`
+                 WHERE %s = %d&quot;,
+				$this-&gt;getTagBindingTableName(),
+				$this-&gt;getModelTableFkName(),
+				$this-&gt;getOwner()-&gt;primaryKey
+			)
+		)-&gt;execute();
+	}
+	/**
+	 * Creates a tag.
+	 * Method is for future inheritance.
+	 * @param string $tag tag name.
+	 * @return void
+	 */
+	protected function createTag($tag) {
+
+		$builder = $this-&gt;getConnection()-&gt;getCommandBuilder();
+
+		$values = array(
+			$this-&gt;tagTableName =&gt; $tag
+		);
+		if(is_array($this-&gt;insertValues)){
+			$values = array_merge($this-&gt;insertValues, $values);
+		}
+
+		$builder-&gt;createInsertCommand($this-&gt;tagTable, $values)-&gt;execute();
+
+	}
+	/**
+	 * Updates counter information in database.
+	 * Used if {@link tagTableCount} is not null.
+	 * @param int $count incremental (&quot;1&quot;) or decremental (&quot;-1&quot;) value.
+	 * @return void
+	 */
+	protected function updateCount($count) {
+		if($this-&gt;tagTableCount !== null){
+			$conn = $this-&gt;getConnection();
+			$conn-&gt;createCommand(
+				sprintf(
+					&quot;UPDATE %s
+					SET %s = %s + %s
+					WHERE %s in (SELECT %s FROM %s WHERE %s = %d)&quot;,
+					$this-&gt;tagTable,
+					$this-&gt;tagTableCount,
+					$this-&gt;tagTableCount,
+					$count,
+					$this-&gt;tagTablePk,
+					$this-&gt;tagBindingTableTagId,
+					$this-&gt;getTagBindingTableName(),
+					$this-&gt;getModelTableFkName(),
+					$this-&gt;getOwner()-&gt;primaryKey
+				)
+			)-&gt;execute();
+		}
+	}
+}</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all()
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,61 @@
+<html>
+    <head>
+        <script type="text/javascript" src="../../../js/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shCore.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushJScript.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushPhp.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushXml.js"></script>
+        <link href="../../../syntax_highlighter/styles/shCore.css" rel="stylesheet" type="text/css" />
+        <link href="../../../syntax_highlighter/styles/shCoreEclipse.css" rel="stylesheet" type="text/css" />
+        <link href="../../../syntax_highlighter/styles/shThemeWordpress.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+/**
+ * EZendAutoloader
+ *
+ * @author Alexander Makarov
+ * @version 1.1
+ *
+ * See readme for instructions.
+ */
+class EZendAutoloader {
+	/**
+	 * @var array class prefixes
+	 */
+	static $prefixes = array(
+		'Zend'
+	);
+
+	/**
+	 * @var string path to where Zend classes root is located
+	 */
+    static $basePath = null;
+
+    /**
+     * Class autoload loader.
+     *
+     * @static
+     * @param string $class
+     * @return boolean
+     */
+    static function loadClass($className){
+		foreach(self::$prefixes as $prefix){
+			if(strpos($className, $prefix.'_')!==false){
+				if(!self::$basePath) self::$basePath = Yii::getPathOfAlias(&quot;application.vendors&quot;).'/';
+				include self::$basePath.str_replace('_','/',$className).'.php';
+				return class_exists($className, false) || interface_exists($className, false);
+			}
+		}
+		return false;
+    }
+}
+</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all()
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>

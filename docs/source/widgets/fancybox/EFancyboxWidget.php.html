@@ -1,0 +1,109 @@
+<html>
+    <head>
+        <script type="text/javascript" src="../../../js/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shCore.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushJScript.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushPhp.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushXml.js"></script>
+        <link href="../../../syntax_highlighter/styles/shCore.css" rel="stylesheet" type="text/css" />
+        <link href="../../../syntax_highlighter/styles/shCoreEclipse.css" rel="stylesheet" type="text/css" />
+        <link href="../../../syntax_highlighter/styles/shThemeWordpress.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+/**
+ * EFancyboxWidget class file.
+ *
+ * @author Veaceslav Medvedev &lt;slavcopost@gmail.com&gt;
+ * @link http://code.google.com/p/yiiext/
+ * @license http://www.opensource.org/licenses/bsd-license.php
+ */
+/**
+ * EFancyboxWidget {@link http://fancybox.net/ fancybox jQuery plugin} widget.
+ *
+ * @author Veaceslav Medvedev &lt;slavcopost@gmail.com&gt;
+ * @version 0.2
+ * @package yiiext.widgets.fancybox
+ * @link http://fancybox.net/
+ */
+class EFancyboxWidget extends CWidget
+{
+	/**
+	 * @var string URL where to look assets.
+	 */
+	public $assetsUrl;
+	/**
+	 * @var string script name.
+	 */
+	public $scriptFile;
+	/**
+	 * @var string stylesheet.
+	 */
+	public $cssFile;
+	/**
+	 * @var string selector for generate fancybox.
+	 * Defaults to '[href$=\'.jpg\'],a[href$=\'.png\'],a[href$=\'.gif\']'.
+	 */
+	public $selector='[href$=\'.jpg\'],a[href$=\'.png\'],a[href$=\'.gif\']'; //a:has(img)
+	/**
+	 * @var boolean enable &quot;mouse-wheel&quot; to navigate throught gallery items.
+	 * Defaults to false.
+	 */
+	public $enableMouseWheel=false;
+	/**
+	 * @var array extension options. For more info read {@link http://fancybox.net/api/ documentation}
+	 */
+	public $options=array();
+
+	/**
+	 * Init widget.
+	 */
+	function init()
+	{
+		if($this-&gt;assetsUrl===null)
+			$this-&gt;assetsUrl=Yii::app()-&gt;getAssetManager()-&gt;publish(dirname(__FILE__).'/assets',false,-1,YII_DEBUG);
+
+		if($this-&gt;scriptFile===null)
+			$this-&gt;scriptFile=YII_DEBUG ? 'jquery.fancybox-1.3.4.js' : 'jquery.fancybox-1.3.4.pack.js';
+
+		if($this-&gt;cssFile===null)
+			$this-&gt;cssFile='jquery.fancybox-1.3.4.css';
+
+		$this-&gt;registerClientScript();
+	}
+	/**
+	 * Run widget.
+	 */
+	public function run()
+	{
+	}
+	/**
+	 * Register CSS and Script.
+	 * @return void
+	 */
+	protected function registerClientScript()
+	{
+		$cs=Yii::app()-&gt;getClientScript();
+		if($this-&gt;cssFile!==false)
+			$cs-&gt;registerCssFile($this-&gt;assetsUrl.'/'.$this-&gt;cssFile);
+		$cs-&gt;registerCoreScript('jquery');
+		$cs-&gt;registerScriptFile($this-&gt;assetsUrl.'/'.$this-&gt;scriptFile);
+		// Registry easing script for elastic transition.
+		if((isset($this-&gt;options['transitionIn']) &amp;&amp; $this-&gt;options['transitionIn']=='elastic')
+			|| (isset($this-&gt;options['transitionOut']) &amp;&amp; $this-&gt;options['transitionOut']=='elastic'))
+			$cs-&gt;registerScriptFile($this-&gt;assetsUrl.'/jquery.easing-1.3.pack.js');
+		// Registry mouse-wheel script if mouse-wheel enabled.  
+		if($this-&gt;enableMouseWheel)
+			$cs-&gt;registerScriptFile($this-&gt;assetsUrl.'/jquery.mousewheel-3.0.4.pack.js');
+		$cs-&gt;registerScript($this-&gt;getId(),'$(&quot;'.$this-&gt;selector.'&quot;).fancybox('.CJavaScript::encode($this-&gt;options).');',CClientScript::POS_READY);
+	}
+}
+</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all()
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>

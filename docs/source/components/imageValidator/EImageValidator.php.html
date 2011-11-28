@@ -1,0 +1,160 @@
+<html>
+    <head>
+        <script type="text/javascript" src="../../../js/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shCore.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushJScript.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushPhp.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushXml.js"></script>
+        <link href="../../../syntax_highlighter/styles/shCore.css" rel="stylesheet" type="text/css" />
+        <link href="../../../syntax_highlighter/styles/shCoreEclipse.css" rel="stylesheet" type="text/css" />
+        <link href="../../../syntax_highlighter/styles/shThemeWordpress.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+
+class EImageValidator extends CFileValidator{
+	/**
+	 * mime &Ntilde;Ç&ETH;&cedil;&ETH;&iquest;&Ntilde;ã &ETH;&ordm;&ETH;&frac34;&Ntilde;Ç&ETH;&frac34;&Ntilde;Ä&Ntilde;ã&ETH;&micro; &ETH;&iquest;&ETH;&frac34;&ETH;&middot;&ETH;&sup2;&ETH;&frac34;&ETH;&raquo;&ETH;&micro;&ETH;&frac12;&ETH;&frac34; &ETH;&middot;&ETH;&deg;&ETH;&sup3;&Ntilde;Ä&Ntilde;É&ETH;&para;&ETH;&deg;&Ntilde;Ç&Ntilde;å,
+	 * &ETH;&micro;&Ntilde;Å&ETH;&raquo;&ETH;&cedil; NULL &ETH;&iquest;&Ntilde;Ä&ETH;&frac34;&ETH;&sup2;&ETH;&micro;&Ntilde;Ä&ETH;&ordm;&ETH;&deg; &ETH;&frac12;&ETH;&micro; &ETH;&iquest;&Ntilde;Ä&ETH;&frac34;&ETH;&cedil;&ETH;&middot;&ETH;&sup2;&ETH;&frac34;&ETH;&acute;&ETH;&cedil;&Ntilde;Ç&Ntilde;Å&Ntilde;è
+	 * @var string or array
+	 */
+	public $mime;
+	
+	/**
+	 * &ETH;ú&ETH;&cedil;&ETH;&frac12;&ETH;&cedil;&ETH;&frac14;&ETH;&deg;&ETH;&raquo;&Ntilde;å&ETH;&frac12;&ETH;&deg;&Ntilde;è &Ntilde;à&ETH;&cedil;&Ntilde;Ä&ETH;&cedil;&ETH;&frac12;&ETH;&deg; &ETH;&ordm;&ETH;&deg;&Ntilde;Ä&Ntilde;Ç&ETH;&cedil;&ETH;&frac12;&ETH;&ordm;&ETH;&cedil; &ETH;&sup2; &ETH;&iquest;&ETH;&cedil;&ETH;&ordm;&Ntilde;Å&ETH;&micro;&ETH;&raquo;&Ntilde;è&Ntilde;Ö
+	 * @var unsigned int
+	 */
+	public $minWidth;
+	
+	/**
+	 * &ETH;ú&ETH;&deg;&ETH;&ordm;&Ntilde;Å&ETH;&cedil;&ETH;&frac14;&ETH;&deg;&ETH;&raquo;&Ntilde;å&ETH;&frac12;&ETH;&deg;&Ntilde;è &Ntilde;à&ETH;&cedil;&Ntilde;Ä&ETH;&cedil;&ETH;&frac12;&ETH;&deg; &ETH;&ordm;&ETH;&deg;&Ntilde;Ä&Ntilde;Ç&ETH;&cedil;&ETH;&frac12;&ETH;&ordm;&ETH;&cedil; &ETH;&sup2; &ETH;&iquest;&ETH;&cedil;&ETH;&ordm;&Ntilde;Å&ETH;&micro;&ETH;&raquo;&Ntilde;è&Ntilde;Ö
+	 * @var unsigned int
+	 */
+	public $maxWidth;
+	
+	/**
+	 * &ETH;ú&ETH;&cedil;&ETH;&frac12;&ETH;&cedil;&ETH;&frac14;&ETH;&deg;&ETH;&raquo;&Ntilde;å&ETH;&frac12;&ETH;&deg;&Ntilde;è &ETH;&sup2;&Ntilde;ã&Ntilde;Å&ETH;&frac34;&Ntilde;Ç&ETH;&deg; &ETH;&ordm;&ETH;&deg;&Ntilde;Ä&Ntilde;Ç&ETH;&cedil;&ETH;&frac12;&ETH;&ordm;&ETH;&cedil; &ETH;&sup2; &ETH;&iquest;&ETH;&cedil;&ETH;&ordm;&Ntilde;Å&ETH;&micro;&ETH;&raquo;&Ntilde;è&Ntilde;Ö
+	 * @var unsigned int
+	 */
+	public $minHeight;
+	
+	/**
+	 * &ETH;ú&ETH;&deg;&ETH;&ordm;&Ntilde;Å&ETH;&cedil;&ETH;&frac14;&ETH;&deg;&ETH;&raquo;&Ntilde;å&ETH;&frac12;&ETH;&deg;&Ntilde;è &ETH;&sup2;&Ntilde;ã&Ntilde;Å&ETH;&frac34;&Ntilde;Ç&ETH;&deg; &ETH;&ordm;&ETH;&deg;&Ntilde;Ä&Ntilde;Ç&ETH;&cedil;&ETH;&frac12;&ETH;&ordm;&ETH;&cedil; &ETH;&sup2; &ETH;&iquest;&ETH;&cedil;&ETH;&ordm;&Ntilde;Å&ETH;&micro;&ETH;&raquo;&Ntilde;è&Ntilde;Ö
+	 * @var unsigned int
+	 */
+	public $maxHeight;
+	
+	/**
+	 * &ETH;&cent;&ETH;&micro;&ETH;&ordm;&Ntilde;Å&Ntilde;Ç &ETH;&frac34;&Ntilde;à&ETH;&cedil;&ETH;&plusmn;&ETH;&ordm;&ETH;&cedil; &ETH;&iquest;&Ntilde;Ä&ETH;&cedil; &Ntilde;Å&ETH;&raquo;&ETH;&cedil;&Ntilde;à&ETH;&ordm;&ETH;&frac34;&ETH;&frac14; &ETH;&plusmn;&ETH;&frac34;&ETH;&raquo;&Ntilde;å&Ntilde;à&ETH;&frac34;&ETH;&sup1; &Ntilde;à&ETH;&cedil;&Ntilde;Ä&ETH;&cedil;&ETH;&frac12;&ETH;&micro; &ETH;&ordm;&ETH;&deg;&Ntilde;Ä&Ntilde;Ç&ETH;&cedil;&ETH;&frac12;&ETH;&ordm;&ETH;&cedil;
+	 * @var unsigned int
+	 */
+	public $tooLargWidth;
+	
+	/**
+	 * &ETH;&cent;&ETH;&micro;&ETH;&ordm;&Ntilde;Å&Ntilde;Ç &ETH;&frac34;&Ntilde;à&ETH;&cedil;&ETH;&plusmn;&ETH;&ordm;&ETH;&cedil; &ETH;&iquest;&Ntilde;Ä&ETH;&cedil; &Ntilde;Å&ETH;&raquo;&ETH;&cedil;&Ntilde;à&ETH;&ordm;&ETH;&frac34;&ETH;&frac14; &ETH;&frac14;&ETH;&deg;&ETH;&raquo;&ETH;&micro;&ETH;&frac12;&Ntilde;å&ETH;&ordm;&ETH;&frac34;&ETH;&sup1; &Ntilde;à&ETH;&cedil;&Ntilde;Ä&ETH;&cedil;&ETH;&frac12;&ETH;&micro; &ETH;&ordm;&ETH;&deg;&Ntilde;Ä&Ntilde;Ç&ETH;&cedil;&ETH;&frac12;&ETH;&ordm;&ETH;&cedil;
+	 * @var unsigned int
+	 */
+	public $tooSmallWidth;
+	
+	/**
+	 * &ETH;&cent;&ETH;&micro;&ETH;&ordm;&Ntilde;Å&Ntilde;Ç &ETH;&frac34;&Ntilde;à&ETH;&cedil;&ETH;&plusmn;&ETH;&ordm;&ETH;&cedil; &ETH;&iquest;&Ntilde;Ä&ETH;&cedil; &Ntilde;Å&ETH;&raquo;&ETH;&cedil;&Ntilde;à&ETH;&ordm;&ETH;&frac34;&ETH;&frac14; &ETH;&plusmn;&ETH;&frac34;&ETH;&raquo;&Ntilde;å&Ntilde;à&ETH;&frac34;&ETH;&sup1; &ETH;&sup2;&Ntilde;ã&Ntilde;Å&ETH;&frac34;&Ntilde;Ç&ETH;&micro; &ETH;&ordm;&ETH;&deg;&Ntilde;Ä&Ntilde;Ç&ETH;&cedil;&ETH;&frac12;&ETH;&ordm;&ETH;&cedil;
+	 * @var unsigned int
+	 */
+	public $tooLargHeight;
+	
+	/**
+	 * &ETH;&cent;&ETH;&micro;&ETH;&ordm;&Ntilde;Å&Ntilde;Ç &ETH;&frac34;&Ntilde;à&ETH;&cedil;&ETH;&plusmn;&ETH;&ordm;&ETH;&cedil; &ETH;&iquest;&Ntilde;Ä&ETH;&cedil; &Ntilde;Å&ETH;&raquo;&ETH;&cedil;&Ntilde;à&ETH;&ordm;&ETH;&frac34;&ETH;&frac14; &ETH;&frac14;&ETH;&deg;&ETH;&raquo;&ETH;&micro;&ETH;&frac12;&Ntilde;å&ETH;&ordm;&ETH;&frac34;&ETH;&sup1; &ETH;&sup2;&Ntilde;ã&Ntilde;Å&ETH;&frac34;&Ntilde;Ç&ETH;&micro; &ETH;&ordm;&ETH;&deg;&Ntilde;Ä&Ntilde;Ç&ETH;&cedil;&ETH;&frac12;&ETH;&ordm;&ETH;&cedil;
+	 * @var unsigned int
+	 */
+	public $tooSmallHeight;
+		
+	/**
+	 * &ETH;&iexcl;&ETH;&frac34;&ETH;&frac34;&ETH;&plusmn;&Ntilde;â&ETH;&micro;&ETH;&frac12;&ETH;&cedil;&ETH;&micro;, &ETH;&micro;&Ntilde;Å&ETH;&raquo;&ETH;&cedil; &ETH;&frac12;&ETH;&micro; &ETH;&iquest;&ETH;&frac34;&ETH;&acute;&Ntilde;Ö&ETH;&frac34;&ETH;&acute;&ETH;&cedil;&Ntilde;Ç mime &Ntilde;Ç&ETH;&cedil;&ETH;&iquest; &Ntilde;É&ETH;&ordm;&ETH;&deg;&ETH;&middot;&ETH;&deg;&ETH;&frac12;&Ntilde;ã&ETH;&frac14;
+	 * @var string
+	 */
+	public $wrongMime;
+	
+	/**
+	 * &ETH;&iexcl;&ETH;&frac34;&ETH;&frac34;&ETH;&plusmn;&Ntilde;â&ETH;&micro;&ETH;&frac12;&ETH;&cedil;&ETH;&micro;, &ETH;&micro;&Ntilde;Å&ETH;&raquo;&ETH;&cedil; &Ntilde;ç&Ntilde;Ç&ETH;&frac34; &ETH;&frac12;&ETH;&micro; &ETH;&ordm;&ETH;&deg;&Ntilde;Ä&Ntilde;Ç&ETH;&cedil;&ETH;&frac12;&ETH;&ordm;&ETH;&deg; (&ETH;&frac12;&ETH;&micro; &ETH;&frac14;&ETH;&frac34;&ETH;&para;&ETH;&micro;&Ntilde;Ç &ETH;&plusmn;&Ntilde;ã&Ntilde;Ç&Ntilde;å &ETH;&frac34;&ETH;&plusmn;&Ntilde;Ä&ETH;&deg;&ETH;&plusmn;&ETH;&frac34;&Ntilde;Ç&ETH;&deg;&ETH;&frac12;&ETH;&frac34; getimagesize)
+	 * @var string
+	 */
+	public $notImage;
+	
+	/**
+	 * &ETH;ü&Ntilde;Ä&ETH;&frac34;&ETH;&sup2;&ETH;&micro;&Ntilde;Ä&ETH;&ordm;&ETH;&deg; &ETH;&iquest;&ETH;&frac34;&ETH;&acute;&Ntilde;Ö&ETH;&frac34;&ETH;&acute;&ETH;&cedil;&Ntilde;Ç &ETH;&raquo;&ETH;&cedil; mime &Ntilde;Ç&ETH;&cedil;&ETH;&iquest;
+	 * @param string $attribute
+	 * @param CUploadedFile $file
+	 */
+	private function checkMime($attribute, $file)
+	{
+		if($this-&gt;mime === null){
+			return true;
+		}
+		
+		if(is_array($this-&gt;mime)){
+			if(in_array($file-&gt;getType(), $this-&gt;mime)){
+				return true;
+			}else{
+				return false;
+			}
+		}elseif(is_string($this-&gt;mime)){
+			if($file-&gt;getType() == $this-&gt;mime){
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
+	}
+	
+	/**
+	 * (non-PHPdoc)
+	 * @see CFileValidator::validateFile()
+	 */
+	protected function validateFile($object, $attribute, $file)
+	{
+		parent::validateFile($object, $attribute, $file);
+	
+		$size = getimagesize($file-&gt;getTempName());
+		
+		if($size === false){
+			$message=$this-&gt;notImage ? $this-&gt;notImage : Yii::t('yii','This is not a picture');
+			$this-&gt;addError($object,$attribute,$message,array('{mime}'=&gt;(is_array($this-&gt;mime) ? implode(', ', $this-&gt;mime) : $this-&gt;mime)));
+			return;
+		}
+	
+		if(!$this-&gt;checkMime($attribute, $file)){
+			$message=$this-&gt;wrongMime ? $this-&gt;wrongMime : Yii::t('yii','This mime type of the photo is not allowed, mime types: {mime}');
+			$this-&gt;addError($object,$attribute,$message,array('{mime}'=&gt;(is_array($this-&gt;mime) ? implode(', ', $this-&gt;mime) : $this-&gt;mime)));
+		}
+	
+		if($this-&gt;minWidth !== null &amp;&amp; $size[0] &lt; $this-&gt;minWidth){
+			$message=$this-&gt;tooSmallWidth ? $this-&gt;tooSmallWidth : Yii::t('yii','Photo should be at least {width}px in width');
+			$this-&gt;addError($object,$attribute,$message,array('{width}'=&gt;$this-&gt;minWidth));
+		}
+		
+		if($this-&gt;maxWidth !== null &amp;&amp; $size[0] &gt; $this-&gt;maxWidth){
+			$message=$this-&gt;tooLargWidth ? $this-&gt;tooLargWidth : Yii::t('yii','Photo should be at max {width}px in width');
+			$this-&gt;addError($object,$attribute,$message,array('{width}'=&gt;$this-&gt;maxWidth));
+		}
+		
+		if($this-&gt;minHeight !== null &amp;&amp; $size[1] &lt; $this-&gt;minHeight){
+			$message=$this-&gt;tooSmallHeight ? $this-&gt;tooSmallHeight : Yii::t('yii','Photo should be at least {height}px in height');
+			$this-&gt;addError($object,$attribute,$message,array('{height}'=&gt;$this-&gt;minHeight));
+		}
+		
+		if($this-&gt;maxHeight !== null &amp;&amp; $size[1] &gt; $this-&gt;maxHeight){
+			$message=$this-&gt;tooLargHeight ? $this-&gt;tooLargHeight : Yii::t('yii','Photo should be at max {height}px in height');
+			$this-&gt;addError($object,$attribute,$message,array('{height}'=&gt;$this-&gt;maxHeight));
+		}
+	}
+}</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all()
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>

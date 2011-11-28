@@ -1,0 +1,571 @@
+<html>
+    <head>
+        <script type="text/javascript" src="../../../../js/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="../../../../syntax_highlighter/scripts/shCore.js"></script>
+        <script type="text/javascript" src="../../../../syntax_highlighter/scripts/shBrushJScript.js"></script>
+        <script type="text/javascript" src="../../../../syntax_highlighter/scripts/shBrushPhp.js"></script>
+        <script type="text/javascript" src="../../../../syntax_highlighter/scripts/shBrushXml.js"></script>
+        <link href="../../../../syntax_highlighter/styles/shCore.css" rel="stylesheet" type="text/css" />
+        <link href="../../../../syntax_highlighter/styles/shCoreEclipse.css" rel="stylesheet" type="text/css" />
+        <link href="../../../../syntax_highlighter/styles/shThemeWordpress.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+/**
+ * EEavBehavior class file.
+ *
+ * Entity-Attribute-Value behavior.
+ * Allows model to work with custom fields on the fly (EAV pattern).
+ *
+ * @author Veaceslav Medvedev &lt;slavcopost@gmail.com&gt;
+ * @link http://code.google.com/p/yiiext/
+ *
+ * @version 0.5
+ */
+class EEavBehavior extends CActiveRecordBehavior {
+    /**
+     * @access public
+     * @var string name of the table where data is stored. Required to be set on init behavior.
+     * @default ''
+     */
+    public $tableName = '';
+
+    /**
+     * @access public
+     * @var string prefix for each attribute.
+     * @default ''
+     */
+    public $attributesPrefix = '';
+
+    /**
+     * @access protected
+     * @var string owner model FK name. If not set automatically assign to model's primaryKey.
+     * @default ''
+     */
+    protected $modelTableFk = '';
+
+    /**
+     * @access public
+     * @var string name of the column to store entity name.
+     * @default 'entity'
+     */
+    public $entityField = 'entity';
+
+    /**
+     * @access public
+     * @var string name of the column to store attribute key.
+     * @default 'attribute'
+     */
+    public $attributeField = 'attribute';
+
+    /**
+     * @access public
+     * @var string name of the column to store value.
+     * @default 'value'
+     */
+    public $valueField = 'value';
+
+    /**
+     * @access public
+     * @var string caching component Id.
+     * @default ''
+     */
+    public $cacheId = '';
+
+    /**
+     * @access protected
+     * @var ICache cache component object.
+     * @default NULL
+     */
+    protected $cache = NULL;
+
+    /**
+     * @access protected
+     * @var CAttributeCollection attributes store.
+     * @default new CAttributeCollection
+     */
+    protected $attributes = NULL;
+
+    /**
+     * @access protected
+     * @var CList changed attributes list.
+     * @default new CList
+     */
+    protected $changedAttributes = NULL;
+
+    /**
+     * @access protected
+     * @var CList safe attributes list.
+     * @default new CList
+     */
+    protected $safeAttributes = NULL;
+
+    /**
+     * @access public
+     * @var boolean loaded attributes after find model.
+     * @default TRUE
+     */
+    public $preload = TRUE;
+
+    /**
+     * Returns owner model id.
+     * @access protected
+     * @return mixed
+     */
+    protected function getModelId() {
+        return $this-&gt;getOwner()-&gt;{$this-&gt;getModelTableFk()};
+    }
+
+    /**
+     * Returns key for caching model attributes.
+     * @access protected
+     * @return string
+     */
+    protected function getCacheKey() {
+        return __CLASS__ . $this-&gt;tableName . $this-&gt;attributesPrefix . $this-&gt;getOwner()-&gt;tableName() . $this-&gt;getModelId();
+    }
+
+    /**
+     * Set owner model FK name.
+     * @param string owner model FK name.
+     * @return void
+     */
+    public function setModelTableFk($modelTableFk) {
+        if (is_string($modelTableFk) &amp;&amp; !empty($modelTableFk)) {
+            $this-&gt;modelTableFk = $modelTableFk;
+        }
+    }
+
+    /**
+     * Returns owner model FK name.
+     * @access protected
+     * @throws CException
+     * @return string
+     */
+    protected function getModelTableFk() {
+        // Check required property modelTableFk.
+        if (empty($this-&gt;modelTableFk) || !$this-&gt;getOwner()-&gt;hasAttribute($this-&gt;modelTableFk)) {
+            // If property modelTableFk not set, trying to get a primary key from model table.
+            $this-&gt;modelTableFk = $this-&gt;getOwner()-&gt;getTableSchema()-&gt;primaryKey;
+            if(!is_string($this-&gt;modelTableFk)) {
+                throw new CException(Yii::t('yiiext', 'Table &quot;{table}&quot; does not have a primary key defined.',
+                    array('{table}' =&gt; $this-&gt;getOwner()-&gt;getTableSchema())));
+            }
+        }
+        return $this-&gt;modelTableFk;
+    }
+
+    /**
+     * Strip prefix from attribute key.
+     * @access protected
+     * @param string attribute key
+     * @return string
+     */
+    protected function stripPrefix($attribute) {
+        // Remove prefix if exists.
+        if (!empty($this-&gt;attributesPrefix) &amp;&amp; strpos($attribute, $this-&gt;attributesPrefix) === 0) {
+            $attribute = substr($attribute, strlen($this-&gt;attributesPrefix));
+        }
+        return $attribute;
+    }
+
+    /**
+     * Set safe attributes array.
+     * @param array safe attributes.
+     * @return void
+     */
+    public function setSafeAttributes($safeAttributes) {
+        $this-&gt;safeAttributes-&gt;copyFrom($safeAttributes);
+    }
+
+    /**
+     * Return safe attributes key. If not set returns all keys.
+     * @access protected
+     * @return array
+     */
+    protected function getSafeAttributesArray() {
+        return $this-&gt;safeAttributes-&gt;count() == 0 ? $this-&gt;attributes-&gt;keys : $this-&gt;safeAttributes-&gt;toArray();
+    }
+
+    /**
+     * @access protected
+     * @param string attribute key
+     * @return boolean
+     */
+    protected function hasSafeAttribute($attribute) {
+        if ($this-&gt;safeAttributes-&gt;count() &gt; 0) {
+            return $this-&gt;safeAttributes-&gt;contains($attribute);
+        }
+        return TRUE;
+    }
+
+    /**
+     * @return void
+     */
+    public function __construct() {
+        // Prepare attributes collection.
+        $this-&gt;attributes = new CAttributeCollection;
+        $this-&gt;attributes-&gt;caseSensitive = TRUE;
+        // Prepare safe attributes list.
+        $this-&gt;safeAttributes = new CList;
+        // Prepare changed attributes list.
+        $this-&gt;changedAttributes = new CList;
+    }
+
+    /**
+     * @throws CException
+     * @param CComponent
+     * @return void
+     */
+    public function attach($owner) {
+        // Check required property tableName.
+        if (!is_string($this-&gt;tableName) || empty($this-&gt;tableName)) {
+            throw new CException(self::t('yii', 'Property &quot;{class}.{property}&quot; is not defined.',
+                array('{class}' =&gt; get_class($this), '{property}' =&gt; 'tableName')));
+        }
+        // Prepare translate component for behavior messages.
+        if (!Yii::app()-&gt;hasComponent(__CLASS__ . 'Messages')) {
+            Yii::app()-&gt;setComponents(array(
+                __CLASS__ . 'Messages' =&gt; array(
+                    'class' =&gt; 'CPhpMessageSource',
+                    'basePath' =&gt; dirname(__FILE__) . DIRECTORY_SEPARATOR . 'messages',
+                )
+            ));
+        }
+        // Prepare cache component.
+        $this-&gt;cache = Yii::app()-&gt;getComponent($this-&gt;cacheId);
+        if (!($this-&gt;cache instanceof ICache)) {
+            // If not set cache component, use dummy cache.
+            $this-&gt;cache = new CDummyCache;
+        }
+        // Call parent method for convenience.
+        parent::attach($owner);
+    }
+
+    /**
+     * @param CEvent
+     * @return void
+     */
+    public function afterSave($event) {
+        // TODO afterSave &ETH;&frac12;&ETH;&micro; &Ntilde;Å&Ntilde;Ä&ETH;&deg;&ETH;&plusmn;&ETH;&deg;&Ntilde;Ç&Ntilde;ã&ETH;&sup2;&ETH;&deg;&ETH;&micro;&Ntilde;Ç &ETH;&micro;&Ntilde;Å&ETH;&raquo;&ETH;&cedil; &ETH;&frac14;&ETH;&frac34;&ETH;&acute;&ETH;&micro;&ETH;&raquo;&Ntilde;å &ETH;&frac12;&ETH;&micro; &ETH;&plusmn;&Ntilde;ã&ETH;&raquo;&ETH;&deg; &ETH;&cedil;&ETH;&middot;&ETH;&frac14;&ETH;&micro;&ETH;&frac12;&ETH;&micro;&ETH;&frac12;&ETH;&deg;
+
+        // Save changed attributes.
+        if ($this-&gt;changedAttributes-&gt;count &gt; 0) {
+            $this-&gt;saveEavAttributes($this-&gt;changedAttributes-&gt;toArray());
+        }
+        // Call parent method for convenience.
+        parent::afterSave($event);
+    }
+
+    /**
+     * @param CEvent
+     * @return void
+     */
+    public function afterDelete($event) {
+        // Delete all attributes.
+        $this-&gt;deleteEavAttributes(array(), TRUE);
+        // Call parent method for convenience.
+        parent::afterDelete($event);
+    }
+
+    /**
+     * @param CEvent
+     * @return void
+     */
+    public function afterFind($event) {
+        // Load attributes for model.
+        if ($this-&gt;preload) {
+            $this-&gt;loadEavAttributes($this-&gt;getSafeAttributesArray());
+        }
+        // Call parent method for convenience.
+        parent::afterFind($event);
+    }
+
+    /**
+     * @param array attributes key for save.
+     * @return CActiveRecord
+     */
+    public function saveEavAttributes($attributes) {
+        // Delete old attributes values from DB.
+        $this-&gt;getDeleteCommand($attributes)-&gt;execute();
+        // Process each attributes.
+        foreach ($attributes as $attribute) {
+            // Skip if null attributes.
+            if (!is_null($values = $this-&gt;attributes-&gt;itemAt($attribute))) {
+                // Create array of values for convenience.
+                if (!is_array($values)) {
+                    $values = array($values);
+                }
+                // Save each value of attribute into DB.
+                foreach ($values as $value) {
+                    $this-&gt;getSaveEavAttributeCommand($this-&gt;attributesPrefix . $attribute, $value)-&gt;execute();
+                }
+                // Remove from changed list.
+                $this-&gt;changedAttributes-&gt;remove($attribute);
+            }
+        }
+        // Save attributes to cache.
+        if ($this-&gt;attributes-&gt;count &gt; 0) {
+            $this-&gt;cache-&gt;set($this-&gt;getCacheKey(), $this-&gt;attributes-&gt;toArray());
+        }
+        // Or delete cache is attributes not exists.
+        else {
+            $this-&gt;cache-&gt;delete($this-&gt;getCacheKey());
+        }
+        // Return model.
+        return $this-&gt;getOwner();
+    }
+
+    /**
+     * @access public
+     * @param array attributes key for load.
+     * @return CActiveRecord
+     */
+    public function loadEavAttributes($attributes) {
+        // If exists cache, return it.
+        $data = $this-&gt;cache-&gt;get($this-&gt;getCacheKey());
+        if ($data !== FALSE) {
+            $this-&gt;attributes-&gt;mergeWith($data, FALSE);
+            return $this-&gt;getOwner();
+        }
+        // Query DB.
+        $data = $this-&gt;getLoadEavAttributesCommand($attributes)-&gt;query();
+        foreach($data as $row) {
+            $attribute = $this-&gt;stripPrefix($row[$this-&gt;attributeField]);
+            $value = $row[$this-&gt;valueField];
+            // Check if value exists.
+            if (!is_null($current = $this-&gt;attributes-&gt;itemAt($attribute)) &amp;&amp; $current != $value) {
+                $value = is_array($current) ? $current[] = $value : array($current, $value);
+            }
+            $this-&gt;attributes-&gt;add($attribute, $value);
+        }
+        // Save loaded attributes to cache.
+        $this-&gt;cache-&gt;set($this-&gt;getCacheKey(), $this-&gt;attributes-&gt;toArray());
+        // Return model.
+        return $this-&gt;getOwner();
+    }
+
+    /**
+     * @param array attributes key for delete.
+     * @param boolean whether auto save attributes.
+     * @return CActiveRecord
+     */
+    public function deleteEavAttributes($attributes = array(), $save = FALSE) {
+        // If not set attributes for deleting, delete all.
+        if (empty($attributes)) {
+            $attributes = $this-&gt;attributes-&gt;keys;
+        }
+        // Delete each attributes.
+        foreach ($attributes as $attribute) {
+            $this-&gt;attributes-&gt;remove($attribute);
+            $this-&gt;changedAttributes-&gt;add($attribute);
+        }
+        // Auto save if set.
+        if ($save) {
+            $this-&gt;saveEavAttributes($attributes);
+        }
+        // Return model.
+        return $this-&gt;getOwner();
+    }
+
+    /**
+     * @param array attributes values for change.
+     * @param boolean whether auto save attributes.
+     * @return CActiveRecord
+     */
+    public function setEavAttributes($attributes, $save = FALSE) {
+        foreach ($attributes as $attribute =&gt; $value) {
+            $this-&gt;attributes-&gt;add($attribute, $value);
+            $this-&gt;changedAttributes-&gt;add($attribute);
+        }
+        // Auto save if set.
+        if ($save) {
+            $this-&gt;saveEavAttributes(array_keys($attributes));
+        }
+        // Return model.
+        return $this-&gt;getOwner();
+    }
+
+    /**
+     * @param string attribute key.
+     * @param mixed attribute value.
+     * @param boolean whether auto save attributes.
+     * @return CActiveRecord
+     */
+    public function setEavAttribute($attribute, $value, $save = FALSE) {
+        return $this-&gt;setEavAttributes(array($attribute =&gt; $value), $save);
+    }
+
+    /**
+     * @param array attributes key for get.
+     * @return array
+     */
+    public function getEavAttributes($attributes = array()) {
+        // Get all attributes if not specified.
+        if (empty($attributes)) {
+            $attributes = $this-&gt;getSafeAttributesArray();
+        }
+        // Values array.
+        $values = array();
+        // Queue for load.
+        $loadQueue = new CList;
+        foreach ($attributes as $attribute) {
+            // Check is safe.
+            if ($this-&gt;hasSafeAttribute($attribute)) {
+                $values[$attribute] = $this-&gt;attributes-&gt;itemAt($attribute);
+                // If attribute not set and not load, prepare array for loaded.
+                if (!$this-&gt;preload &amp;&amp; $values[$attribute] === NULL) {
+                    $loadQueue-&gt;add($attribute);
+                }
+            }
+        }
+        // If array for loaded not empty, load attributes.
+        if (!$this-&gt;preload &amp;&amp; $loadQueue-&gt;count() &gt; 0) {
+            $this-&gt;loadEavAttributes($loadQueue-&gt;toArray());
+            foreach ($loadQueue as $attribute) {
+                $values[$attribute] = $this-&gt;attributes-&gt;itemAt($attribute);
+            }
+        }
+        // Delete load queue.
+        unset($loadQueue);
+        // Return values.
+        return $values;
+    }
+
+    /**
+     * @param string attribute for get.
+     * @return mixed
+     */
+    public function getEavAttribute($attribute) {
+        $values = $this-&gt;getEavAttributes(array($attribute));
+        return $this-&gt;attributes-&gt;itemAt($attribute);
+    }
+
+    /**
+     * Limit current AR query to have all attributes and values specified.
+     * @param array attributes values or key for filter models.
+     * @return CActiveRecord
+     */
+    public function withEavAttributes($attributes = array()) {
+        // If not set attributes, search models with anything attributes exists.
+        if (empty($attributes)) {
+            $attributes = $this-&gt;getSafeAttributesArray();
+        }
+        // $attributes be array of elements: $attribute =&gt; $values
+        $criteria = $this-&gt;getFindByEavAttributesCriteria($attributes);
+        // Merge model criteria.
+        $this-&gt;getOwner()-&gt;getDbCriteria()-&gt;mergeWith($criteria);
+        // Return model.
+        return $this-&gt;getOwner();
+    }
+
+    /**
+     * @access protected
+     * @param  $attribute
+     * @param  $value
+     * @return CDbCommand
+     */
+    protected function getSaveEavAttributeCommand($attribute, $value) {
+        $data = array(
+            $this-&gt;entityField =&gt; $this-&gt;getModelId(),
+            $this-&gt;attributeField =&gt; $attribute,
+            $this-&gt;valueField =&gt; $value,
+        );
+        return $this-&gt;getOwner()
+            -&gt;getCommandBuilder()
+            -&gt;createInsertCommand($this-&gt;tableName, $data);
+    }
+
+    /**
+     * @access protected
+     * @param  $attributes
+     * @return CDbCommand
+     */
+    protected function getLoadEavAttributesCommand($attributes) {
+        return $this-&gt;getOwner()
+            -&gt;getCommandBuilder()
+            -&gt;createFindCommand($this-&gt;tableName, $this-&gt;getLoadEavAttributesCriteria($attributes));
+    }
+
+    /**
+     * @access protected
+     * @param  $attributes
+     * @return CDbCommand
+     */
+    protected function getDeleteCommand($attributes = array()) {
+        return $this-&gt;getOwner()
+            -&gt;getCommandBuilder()
+            -&gt;createDeleteCommand($this-&gt;tableName, $this-&gt;getDeleteEavAttributesCriteria($attributes));
+    }
+
+    /**
+     * @access protected
+     * @param  $attributes
+     * @return CDbCriteria
+     */
+    protected function getLoadEavAttributesCriteria($attributes = array()) {
+        $criteria = new CDbCriteria;
+        $criteria-&gt;addCondition(&quot;{$this-&gt;entityField} = {$this-&gt;getModelId()}&quot;);
+        if (!empty($attributes)) {
+            $criteria-&gt;addInCondition($this-&gt;attributeField, $attributes);
+        }
+        return $criteria;
+    }
+
+    /**
+     * @access protected
+     * @param  $attributes
+     * @return CDbCriteria
+     */
+    protected function getDeleteEavAttributesCriteria($attributes = array()) {
+        return $this-&gt;getLoadEavAttributesCriteria($attributes);
+    }
+
+    /**
+     * @access protected
+     * @param  $attributes
+     * @return CDbCriteria
+     */
+    protected function getFindByEavAttributesCriteria($attributes){
+        $criteria = new CDbCriteria();
+        $pk = $this-&gt;getModelTableFk();
+
+        $conn = $this-&gt;getOwner()-&gt;getDbConnection();
+        $i = 0;
+        foreach ($attributes as $attribute =&gt; $values) {
+            // If search models with attribute name with specified values.
+            if (is_string($attribute)) {
+                $attribute = $conn-&gt;quoteValue($attribute);
+                if (!is_array($values)) $values = array($values);
+                foreach ($values as $value) {
+                    $value = $conn-&gt;quoteValue($value);
+                    $criteria-&gt;join .= &quot;\nJOIN {$this-&gt;tableName} eavb$i&quot;
+                                    .  &quot;\nON t.{$pk} = eavb$i.{$this-&gt;entityField}&quot;
+                                    .  &quot;\nAND eavb$i.{$this-&gt;attributeField} = $attribute&quot;
+                                    .  &quot;\nAND eavb$i.{$this-&gt;valueField} = $value&quot;;
+                    $i++;
+                }
+            }
+            // If search models with attribute name with anything values.
+            elseif (is_int($attribute)) {
+                $values = $conn-&gt;quoteValue($values);
+                $criteria-&gt;join .= &quot;\nJOIN {$this-&gt;tableName} eavb$i&quot;
+                                .  &quot;\nON t.{$pk} = eavb$i.{$this-&gt;entityField}&quot;
+                                .  &quot;\nAND eavb$i.{$this-&gt;attributeField} = $values&quot;;
+                $i++;
+            }
+        }
+        $criteria-&gt;distinct = TRUE;
+        $criteria-&gt;group .= &quot;t.{$pk}&quot;;
+        return $criteria;
+    }
+}
+</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all()
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,85 @@
+<html>
+    <head>
+        <script type="text/javascript" src="../../../../js/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="../../../../syntax_highlighter/scripts/shCore.js"></script>
+        <script type="text/javascript" src="../../../../syntax_highlighter/scripts/shBrushJScript.js"></script>
+        <script type="text/javascript" src="../../../../syntax_highlighter/scripts/shBrushPhp.js"></script>
+        <script type="text/javascript" src="../../../../syntax_highlighter/scripts/shBrushXml.js"></script>
+        <link href="../../../../syntax_highlighter/styles/shCore.css" rel="stylesheet" type="text/css" />
+        <link href="../../../../syntax_highlighter/styles/shCoreEclipse.css" rel="stylesheet" type="text/css" />
+        <link href="../../../../syntax_highlighter/styles/shThemeWordpress.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+
+/**
+ *
+ */
+class EGithubUser extends EGithubModel
+{
+	/**
+	 * http://developer.github.com/v3/users/#get-a-single-user
+	 * http://developer.github.com/v3/users/#get-the-authenticated-user
+	 *
+	 * @return array
+	 */
+	public function attributeNames()
+	{
+		return array(
+			'login',
+	        'id',
+	        'avatar_url',
+			//'gravatar_id',
+	        'url',
+	        'name',
+	        'company',
+	        'blog',
+	        'location',
+	        'email',
+	        'hireable',
+	        'bio',
+	        'public_repos',
+			'public_gists',
+			'followers',
+			'following',
+			'html_url',
+			'created_at',
+			'type', // User
+			// for private users only
+			'total_private_repos',
+			'owned_private_repos',
+			'private_gists',
+			'disk_usage',
+			'collaborators',
+//			'plan',
+		);
+	}
+
+	public function relations()
+	{
+		return array(
+			'plan' =&gt; array(static::RELATION_ONE, 'EGithubUserPlan'),
+		);
+	}
+
+	public function findScopes()
+	{
+		return array(
+			'find' =&gt; '/users'
+		);
+	}
+
+	public static function model($className=__CLASS__)
+	{
+	    return parent::model($className);
+	}
+}
+</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all()
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>

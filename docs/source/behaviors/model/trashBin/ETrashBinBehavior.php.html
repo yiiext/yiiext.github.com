@@ -1,0 +1,157 @@
+<html>
+    <head>
+        <script type="text/javascript" src="../../../../js/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="../../../../syntax_highlighter/scripts/shCore.js"></script>
+        <script type="text/javascript" src="../../../../syntax_highlighter/scripts/shBrushJScript.js"></script>
+        <script type="text/javascript" src="../../../../syntax_highlighter/scripts/shBrushPhp.js"></script>
+        <script type="text/javascript" src="../../../../syntax_highlighter/scripts/shBrushXml.js"></script>
+        <link href="../../../../syntax_highlighter/styles/shCore.css" rel="stylesheet" type="text/css" />
+        <link href="../../../../syntax_highlighter/styles/shCoreEclipse.css" rel="stylesheet" type="text/css" />
+        <link href="../../../../syntax_highlighter/styles/shThemeWordpress.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+/**
+ * ETrashBinBehavior class file.
+ *
+ * @author Veaceslav Medvedev &lt;slavcopost@gmail.com&gt;
+ * @link http://code.google.com/p/yiiext/
+ * @license http://www.opensource.org/licenses/mit-license.php
+ */
+
+/**
+ * ETrashBinBehavior allows you to remove the model in the trash bin and restore them when need.
+ *
+ * @author Veaceslav Medvedev &lt;slavcopost@gmail.com&gt;
+ * @version 0.2
+ * @package yiiext.behaviors.model.trashBin
+ * @since 1.1.4
+ */
+class ETrashBinBehavior extends CActiveRecordBehavior
+{
+	/**
+	 * @var string The name of the table where data stored.
+	 * Required to set on init behavior.
+	 * No defaults. Example: &quot;isRemoved&quot;.
+	 */
+	public $trashFlagField;
+	/**
+	 * @var mixed The value to set for removed model.
+	 * Default is 1.
+	 */
+	public $removedFlag=1;
+	/**
+	 * @var mixed The value to set for restored model.
+	 * Default is 0.
+	 */
+	public $restoredFlag=0;
+	/**
+	 * @var bool If except removed model in find results.
+	 * Default is false.
+	 */
+	public $findRemoved=false;
+	/**
+	 * @param bool The flag to disable filter removed models in the next query.
+	 */
+	protected $_withRemoved=false;
+
+	public function attach($owner)
+	{
+		// Check required var trashFlagField
+		if(!is_string($this-&gt;trashFlagField) || empty($this-&gt;trashFlagField))
+		{
+			throw new CException(Yii::t('yiiext','Required var &quot;{class}.{property}&quot; not set.',
+				array('{class}'=&gt;get_class($this),'{property}'=&gt;'trashFlagField')));
+		}
+
+		parent::attach($owner);
+	}
+	/**
+	 * Set value for trash field.
+	 *
+	 * @param mixed Value for trash field.   
+	 * @return CActiveRecord
+	 */
+	public function setTrashFlag($value)
+	{
+		$owner=$this-&gt;getOwner();
+		$owner-&gt;{$this-&gt;trashFlagField}=$value;
+		
+		return $owner;
+	}
+	/**
+	 * Remove model in trash bin.
+	 *
+	 * @return CActiveRecord
+	 */
+	public function remove()
+	{
+		return $this-&gt;setTrashFlag($this-&gt;removedFlag);
+	}
+	/**
+	 * Restore removed model from trash bin.
+	 *
+	 * @return CActiveRecord
+	 */
+	public function restore()
+	{
+		return $this-&gt;setTrashFlag($this-&gt;restoredFlag);
+	}
+	/**
+	 * Check if model is removed in trash bin.
+	 *
+	 * @return bool
+	 */
+	public function getIsRemoved()
+	{
+		return $this-&gt;getOwner()-&gt;{$this-&gt;trashFlagField}==$this-&gt;removedFlag;
+	}
+	/**
+	 * Disable excepting removed models for next search.
+	 *
+	 * @return CActiveRecord
+	 */
+	public function withRemoved()
+	{
+		$this-&gt;_withRemoved=true;
+		return $this-&gt;getOwner();
+	}
+	/**
+	 * Add condition to query for filter removed models.
+	 *
+	 * @return CActiveRecord
+	 * @since 1.1.4
+	 */
+	public function filterRemoved()
+	{
+		$owner=$this-&gt;getOwner();
+		$criteria=$owner-&gt;getDbCriteria();
+		
+		$criteria-&gt;addCondition($this-&gt;trashFlagField.'!='.CDbCriteria::PARAM_PREFIX.CDbCriteria::$paramCount);
+		$criteria-&gt;params[CDbCriteria::PARAM_PREFIX.CDbCriteria::$paramCount++]=$this-&gt;removedFlag;
+
+		return $owner;
+	}
+	/**
+	 * Add condition before find, for except removed models.
+	 *
+	 * @param CEvent
+	 */
+	public function beforeFind(CEvent $event)
+	{
+		if($this-&gt;getEnabled() &amp;&amp; !$this-&gt;findRemoved &amp;&amp; !$this-&gt;_withRemoved)
+			$this-&gt;filterRemoved();
+
+		$this-&gt;_withRemoved=false;
+		parent::beforeFind($event);
+	}
+}
+</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all()
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>

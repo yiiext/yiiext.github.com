@@ -1,0 +1,115 @@
+<html>
+    <head>
+        <script type="text/javascript" src="../../../js/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shCore.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushJScript.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushPhp.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushXml.js"></script>
+        <link href="../../../syntax_highlighter/styles/shCore.css" rel="stylesheet" type="text/css" />
+        <link href="../../../syntax_highlighter/styles/shCoreEclipse.css" rel="stylesheet" type="text/css" />
+        <link href="../../../syntax_highlighter/styles/shThemeWordpress.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+/**
+ * Chm class file.
+ *
+ * @author Veaceslav Medvedev &lt;slavcopost@gmail.com&gt;
+ * @link http://code.google.com/p/yiiext/
+ * @license http://www.opensource.org/licenses/mit-license.php
+ */
+
+require_once(dirname(__FILE__).'/EChmFile.php');
+require_once(dirname(__FILE__).'/EChmHhcFile.php');
+require_once(dirname(__FILE__).'/EChmHhkFile.php');
+require_once(dirname(__FILE__).'/EChmHhcItem.php');
+require_once(dirname(__FILE__).'/EChmHhkItem.php');
+require_once(dirname(__FILE__).'/EChmHhpFile.php');
+require_once(dirname(__FILE__).'/EChmWindow.php');
+
+/**
+ * Chm.
+ *
+ * @author Veaceslav Medvedev &lt;slavcopost@gmail.com&gt;
+ * @version 0.1
+ * @package yiiext.components.chm
+ */
+class EChm extends CComponent
+{
+	protected $toc;
+	protected $index;
+	protected $project;
+
+	public function __construct($projectOptions=array(),$tocOptions=array(),$indexOptions=array())
+	{
+		$this-&gt;project=new EChmHhpFile($projectOptions);
+		$this-&gt;toc=new EChmHhcFile($tocOptions);
+		$this-&gt;index=new EChmHhkFile($indexOptions);
+	}
+
+	public function save()
+	{
+		$name=basename($this-&gt;project-&gt;compiledFile,'.chm');
+		$dir=dirname($this-&gt;project-&gt;compiledFile);
+
+		if(!is_dir($dir))
+			throw new CException(Yii::t('yiiext','Directory &quot;{directory} not available.&quot;.',array('{directory}'=&gt;$dir)));
+
+		if($this-&gt;project-&gt;contentsFile===NULL)
+			$this-&gt;project-&gt;contentsFile=$dir.'/'.$name.'.hhc';
+
+		if($this-&gt;project-&gt;indexFile===NULL)
+			$this-&gt;project-&gt;indexFile=$dir.'/'.$name.'.hhk';
+
+		if($this-&gt;project-&gt;path===NULL)
+			$this-&gt;project-&gt;path=$dir.'/'.$name.'.hhp';
+
+		$windows=$this-&gt;project-&gt;getWindows();
+		if($this-&gt;project-&gt;defaultWindow===NULL || !key_exists($this-&gt;project-&gt;defaultWindow,$windows))
+		{
+			reset($windows);
+			$this-&gt;project-&gt;defaultWindow=current($windows)-&gt;id;
+		}
+
+		$this-&gt;toc-&gt;save($this-&gt;project-&gt;contentsFile);
+		$this-&gt;index-&gt;save($this-&gt;project-&gt;indexFile);
+		$this-&gt;project-&gt;save($this-&gt;project-&gt;path);
+
+		// generate project
+		$exeFile=dirname(__FILE__).'/vendors/hhc.exe';
+		exec('&quot;'.$exeFile.'&quot; &quot;'.$this-&gt;project-&gt;path.'&quot;', $output, $return_var);
+
+		if(!file_exists($this-&gt;project-&gt;compiledFile))
+			throw new CException(Yii::t('yiiext','Cannot save .chm file &quot;{file}&quot;.'.&quot;\nReturn: $return_var\nOutput:\n&quot;.implode(&quot;\n&quot;, $output),array('{file}'=&gt;$this-&gt;project-&gt;compiledFile)));
+
+		return $this-&gt;project-&gt;compiledFile;
+	}
+	public function addWindow($config)
+	{
+		$window=$this-&gt;project-&gt;addWindow($config);
+		//$window-&gt;tocPath=$this-&gt;project-&gt;contentsFile;
+		//$window-&gt;indexPath='guide.hhk';
+		return $window;
+	}
+	public function addFile($path)
+	{
+		return $this-&gt;project-&gt;addFile($path);
+	}
+	public function addTocItem($config)
+	{
+		return $this-&gt;toc-&gt;addItem($config);
+	}
+	public function addIndexItem($config)
+	{
+		return $this-&gt;index-&gt;addItem($config);
+	}
+}
+</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all()
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>

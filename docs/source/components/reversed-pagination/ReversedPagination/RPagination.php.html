@@ -1,0 +1,116 @@
+<html>
+    <head>
+        <script type="text/javascript" src="../../../../js/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="../../../../syntax_highlighter/scripts/shCore.js"></script>
+        <script type="text/javascript" src="../../../../syntax_highlighter/scripts/shBrushJScript.js"></script>
+        <script type="text/javascript" src="../../../../syntax_highlighter/scripts/shBrushPhp.js"></script>
+        <script type="text/javascript" src="../../../../syntax_highlighter/scripts/shBrushXml.js"></script>
+        <link href="../../../../syntax_highlighter/styles/shCore.css" rel="stylesheet" type="text/css" />
+        <link href="../../../../syntax_highlighter/styles/shCoreEclipse.css" rel="stylesheet" type="text/css" />
+        <link href="../../../../syntax_highlighter/styles/shThemeWordpress.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+/**
+ * RPagination class file.
+ *
+ * @author DeusModus &lt;maximebaldin@gmail.com&gt;
+ * @link http://deusmodus.ru/
+ * @license BSD
+ */
+
+/**
+ * RPagination represents information relevant to pagination.
+ *
+ * When data needs to be rendered in multiple pages, we can use RPagination to
+ * represent information such as {@link getItemCount total item count},
+ * {@link getPageSize page size}, {@link getCurrentPage current page}, etc.
+ * These information can be passed to {@link CBasePager pagers} to render
+ * pagination buttons or links.
+ *
+ * Example:
+ *
+ * Controller action:
+ * &lt;pre&gt;
+ * function actionIndex(){
+ *     $criteria = new CDbCriteria();
+ *     $count=Article::model()-&gt;count($criteria);
+ *     $pages=new CPagination($count);
+ *
+ *     // results per page
+ *     $pages-&gt;pageSize=10;
+ *     $pages-&gt;applyLimit($criteria);
+ *     $models = Post::model()-&gt;findAll($criteria);
+ *
+ *     $this-&gt;render('index', array(
+ *     'models' =&gt; $models,
+ *          'pages' =&gt; $pages
+ *     ));
+ * }
+ * &lt;/pre&gt;
+ *
+ * View:
+ * &lt;pre&gt;
+ * &lt;?php foreach($models as $model): ?&gt;
+ *     // display a model
+ * &lt;?php endforeach; ?&gt;
+ *
+ * // display pagination
+ * &lt;?php $this-&gt;widget('CLinkPager', array(
+ *     'pages' =&gt; $pages,
+ * )) ?&gt;
+ * &lt;/pre&gt;
+ *
+ * @author DeusModus &lt;maximebaldin@gmail.com&gt;
+ */
+class RPagination extends CPagination
+{
+    private $_currentPage;
+
+     /*
+	 * @param boolean $recalculate whether to recalculate the current page based on the page size and item count.
+	 * @return integer the zero-based index of the current page. Defaults to 0.
+	 */
+    public function getCurrentPage($recalculate = true)
+    {
+        if ($this-&gt;_currentPage === null || $recalculate) {
+            if (isset($_GET[$this-&gt;pageVar])) {
+                $this-&gt;_currentPage = (int)$_GET[$this-&gt;pageVar] - 1;
+                if ($this-&gt;validateCurrentPage) {
+                    $pageCount = $this-&gt;getPageCount();
+                    if ($this-&gt;_currentPage &gt;= $pageCount){
+                        $this-&gt;_currentPage = $pageCount - 1;
+                    }
+                }
+                if ($this-&gt;_currentPage &lt; 0){
+                    $this-&gt;_currentPage = 0;
+                }
+            }
+            else{
+                $this-&gt;_currentPage = $this-&gt;getPageCount()-1;
+            }
+        }
+        $reversePageNumber = $this-&gt;getPageCount() - $this-&gt;_currentPage - 1;
+        return $reversePageNumber;
+    }
+
+	public function createPageUrl($controller,$page)
+	{
+		$params=$this-&gt;params===null ? $_GET : $this-&gt;params;
+		if($page&gt;=0 &amp;&amp; $page!=$this-&gt;getPageCount()-1) // last page is the default
+			$params[$this-&gt;pageVar]=$page+1;
+        else{
+            unset($params[$this-&gt;pageVar]);
+        }
+		return $controller-&gt;createUrl($this-&gt;route,$params);
+	}
+}
+</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all()
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>

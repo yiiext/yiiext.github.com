@@ -1,0 +1,162 @@
+<html>
+    <head>
+        <script type="text/javascript" src="../../../js/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shCore.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushJScript.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushPhp.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushXml.js"></script>
+        <link href="../../../syntax_highlighter/styles/shCore.css" rel="stylesheet" type="text/css" />
+        <link href="../../../syntax_highlighter/styles/shCoreEclipse.css" rel="stylesheet" type="text/css" />
+        <link href="../../../syntax_highlighter/styles/shThemeWordpress.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+/**
+ * ESwfobjectWidget class file.
+ *
+ * @author Veaceslav Medvedev &lt;slavcopost@gmail.com&gt;
+ * @link http://code.google.com/p/yiiext/
+ * @license http://www.opensource.org/licenses/bsd-license.php
+ */
+/**
+ * ESwfobjectWidget embedding Adobe Flash Player content using SWFObject 2.
+ *
+ * @author Veaceslav Medvedev &lt;slavcopost@gmail.com&gt;
+ * @version 0.1
+ * @package yiiext.widgets.swfobject
+ * @link http://code.google.com/p/swfobject/
+ */
+class ESwfObjectWidget extends CWidget
+{
+	/**
+	* @var string the tag name. It used flash container.
+	*/
+	public $tag='div';
+	/**
+	 * @var array html options for container.
+	 */
+	public $htmlOptions=array();
+	/**
+	 * @var string URL where to look assets.
+	 */
+	public $assetsUrl;
+	/**
+	 * @var string script name.
+	 */
+	public $scriptFile;
+	/**
+	 * @var string
+	 */
+	public $swfUrl='';
+	/**
+	 * @var int
+	 */
+	public $width;
+	/**
+	 * @var int
+	 */
+	public $height;
+	/**
+	 * @var string
+	 */
+	public $version='8';
+	/**
+	 * @var string|boolean
+	 */
+	public $expressInstallSwfurl=false;
+	/**
+	 * @var array
+	 */
+	public $flashvars=array();
+	/**
+	 * @var array
+	 */
+	public $params=array();
+	/**
+	 * @var array
+	 */
+	public $attributes=array();
+	/**
+	 * @var string|boolean
+	 */
+	public $callbackFn=false;
+	/**
+	* @var integer the position of the JavaScript code.
+	* @see CClientScript::registerScriptFile()
+	*/
+	public $scriptPosition=CClientScript::POS_READY;
+
+	/**
+	 * Init widget.
+	 */
+	public function init()
+	{
+		if(empty($this-&gt;swfUrl))
+			throw new CException('Invalid swf url.');
+
+		if(empty($this-&gt;width))
+			throw new CException('Invalid swf width.');
+
+		if(empty($this-&gt;height))
+			throw new CException('Invalid swf height.');
+
+		if($this-&gt;assetsUrl===null)
+			$this-&gt;assetsUrl=Yii::app()-&gt;getAssetManager()-&gt;publish(dirname(__FILE__).'/assets',false,-1,YII_DEBUG);
+
+		if($this-&gt;scriptFile===null)
+			$this-&gt;scriptFile=YII_DEBUG?'swfobject.v2.2.js':'swfobject.v2.2.min.js';
+
+		if(!isset($this-&gt;htmlOptions['id']))
+			$this-&gt;htmlOptions['id']=$this-&gt;getId();
+		else
+			$this-&gt;setId($this-&gt;htmlOptions['id']);
+
+		$this-&gt;registerClientScript();
+
+		echo CHtml::openTag($this-&gt;tag,$this-&gt;htmlOptions);
+		$this-&gt;beginClip(__CLASS__.$this-&gt;getId());
+	}
+	/**
+	 * Run widget.
+	 */
+	public function run()
+	{
+		$this-&gt;endClip(__CLASS__.$this-&gt;getId());
+		$altText=$this-&gt;getController()-&gt;getClips()-&gt;itemAt(__CLASS__.$this-&gt;getId());
+		if(empty($altText))
+			$altText=Yii::t('yiiext','Flash cannot show, please update your player.');
+		echo $altText;
+		echo CHtml::closeTag($this-&gt;tag);
+	}
+	/**
+	 * @return void
+	 * Register CSS and Script.
+	 */
+	protected function registerClientScript()
+	{
+		$cs=Yii::app()-&gt;getClientScript();
+		$cs-&gt;registerScriptFile($this-&gt;assetsUrl.'/'.$this-&gt;scriptFile);
+		$cs-&gt;registerScript(__CLASS__.'#'.$this-&gt;getId(),
+		'swfobject.embedSWF('.
+			CJavaScript::encode($this-&gt;swfUrl).','.
+			CJavaScript::encode($this-&gt;getId()).','.
+			CJavaScript::encode($this-&gt;width).','.
+			CJavaScript::encode($this-&gt;height).','.
+			CJavaScript::encode(strval($this-&gt;version)).','.
+			CJavaScript::encode($this-&gt;expressInstallSwfurl).','.
+			CJavaScript::encode($this-&gt;flashvars).','.
+			CJavaScript::encode($this-&gt;params).','.
+			CJavaScript::encode($this-&gt;attributes).','.
+			CJavaScript::encode($this-&gt;callbackFn).
+		');',$this-&gt;scriptPosition);
+	}
+}
+</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all()
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>

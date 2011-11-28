@@ -1,0 +1,170 @@
+<html>
+    <head>
+        <script type="text/javascript" src="../../../js/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shCore.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushJScript.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushPhp.js"></script>
+        <script type="text/javascript" src="../../../syntax_highlighter/scripts/shBrushXml.js"></script>
+        <link href="../../../syntax_highlighter/styles/shCore.css" rel="stylesheet" type="text/css" />
+        <link href="../../../syntax_highlighter/styles/shCoreEclipse.css" rel="stylesheet" type="text/css" />
+        <link href="../../../syntax_highlighter/styles/shThemeWordpress.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+/**
+ * EUploadifyWidget class file.
+ *
+ * @author Veaceslav Medvedev &lt;slavcopost@gmail.com&gt;
+ * @link http://code.google.com/p/yiiext/
+ * @license http://www.opensource.org/licenses/bsd-license.php
+ */
+/**
+ * EUploadifyWidget adds {@link http://www.uploadify.com/ uploadify jQuery plugin} as a form field widget.
+ *
+ * @author Veaceslav Medvedev &lt;slavcopost@gmail.com&gt;
+ * @version 1.7
+ * @package yiiext.widgets.uploadify
+ * @link http://www.uploadify.com/
+ */
+class EUploadifyWidget extends CInputWidget
+{
+	/**
+	 * @var array the uploadify package.
+	 * Defaults to array(
+	 *     'basePath'=&gt;dirname(__FILE__).'/vendors/jquery.uploadify-v2.1.4',
+	 *     'js'=&gt;array('jquery.uploadify'.(YII_DEBUG?'':'.min').'.js','swfobject.js'),
+	 *     'css'=&gt;array('uploadify.css'),
+	 *     'depends'=&gt;array('jquery'),
+	 * )
+	 * @see CClientScript::$packages
+	 * @since 1.7
+	 */
+	public $package=array();
+	/**
+	 * @var string|null the name of the POST parameter where save session id.
+	 * Or null to disable sending session id. Use {@link EForgerySessionFilter} to load session by id from POST.
+	 * Defaults to null.
+	 * @see EForgerySessionFilter
+	 */
+	public $sessionParam;
+	/**
+	 * @var array extension options. For more info read {@link http://www.uploadify.com/documentation/ documentation}
+	 */
+	public $options=array();
+
+	/**
+	 * Init widget.
+	 */
+	public function init()
+	{
+		list($this-&gt;name,$this-&gt;id)=$this-&gt;resolveNameId();
+		// Set defaults package.
+		if($this-&gt;package==array())
+		{
+			$this-&gt;package=array(
+				'basePath'=&gt;dirname(__FILE__).'/vendors/jquery.uploadify-v2.1.4',
+				'js'=&gt;array(
+					'jquery.uploadify'.(YII_DEBUG?'':'.min').'.js',
+					'swfobject.js',
+				),
+				'css'=&gt;array(
+					'uploadify.css',
+				),
+				'depends'=&gt;array(
+					'jquery',
+				),
+			);
+		}
+		// Publish package assets. Force copy assets in debug mode.
+		if(!isset($this-&gt;package['baseUrl']))
+		{
+			$this-&gt;package['baseUrl']=Yii::app()-&gt;getAssetManager()-&gt;publish($this-&gt;package['basePath'],false,-1,YII_DEBUG);
+		}
+
+		$baseUrl=$this-&gt;package['baseUrl'];
+
+		if(!isset($this-&gt;options['uploader']))
+		{
+			$this-&gt;options['uploader']=$baseUrl.'/uploadify.swf';
+		}
+
+		if(!isset($this-&gt;options['cancelImg']))
+		{
+			$this-&gt;options['cancelImg']=$baseUrl.'/cancel.png';
+		}
+
+		if(!isset($this-&gt;options['expressInstall']))
+		{
+			$this-&gt;options['expressInstall']=$baseUrl.'/expressInstall.swf';
+		}
+
+		if(!isset($this-&gt;options['script']))
+		{
+			$this-&gt;options['script']=$baseUrl.'/uploadify.php';
+		}
+
+		// TODO: Decide what to do with checkScript.
+		// if(!isset($this-&gt;options['checkScript']))
+		// {
+		//  	$this-&gt;options['checkScript']=$this-&gt;assetsUrl.'/check.php';
+		// }
+
+		// Send session id with via POST.
+		if($this-&gt;sessionParam!==null&amp;&amp;isset($this-&gt;options['scriptData'][$this-&gt;sessionParam]))
+		{
+			$this-&gt;options['scriptData'][$this-&gt;sessionParam]=Yii::app()-&gt;getSession()-&gt;getSessionId();
+		}
+
+		// TODO: Csrf Validation
+		// &ETH;&iexcl; &Ntilde;ç&Ntilde;Ç&ETH;&cedil;&ETH;&frac14; &ETH;&iquest;&ETH;&frac34;&ETH;&ordm;&ETH;&deg; &ETH;&iquest;&Ntilde;Ä&ETH;&frac34;&ETH;&plusmn;&ETH;&raquo;&ETH;&micro;&ETH;&frac14;&ETH;&deg;. &ETH;&cent;.&ETH;&ordm;. flash upload &ETH;&frac12;&ETH;&micro; &ETH;&iquest;&ETH;&frac34;&Ntilde;Å&Ntilde;ã&ETH;&raquo;&ETH;&deg;&ETH;&micro;&Ntilde;Ç &ETH;&ordm;&Ntilde;É&ETH;&ordm;&ETH;&cedil; &ETH;&cedil;&ETH;&middot;-&ETH;&middot;&ETH;&deg; &ETH;&iquest;&ETH;&frac34;&ETH;&raquo;&ETH;&cedil;&Ntilde;Ç&ETH;&cedil;&ETH;&ordm;&ETH;&cedil; &ETH;&plusmn;&ETH;&micro;&ETH;&middot;&ETH;&frac34;&ETH;&iquest;&ETH;&deg;&Ntilde;Å&ETH;&frac12;&ETH;&frac34;&Ntilde;Å&Ntilde;Ç&ETH;&cedil;.
+		// if(Yii::app()-&gt;getRequest()-&gt;enableCsrfValidation &amp;&amp; (!isset($this-&gt;options['method']) || $this-&gt;options['method']=='POST'))
+		// {
+		//  	$this-&gt;options['scriptData'][Yii::app()-&gt;getRequest()-&gt;csrfTokenName]=Yii::app()-&gt;getRequest()-&gt;getCsrfToken();
+		// }
+
+		// fileDesc is required if fileExt set.
+		if(!empty($this-&gt;options['fileExt'])&amp;&amp;empty($this-&gt;options['fileDesc']))
+		{
+			$this-&gt;options['fileDesc']=Yii::t('yiiext','Supported files ({fileExt})',array('{fileExt}'=&gt;$this-&gt;options['fileExt']));
+		}
+
+		// Generate fileDataName for linked with model attribute.
+		$this-&gt;options['fileDataName']=$this-&gt;name;
+
+		$this-&gt;registerClientScript();
+	}
+	/**
+	 * Run widget.
+	 */
+	public function run()
+	{
+		if($this-&gt;hasModel())
+		{
+			echo CHtml::activeFileField($this-&gt;model,$this-&gt;attribute,$this-&gt;htmlOptions);
+		}
+		else
+		{
+			echo CHtml::fileField($this-&gt;name,$this-&gt;value,$this-&gt;htmlOptions);
+		}
+	}
+	/**
+	 * @return void
+	 * Register CSS and Script.
+	 */
+	protected function registerClientScript()
+	{
+		$cs=Yii::app()-&gt;getClientScript();
+		$cs-&gt;packages['uploadify']=$this-&gt;package;
+		$cs-&gt;registerPackage('uploadify');
+		$cs-&gt;registerScript(__CLASS__.'#'.$this-&gt;id,'jQuery(&quot;#'.$this-&gt;id.'&quot;).uploadify('.CJavaScript::encode($this-&gt;options).');',CClientScript::POS_READY);
+	}
+}
+</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all()
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>
