@@ -43,8 +43,7 @@
         <div id="repo">
             <h1>Шаблонизатор Smarty для Yii</h1>
 
-<p>Данное расширение позволяет использовать <a href="http://www.smarty.net/">Smarty</a> версии 2
-или 3 в шаблонах Yii.</p>
+<p>Данное расширение позволяет использовать <a href="http://www.smarty.net/">Smarty</a> версии 3 в приложениях Yii.</p>
 
 <h3>Полезные ссылки</h3>
 
@@ -76,6 +75,11 @@
     </span><span class="php-hl-quotes">'</span><span class="php-hl-string">fileExtension</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">.tpl</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
     </span><span class="php-hl-comment">//</span><span class="php-hl-comment">'pluginsDir' =&gt; 'application.smartyPlugins',</span>
     <span class="php-hl-comment">//</span><span class="php-hl-comment">'configDir' =&gt; 'application.smartyConfig',</span>
+    <span class="php-hl-comment">//</span><span class="php-hl-comment">'prefilters' =&gt; array(array('MyClass','filterMethod')),</span>
+    <span class="php-hl-comment">//</span><span class="php-hl-comment">'postfilters' =&gt; array(),</span>
+    <span class="php-hl-comment">//</span><span class="php-hl-comment">'config'=&gt;array(</span>
+    <span class="php-hl-comment">//</span><span class="php-hl-comment">    'force_compile' =&gt; YII_DEBUG,</span>
+    <span class="php-hl-comment">//</span><span class="php-hl-comment">   ... any Smarty object parameter</span>
 <span class="php-hl-brackets">)</span><span class="php-hl-code">,</span></pre></div></div>
 
 <p>There are some more options on configuring Smarty properties now. Will add documentation soon.</p>
@@ -92,7 +96,15 @@
     
     <h2 id="changelog">Changelog</h2>
 
-    <h3>1.0.1</h3>
+    <h3>1.0.2</h3>
+
+<ul>
+<li>Added ability to define pre- and postfilters in yii config (grigori)
+Filters defined with a class-method array callback syntax are lazy-loaded by yii autoloader
+for compilation only.</li>
+</ul>
+
+<h3>1.0.1</h3>
 
 <ul>
 <li>Smarty 3.1 compatibility (Sam Dark, cebe)</li>
@@ -188,6 +200,10 @@
             <li>1.0.1 -
         <a href="https://github.com/yiiext/smarty-renderer/tarball/1.0.1">tar</a>,
         <a href="https://github.com/yiiext/smarty-renderer/zipball/1.0.1">zip</a>
+        </li>
+            <li>v1.0.2 -
+        <a href="https://github.com/yiiext/smarty-renderer/tarball/v1.0.2">tar</a>,
+        <a href="https://github.com/yiiext/smarty-renderer/zipball/v1.0.2">zip</a>
         </li>
         </ul>
 
