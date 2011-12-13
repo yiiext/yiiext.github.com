@@ -1,0 +1,160 @@
+/*
+yiiext
+Alexander Makarov, sam@rmcreative.ru
+*/
+body {
+    font: normal 10pt Arial, Helvetica, sans-serif;
+}
+
+a, a:visited {
+    color: #306495;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #73471b;
+    text-decoration: underline;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+    font-family: Calibri, Helvetica, Arial, sans-serif;
+}
+
+h1 {
+    font-size: 1.6em;
+    margin: 1em 0 .5em;
+}
+
+h2 {
+    font-size: 1.5em;
+    margin: 1.07em 0 .535em;
+}
+
+h3 {
+    font-size: 1.4em;
+    margin: 1.14em 0 .57em;
+}
+
+h4 {
+    font-size: 1.3em;
+    margin: 1.23em 0 .615em;
+}
+
+h5 {
+    font-size: 1.2em;
+    margin: 1.33em 0 .67em;
+}
+
+h6 {
+    font-size: 1.1em;
+    margin: 1.6em 0 .8em;
+}
+
+::selection {
+    background: #d3dfee;
+    color: #000;
+}
+
+::-moz-selection {
+    background: #d3dfee;
+    color: #000;
+}
+
+acronym, abbr {
+    cursor: help;
+}
+
+label {
+    cursor: pointer;
+}
+
+hr {
+    height: 1px;
+    color: #ccc;
+    background-color: #ccc;
+    border: none;
+}
+
+/* code */
+pre {
+    display: block;
+    padding: 1em;
+    background: #fcfcfc;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    font-family: Consolas, "Courier New", Courier, mono;
+    margin: 1em 0;
+    font-size: 10pt;
+    line-height: 130%;
+}
+
+code {
+    border-bottom: 1px dotted #ccc;
+    font-weight: bold;
+    color: #666;
+}
+
+/* --- code highlighting --- */
+
+/* html-code */
+.html-hl-brackets,
+.html-hl-reserved {
+    color: #0000e6;
+}
+
+.html-hl-var,
+.html-hl-code,
+.html-hl-quotes,
+.html-hl-string {
+    color: #009933;
+}
+
+/* php-code */
+.php-hl-inlinetags {
+    font-weight: bold;
+}
+
+.php-hl-comment {
+    color: #777;
+}
+
+.php-hl-quotes,
+.php-hl-string {
+    color: #009933;
+}
+
+.php-hl-var {
+    color: #6d3206;
+}
+
+.php-hl-reserved {
+    color: #00e;
+}
+
+/* css-code */
+.css-hl-identifier {
+    color: #007c00;
+    font-weight: bold;
+}
+
+.css-hl-reserved {
+    color: #0000e6;
+}
+
+/* css-sql */
+.sql-hl-reserved {
+    color: #0000e6;
+}
+
+.sql-hl-identifier {
+    color: #007c00;
+}
+
+.sql-hl-var {
+    color: #0000e6;
+}
+
+.sql-hl-quotes, .sql-hl-string {
+    color: #007c00;
+}
