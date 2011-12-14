@@ -51,28 +51,26 @@
 <p>Copy component to <code>extensions/image</code> directory located inside your application and add
 it to the application configuration the following way:</p>
 
-<p><code>php
-&lt;?php
-return array(
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-inlinetags">&lt;?php</span>
+<span class="php-hl-reserved">return</span> <span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-code">
 ...
-    'components'=&gt;array(
+    </span><span class="php-hl-quotes">'</span><span class="php-hl-string">components</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-code">
         ...
-        'image'=&gt;array(
-            'class'=&gt;'ext.image.ImageComponent',
-            'driver'=&gt;'Gd',
-        ),
+        </span><span class="php-hl-quotes">'</span><span class="php-hl-string">image</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">class</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">ext.image.ImageComponent</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+            </span><span class="php-hl-quotes">'</span><span class="php-hl-string">driver</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Gd</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+        </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
         ...
-    ),
+    </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
 ...
-);</code></p>
+</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
 
 <h2>Usage example</h2>
 
-<p><code>php
-&lt;?php
-$image=Yii::app()-&gt;image-&gt;open('example.png');
-$thumbnail=$image-&gt;thumbnail(new Imagine\Image\Box(100,100));
-$thumbnail-&gt;save('example.thumb.png');</code></p>
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-inlinetags">&lt;?php</span>
+<span class="php-hl-var">$image</span><span class="php-hl-code">=</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">image</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">open</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">example.png</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$thumbnail</span><span class="php-hl-code">=</span><span class="php-hl-var">$image</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">thumbnail</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Imagine</span><span class="php-hl-code">\</span><span class="php-hl-identifier">Image</span><span class="php-hl-code">\</span><span class="php-hl-identifier">Box</span><span class="php-hl-brackets">(</span><span class="php-hl-number">100</span><span class="php-hl-code">,</span><span class="php-hl-number">100</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$thumbnail</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">save</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">example.thumb.png</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
 
     
     <h2 id="changelog">Changelog</h2>
@@ -86,7 +84,7 @@ $thumbnail-&gt;save('example.thumb.png');</code></p>
     <div class="repo-head">
         <h3><a href="/extensions/image-component/index.html">image-component</a></h3>
     </div>
-    <p>Image component</p>
+    <p>Image processing with Imagine.</p>
 
     <div class="contributors">
             <a href="https://github.com/creocoder" title="creocoder">

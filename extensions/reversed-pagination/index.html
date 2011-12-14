@@ -15,7 +15,7 @@
 	<link rel="stylesheet" type="text/css" href="/css/web.css" />
 	<link rel="stylesheet" type="text/css" href="/css/form.css" />
 
-	<title>yiiext - Repo Site</title>
+	<title>yiiext - RepoReadme Site</title>
 </head>
 
 <body>
@@ -42,10 +42,35 @@
 
     <div id="content">
         <div id="repo">
-            <h1>Extension reversed-pagination</h1>
+            <p>About</p>
 
+<p>Provides ability to use pagination like on bash.org.ru (main content always on last page, wich is realy first), so on page/1 always fixed materials.
+Requirements</p>
 
-        <p>Sorry, no readme files available jet. Please choose resources on right navigation.</p>
+<p>Yii 1.1.8+ (may not work with previous versions, or may work - don`t know)
+Installation</p>
+
+<p>Copy ReversedPagination to your application/extensions path.</p>
+
+<p>Add 'ext.ReversedPagination.*' element to import section of your yii configuration file. Like this:</p>
+
+<pre>return array(
+    &#039;basePath&#039;=&gt;dirname(__FILE__).DIRECTORY_SEPARATOR.&#039;..&#039;,
+    &#039;name&#039;=&gt;&#039;SiteName&#039;,
+    // autoloading model and component classes
+    &#039;import&#039;=&gt;array(
+        &#039;application.models.*&#039;,
+        &#039;ext.ReversedPagination.*&#039;,
+    ),
+
+</pre>
+
+<p>Usage</p>
+
+<p>See http://www.yiiframework.com/doc/api/1.1/CPagination/ and http://www.yiiframework.com/doc/api/1.1/CLinkPager/ for usage documentation.
+Example</p>
+
+<p>See: bash.org.ru or http://xp-dev.com/svn/bhengine/trunk/</p>
 
     
     <h2 id="changelog">Changelog</h2>
@@ -73,6 +98,7 @@
 
     <h2>Documentation</h2>
     <ul>
+            <li><a href="/extensions/reversed-pagination/readme.en.html">readme en</a></li>
         <li><a href="/extensions/reversed-pagination/index.html#changelog">changelog </a></li>
     </ul>
 

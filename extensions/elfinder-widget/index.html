@@ -48,41 +48,42 @@
 
 <p>После этого виджет можно использовать так:</p>
 
-<pre>&lt;?php
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-inlinetags">&lt;?php</span>
+ 
+<span class="php-hl-reserved">class</span> <span class="php-hl-identifier">SiteController</span> <span class="php-hl-reserved">extends</span> <span class="php-hl-identifier">Controller</span>
+<span class="php-hl-brackets">{</span>
+    <span class="php-hl-reserved">public</span> <span class="php-hl-reserved">function</span> <span class="php-hl-identifier">actions</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span>
+    <span class="php-hl-brackets">{</span>
+        <span class="php-hl-reserved">return</span> <span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+<span class="php-hl-comment">//</span><span class="php-hl-comment"> Обработчик сообщений от файл-менеджера</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">fileManager</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+                <span class="php-hl-quotes">'</span><span class="php-hl-string">class</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">ext.elfinder.ElFinderAction</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+            </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+        </span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+    </span><span class="php-hl-brackets">}</span>
+<span class="php-hl-comment">//</span><span class="php-hl-comment"> ...</span>
+<span class="php-hl-brackets">}</span><span class="php-hl-code">
+~~~~
+И в представлении:</span></pre></div></div>
 
-class SiteController extends Controller
-{
-    public function actions()
-    {
-        return array(
-// Обработчик сообщений от файл-менеджера
-            &#039;fileManager&#039;=&gt;array(
-                &#039;class&#039;=&gt;&#039;ext.elfinder.ElFinderAction&#039;,
-            ),
-        );
-    }
-// ...
-}
+<p>[php]
+&lt;?php
+$this->widget('application.my.form.widgets.elfinder.ElFinderWidget',array(
+    'lang'=>'ru',
+    'url'=>CHtml::normalizeUrl(array('site/fileManager')),
+    'editorCallback'=>'js:function(url) {
+        var funcNum = window.location.search.replace(/^.<em>CKEditorFuncNum=(\d+).</em>$/, "$1");
+//      var langCode = window.location.search.replace(/^.<em>langCode=([a-z]{2}).</em>$/, "$1");</p>
+
+<pre>    window.opener.CKEDITOR.tools.callFunction(funcNum, url);
+    window.close();
+}&#039;,
 </pre>
 
-<p>И в представлении:</p>
-
-<pre>&lt;?php
-$this-&gt;widget(&#039;application.my.form.widgets.elfinder.ElFinderWidget&#039;,array(
-    &#039;lang&#039;=&gt;&#039;ru&#039;,
-    &#039;url&#039;=&gt;CHtml::normalizeUrl(array(&#039;site/fileManager&#039;)),
-    &#039;editorCallback&#039;=&gt;&#039;js:function(url) {
-        var funcNum = window.location.search.replace(/^.*CKEditorFuncNum=(\d+).*$/, &quot;$1&quot;);
-//      var langCode = window.location.search.replace(/^.*langCode=([a-z]{2}).*$/, &quot;$1&quot;);
-
-        window.opener.CKEDITOR.tools.callFunction(funcNum, url);
-        window.close();
-    }&#039;,
-//            &#039;htmlOptions&#039;=&gt;array(&#039;style&#039;=&gt;&#039;height:500px&#039;),
+<p>//            'htmlOptions'=>array('style'=>'height:500px'),
 ));
-</pre>
-
-<p>Внимание, код указан на примере использования с расширением ECKEditor</p>
+~~~~
+Внимание, код указан на примере использования с расширением ECKEditor</p>
 
     
     <h2 id="changelog">Changelog</h2>
@@ -128,7 +129,7 @@ $this-&gt;widget(&#039;application.my.form.widgets.elfinder.ElFinderWidget&#039;
     <h2>Resources</h2>
     <ul>
         <li><a href="https://github.com/yiiext/elfinder-widget">Browse Code</a></li>
-        <li><a href="https://github.com/yiiext/elfinder-widget/issues">Issues</a> (0)</li>        <li><a href="https://github.com/yiiext/elfinder-widget/wiki">Wiki</a></li>        <li>...</li>
+        <li><a href="https://github.com/yiiext/elfinder-widget/issues">Issues</a> (1)</li>        <li><a href="https://github.com/yiiext/elfinder-widget/wiki">Wiki</a></li>        <li>...</li>
     </ul>
 
 </div>

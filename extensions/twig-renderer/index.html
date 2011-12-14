@@ -69,39 +69,35 @@
 <li>Add the following to your config file 'components' section:</li>
 </ul>
 
-<p>```php
-&lt;?php</p>
-
-<pre>&#039;viewRenderer&#039; =&gt; array(
-    &#039;class&#039; =&gt; &#039;ext.ETwigViewRenderer&#039;,
-
-    // All parameters below are optional, change them to your needs
-    &#039;fileExtension&#039; =&gt; &#039;.twig&#039;,
-    &#039;options&#039; =&gt; array(
-        &#039;autoescape&#039; =&gt; true,
-    ),
-    &#039;extentions&#039; =&gt; array(
-        &#039;My_Twig_Extension&#039;,
-    ),
-    &#039;globals&#039; =&gt; array(
-        &#039;html&#039; =&gt; &#039;CHtml&#039;
-    ),
-    &#039;functions&#039; =&gt; array(
-        &#039;rot13&#039; =&gt; &#039;str_rot13&#039;,
-    ),
-    &#039;filters&#039; =&gt; array(
-        &#039;jencode&#039; =&gt; &#039;CJSON::encode&#039;,
-    ),
-    // Change template syntax to Smarty-like (not recommended)
-    &#039;lexerOptions&#039; =&gt; array(
-        &#039;tag_comment&#039;  =&gt; array(&#039;{*&#039;, &#039;*}&#039;),
-        &#039;tag_block&#039;    =&gt; array(&#039;{&#039;, &#039;}&#039;),
-        &#039;tag_variable&#039; =&gt; array(&#039;{$&#039;, &#039;}&#039;)
-    ),
-),
-</pre>
-
-<p>```</p>
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-inlinetags">&lt;?php</span>
+ 
+    <span class="php-hl-quotes">'</span><span class="php-hl-string">viewRenderer</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+        <span class="php-hl-quotes">'</span><span class="php-hl-string">class</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">ext.ETwigViewRenderer</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+ 
+        </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> All parameters below are optional, change them to your needs</span>
+        <span class="php-hl-quotes">'</span><span class="php-hl-string">fileExtension</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">.twig</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+        </span><span class="php-hl-quotes">'</span><span class="php-hl-string">options</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">autoescape</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">true</span><span class="php-hl-code">,
+        </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+        </span><span class="php-hl-quotes">'</span><span class="php-hl-string">extentions</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">My_Twig_Extension</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+        </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+        </span><span class="php-hl-quotes">'</span><span class="php-hl-string">globals</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">html</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">CHtml</span><span class="php-hl-quotes">'</span>
+        <span class="php-hl-brackets">)</span><span class="php-hl-code">,
+        </span><span class="php-hl-quotes">'</span><span class="php-hl-string">functions</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">rot13</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">str_rot13</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+        </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+        </span><span class="php-hl-quotes">'</span><span class="php-hl-string">filters</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">jencode</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">CJSON::encode</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+        </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+        </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> Change template syntax to Smarty-like (not recommended)</span>
+        <span class="php-hl-quotes">'</span><span class="php-hl-string">lexerOptions</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">tag_comment</span><span class="php-hl-quotes">'</span><span class="php-hl-code">  =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">{*</span><span class="php-hl-quotes">'</span><span class="php-hl-code">, </span><span class="php-hl-quotes">'</span><span class="php-hl-string">*}</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+            </span><span class="php-hl-quotes">'</span><span class="php-hl-string">tag_block</span><span class="php-hl-quotes">'</span><span class="php-hl-code">    =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">{</span><span class="php-hl-quotes">'</span><span class="php-hl-code">, </span><span class="php-hl-quotes">'</span><span class="php-hl-string">}</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+            </span><span class="php-hl-quotes">'</span><span class="php-hl-string">tag_variable</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">{$</span><span class="php-hl-quotes">'</span><span class="php-hl-code">, </span><span class="php-hl-quotes">'</span><span class="php-hl-string">}</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span>
+        <span class="php-hl-brackets">)</span><span class="php-hl-code">,
+    </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,</span></pre></div></div>
 
 <h3>Usage</h3>
 
@@ -115,8 +111,7 @@
 
 <h3>Widgets usage example</h3>
 
-<p><code>html
-&lt;div id="mainmenu"&gt;
+<div class="hl-code"><div class="html-hl-main"><pre><span class="html-hl-brackets">&lt;</span><span class="html-hl-reserved">div</span> <span class="html-hl-var">id</span><span class="html-hl-code">=</span><span class="html-hl-quotes">&quot;</span><span class="html-hl-string">mainmenu</span><span class="html-hl-quotes">&quot;</span><span class="html-hl-brackets">&gt;</span><span class="html-hl-code">
     {{ this.widget('zii.widgets.CMenu',{
         'items':[
             {'label':'Home', 'url':['/site/index']},
@@ -126,7 +121,7 @@
             {'label':'Logout ('~App.user.name~')', 'url':['/site/logout'], 'visible':not App.user.isGuest}
         ]
     }, true) }}
-&lt;/div&gt;&lt;!-- mainmenu --&gt;</code></p>
+</span><span class="html-hl-brackets">&lt;/</span><span class="html-hl-reserved">div</span><span class="html-hl-brackets">&gt;</span><span class="html-hl-comment">&lt;!--</span><span class="html-hl-comment"> mainmenu </span><span class="html-hl-comment">--&gt;</span></pre></div></div>
 
     
     <h2 id="changelog">Changelog</h2>
