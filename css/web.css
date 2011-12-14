@@ -33,6 +33,7 @@ body
 {
     border-top: 1px solid #C9E0ED;
     padding: 20px;
+    clear: both;
 }
 
 #sidebar
@@ -95,6 +96,10 @@ body
 	text-decoration:none;
 }
 
+#welcome h2, #welcome p, .sorter, .filter {
+	margin-left: 10px;
+}
+
 #repo {
     float: left;
     width: 70%;
@@ -107,7 +112,16 @@ body
 
 .repo {
     border: solid 1px #ccc;
-    margin: 0 0 30px 0;
+    margin: 10px;
+    padding: 0;
+    width: 280.6px;
+    height: 139px;
+    float: left;
+}
+
+#repo-sidebar .repo {
+    margin: 0 0 10px 0;
+    width: 100%;
 }
 
 .noreadme {
@@ -122,6 +136,7 @@ body
 
 .repo .contributors {
     text-align: right;
+    float: right;
     padding: 0 3px;
 }
 
@@ -132,12 +147,29 @@ body
 .repo p {
     padding: 3px;
     margin: 0;
-    height: 30px;
-    min-height: 30px;
+    height: 80px;
+    min-height: 80px;
+}
+
+#repo-sidebar .repo p {
+    height: 50px;
+    min-height: 50px;
 }
 
 .repo a.readme {
     font-weight: bold;
+}
+
+.readmelist {
+    line-height: 24px;
+    margin-left: 3px;
+    vertical-align: bottom;
+}
+
+.list-view .sorter {
+    font-size: 1.0em !important;
+    text-align: left !important;
+    margin: 5px 0 0 10px !important;
 }
 
 div.flash-error, div.flash-notice, div.flash-success
