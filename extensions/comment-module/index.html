@@ -64,90 +64,84 @@ Features:
 <p>Go to your application baseDir (<code>protected</code> in default yii webapp).
 Clone git repo or <a href="https://github.com/yiiext/comment-module/tags">download</a> latest release.</p>
 
-<p><code>sh
-git clone https://github.com/yiiext/comment-module.git extensions/comment-module</code>
-You can also add it to git as a submodule (run command from root of your repo):</p>
+<div class="hl-code"><div class="sh-hl-main"><pre><span class="sh-hl-identifier">git</span> <span class="sh-hl-identifier">clone</span> <span class="sh-hl-identifier">https</span><span class="sh-hl-code">://</span><span class="sh-hl-identifier">github</span><span class="sh-hl-code">.</span><span class="sh-hl-identifier">com</span><span class="sh-hl-code">/</span><span class="sh-hl-identifier">yiiext</span><span class="sh-hl-code">/</span><span class="sh-hl-identifier">comment</span><span class="sh-hl-code">-</span><span class="sh-hl-identifier">module</span><span class="sh-hl-code">.</span><span class="sh-hl-identifier">git</span> <span class="sh-hl-identifier">extensions</span><span class="sh-hl-code">/</span><span class="sh-hl-identifier">comment</span><span class="sh-hl-code">-</span><span class="sh-hl-identifier">module</span></pre></div></div>
 
-<p><code>sh
-git submodule add https://github.com/yiiext/comment-module.git protected/extensions/comment-module</code></p>
+<p>You can also add it to git as a submodule (run command from root of your repo):</p>
+
+<div class="hl-code"><div class="sh-hl-main"><pre><span class="sh-hl-identifier">git</span> <span class="sh-hl-identifier">submodule</span> <span class="sh-hl-identifier">add</span> <span class="sh-hl-identifier">https</span><span class="sh-hl-code">://</span><span class="sh-hl-identifier">github</span><span class="sh-hl-code">.</span><span class="sh-hl-identifier">com</span><span class="sh-hl-code">/</span><span class="sh-hl-identifier">yiiext</span><span class="sh-hl-code">/</span><span class="sh-hl-identifier">comment</span><span class="sh-hl-code">-</span><span class="sh-hl-identifier">module</span><span class="sh-hl-code">.</span><span class="sh-hl-identifier">git</span> <span class="sh-hl-identifier">protected</span><span class="sh-hl-code">/</span><span class="sh-hl-identifier">extensions</span><span class="sh-hl-code">/</span><span class="sh-hl-identifier">comment</span><span class="sh-hl-code">-</span><span class="sh-hl-identifier">module</span></pre></div></div>
 
 <p>Add module to your application config:</p>
 
-<p><code>php
-&lt;?php
-    // ...
-    'modules'=&gt;array(
-        // ...
-        'comment'=&gt;array(
-            'class'=&gt;'ext.comment-module.CommentModule',
-            'commentableModels'=&gt;array(
-                // define commentable Models here (key is an alias that must be lower case, value is the model class name)
-                'post'=&gt;'Post'
-            ),
-            // set this to the class name of the model that represents your users
-            'userModelClass'=&gt;'User',
-            // set this to the username attribute of User model class
-            'userNameAttribute'=&gt;'username',
-            // set this to the email attribute of User model class
-            'userEmailAttribute'=&gt;'email';
-        ),
-        // ...
-    ),
-    // ...</code></p>
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-inlinetags">&lt;?php</span>
+    <span class="php-hl-comment">//</span><span class="php-hl-comment"> ...</span>
+    <span class="php-hl-quotes">'</span><span class="php-hl-string">modules</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+        <span class="php-hl-comment">//</span><span class="php-hl-comment"> ...</span>
+        <span class="php-hl-quotes">'</span><span class="php-hl-string">comment</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">class</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">ext.comment-module.CommentModule</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+            </span><span class="php-hl-quotes">'</span><span class="php-hl-string">commentableModels</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+                <span class="php-hl-comment">//</span><span class="php-hl-comment"> define commentable Models here (key is an alias that must be lower case, value is the model class name)</span>
+                <span class="php-hl-quotes">'</span><span class="php-hl-string">post</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Post</span><span class="php-hl-quotes">'</span>
+            <span class="php-hl-brackets">)</span><span class="php-hl-code">,
+            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> set this to the class name of the model that represents your users</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">userModelClass</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">User</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> set this to the username attribute of User model class</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">userNameAttribute</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">username</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> set this to the email attribute of User model class</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">userEmailAttribute</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">email</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
+        </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+        </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> ...</span>
+    <span class="php-hl-brackets">)</span><span class="php-hl-code">,
+    </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> ...</span></pre></div></div>
 
 <p>Create database tables:
 You can use the database migration provieded by this extension or create a table (example for mysql):</p>
 
-<p><code>sql
-    CREATE TABLE IF NOT EXISTS `comments` (
-      `id`         int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-      `message`    text COLLATE utf8_unicode_ci,
-      `userId`     int(11) UNSIGNED DEFAULT NULL,
-      `createDate` datetime DEFAULT NULL,
-      PRIMARY KEY (`id`),
-      KEY `fk_comments_userId` (`userId`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;</code>
-You might also want to add a foreign key for <code>userId</code> column that references you user tables pk.</p>
+<div class="hl-code"><div class="sql-hl-main"><pre><span class="sql-hl-reserved">CREATE</span> <span class="sql-hl-reserved">TABLE</span> <span class="sql-hl-identifier">IF</span> <span class="sql-hl-reserved">NOT</span> <span class="sql-hl-var">EXISTS</span> <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">comments</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-brackets">(</span>
+      <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">id</span><span class="sql-hl-quotes">`</span>         <span class="sql-hl-reserved">int</span><span class="sql-hl-brackets">(</span><span class="sql-hl-number">11</span><span class="sql-hl-brackets">)</span> <span class="sql-hl-identifier">UNSIGNED</span> <span class="sql-hl-reserved">NOT</span> <span class="sql-hl-reserved">NULL</span> <span class="sql-hl-identifier">AUTO_INCREMENT</span><span class="sql-hl-code">,
+      </span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">message</span><span class="sql-hl-quotes">`</span>    <span class="sql-hl-identifier">text</span> <span class="sql-hl-reserved">COLLATE</span> <span class="sql-hl-identifier">utf8_unicode_ci</span><span class="sql-hl-code">,
+      </span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">userId</span><span class="sql-hl-quotes">`</span>     <span class="sql-hl-reserved">int</span><span class="sql-hl-brackets">(</span><span class="sql-hl-number">11</span><span class="sql-hl-brackets">)</span> <span class="sql-hl-identifier">UNSIGNED</span> <span class="sql-hl-reserved">DEFAULT</span> <span class="sql-hl-reserved">NULL</span><span class="sql-hl-code">,
+      </span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">createDate</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-identifier">datetime</span> <span class="sql-hl-reserved">DEFAULT</span> <span class="sql-hl-reserved">NULL</span><span class="sql-hl-code">,
+      </span><span class="sql-hl-reserved">PRIMARY</span> <span class="sql-hl-reserved">KEY</span> <span class="sql-hl-brackets">(</span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">id</span><span class="sql-hl-quotes">`</span><span class="sql-hl-brackets">)</span><span class="sql-hl-code">,
+      </span><span class="sql-hl-reserved">KEY</span> <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">fk_comments_userId</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-brackets">(</span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">userId</span><span class="sql-hl-quotes">`</span><span class="sql-hl-brackets">)</span>
+    <span class="sql-hl-brackets">)</span> <span class="sql-hl-identifier">ENGINE</span><span class="sql-hl-code">=</span><span class="sql-hl-identifier">InnoDB</span> <span class="sql-hl-reserved">DEFAULT</span> <span class="sql-hl-identifier">CHARSET</span><span class="sql-hl-code">=</span><span class="sql-hl-identifier">utf8</span> <span class="sql-hl-reserved">COLLATE</span><span class="sql-hl-code">=</span><span class="sql-hl-identifier">utf8_unicode_ci</span><span class="sql-hl-code">;</span></pre></div></div>
+
+<p>You might also want to add a foreign key for <code>userId</code> column that references you user tables pk.</p>
 
 <p>Create a database table for every commentable Model relation:</p>
 
-<p><code>sql
-    CREATE TABLE IF NOT EXISTS `posts_comments_nm` (
-      `postId`    int(11) UNSIGNED NOT NULL,
-      `commentId` int(11) UNSIGNED NOT NULL,
-      PRIMARY KEY (`taskId`,`commentId`),
-      KEY `fk_tasks_comments_comments` (`commentId`),
-      KEY `fk_tasks_comments_tasks` (`taskId`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;</code>
-You might want to add foreign keys here too.</p>
+<div class="hl-code"><div class="sql-hl-main"><pre><span class="sql-hl-reserved">CREATE</span> <span class="sql-hl-reserved">TABLE</span> <span class="sql-hl-identifier">IF</span> <span class="sql-hl-reserved">NOT</span> <span class="sql-hl-var">EXISTS</span> <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">posts_comments_nm</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-brackets">(</span>
+      <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">postId</span><span class="sql-hl-quotes">`</span>    <span class="sql-hl-reserved">int</span><span class="sql-hl-brackets">(</span><span class="sql-hl-number">11</span><span class="sql-hl-brackets">)</span> <span class="sql-hl-identifier">UNSIGNED</span> <span class="sql-hl-reserved">NOT</span> <span class="sql-hl-reserved">NULL</span><span class="sql-hl-code">,
+      </span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">commentId</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-reserved">int</span><span class="sql-hl-brackets">(</span><span class="sql-hl-number">11</span><span class="sql-hl-brackets">)</span> <span class="sql-hl-identifier">UNSIGNED</span> <span class="sql-hl-reserved">NOT</span> <span class="sql-hl-reserved">NULL</span><span class="sql-hl-code">,
+      </span><span class="sql-hl-reserved">PRIMARY</span> <span class="sql-hl-reserved">KEY</span> <span class="sql-hl-brackets">(</span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">taskId</span><span class="sql-hl-quotes">`</span><span class="sql-hl-code">,</span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">commentId</span><span class="sql-hl-quotes">`</span><span class="sql-hl-brackets">)</span><span class="sql-hl-code">,
+      </span><span class="sql-hl-reserved">KEY</span> <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">fk_tasks_comments_comments</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-brackets">(</span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">commentId</span><span class="sql-hl-quotes">`</span><span class="sql-hl-brackets">)</span><span class="sql-hl-code">,
+      </span><span class="sql-hl-reserved">KEY</span> <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">fk_tasks_comments_tasks</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-brackets">(</span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">taskId</span><span class="sql-hl-quotes">`</span><span class="sql-hl-brackets">)</span>
+    <span class="sql-hl-brackets">)</span> <span class="sql-hl-identifier">ENGINE</span><span class="sql-hl-code">=</span><span class="sql-hl-identifier">InnoDB</span> <span class="sql-hl-reserved">DEFAULT</span> <span class="sql-hl-identifier">CHARSET</span><span class="sql-hl-code">=</span><span class="sql-hl-identifier">utf8</span> <span class="sql-hl-reserved">COLLATE</span><span class="sql-hl-code">=</span><span class="sql-hl-identifier">utf8_unicode_ci</span><span class="sql-hl-code">;</span></pre></div></div>
+
+<p>You might want to add foreign keys here too.</p>
 
 <p>Add commentable behavior to all Models you want to be commented.</p>
 
-<p><code>php
-&lt;?php
-    // ...
-    public function behaviors() {
-        return array(
-            'commentable' =&gt; array(
-                'class' =&gt; 'ext.comment-module.behaviors.CommentableBehavior',
-                // name of the table created in last step
-                'mapTable' =&gt; 'posts_comments_nm',
-                // name of column to related model id in mapTable
-                'mapRelatedColumn' =&gt; 'postId'
-            ),
-       );
-    }</code></p>
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-inlinetags">&lt;?php</span>
+    <span class="php-hl-comment">//</span><span class="php-hl-comment"> ...</span>
+    <span class="php-hl-reserved">public</span> <span class="php-hl-reserved">function</span> <span class="php-hl-identifier">behaviors</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span> <span class="php-hl-brackets">{</span>
+        <span class="php-hl-reserved">return</span> <span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">commentable</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+                <span class="php-hl-quotes">'</span><span class="php-hl-string">class</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">ext.comment-module.behaviors.CommentableBehavior</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+                </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> name of the table created in last step</span>
+                <span class="php-hl-quotes">'</span><span class="php-hl-string">mapTable</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">posts_comments_nm</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+                </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> name of column to related model id in mapTable</span>
+                <span class="php-hl-quotes">'</span><span class="php-hl-string">mapRelatedColumn</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">postId</span><span class="php-hl-quotes">'</span>
+            <span class="php-hl-brackets">)</span><span class="php-hl-code">,
+       </span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+    </span><span class="php-hl-brackets">}</span></pre></div></div>
 
 <p>Finally add comments to your view template of the commentable model:</p>
 
-<p>```php</p>
-
-<h1>comments</h1>
-
-<p><?php $this->renderPartial('comment.views.comment.commentList', array(
-    'model'=>$model
-)); ?>
-```</p>
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-code">&lt;</span><span class="php-hl-identifier">h1</span><span class="php-hl-code">&gt;</span><span class="php-hl-identifier">comments</span><span class="php-hl-code">&lt;/</span><span class="php-hl-identifier">h1</span><span class="php-hl-code">&gt;
+ 
+&lt;?</span><span class="php-hl-identifier">php</span> <span class="php-hl-var">$this</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">renderPartial</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">comment.views.comment.commentList</span><span class="php-hl-quotes">'</span><span class="php-hl-code">, </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+    <span class="php-hl-quotes">'</span><span class="php-hl-string">model</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-var">$model</span>
+<span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-inlinetags">?&gt;</span></pre></div></div>
 
 <p>If there is something missing here, or you think one step should be described more detailed please <a href="https://github.com/yiiext/comment-module/issues/new">report it</a>. Thanks!</p>
 
