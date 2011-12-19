@@ -45,11 +45,17 @@
             <h2>Comment module</h2>
 
 <p>makes every entity of your application commentable.
-Features:
-* Ajax creation of comment
-* Gravatar support
-* define multiple models that can be commented
-* more coming soon...</p>
+Features:</p>
+
+<ul>
+<li>Ajax creation of comment</li>
+<li>Gravatar support</li>
+<li>define multiple models that can be commented</li>
+<li>more coming soon...</li>
+</ul>
+
+<p>If there is something missing here, or you think one step should be described more detailed,
+please <a href="https://github.com/yiiext/comment-module/issues/new">report it</a>. Thanks!</p>
 
 <h2>Resources</h2>
 
@@ -59,18 +65,33 @@ Features:
 <li>E-Mail the author: CeBe &lt;<a href="mailto:mail@cebe.cc">mail@cebe.cc</a>></li>
 </ul>
 
+<h2>Download</h2>
+
+<p>There are two ways to get this extension working:</p>
+
+<ol>
+<li><p>Clone repo:</p>
+
+<ul>
+<li>Go to your application baseDir (<code>protected</code> in default yii webapp).</li>
+<li><code>git clone https://github.com/yiiext/comment-module.git extensions/comment-module</code>
+
+<ul>
+<li>If your project is in a git repository you can alternatively add comment-module as a submodule like this:</li>
+<li><code>git submodule add https://github.com/yiiext/comment-module.git protected/extensions/comment-module</code></li>
+</ul></li>
+<li>go to new comment-modules base dir and run
+<code>git submodule update --init</code> to get the gravatar extension that's included.</li>
+</ul></li>
+<li><p><a href="https://github.com/yiiext/comment-module/tags">Download</a> latest release and put all the files into
+<code>extensions/comment-module</code> under your application baseDir (<code>protected</code> in default yii webapp).
+To be able to use Gravatar support you have to copy <a href="https://github.com/malyshev/yii-gravatar/tree/master/yii-gravatar">YiiGravatar.php</a>
+into <code>extensions/comment-module/extensions/gravatar</code>.</p></li>
+</ol>
+
 <h2>Quickstart</h2>
 
-<p>Go to your application baseDir (<code>protected</code> in default yii webapp).
-Clone git repo or <a href="https://github.com/yiiext/comment-module/tags">download</a> latest release.</p>
-
-<div class="hl-code"><div class="sh-hl-main"><pre><span class="sh-hl-identifier">git</span> <span class="sh-hl-identifier">clone</span> <span class="sh-hl-identifier">https</span><span class="sh-hl-code">://</span><span class="sh-hl-identifier">github</span><span class="sh-hl-code">.</span><span class="sh-hl-identifier">com</span><span class="sh-hl-code">/</span><span class="sh-hl-identifier">yiiext</span><span class="sh-hl-code">/</span><span class="sh-hl-identifier">comment</span><span class="sh-hl-code">-</span><span class="sh-hl-identifier">module</span><span class="sh-hl-code">.</span><span class="sh-hl-identifier">git</span> <span class="sh-hl-identifier">extensions</span><span class="sh-hl-code">/</span><span class="sh-hl-identifier">comment</span><span class="sh-hl-code">-</span><span class="sh-hl-identifier">module</span></pre></div></div>
-
-<p>You can also add it to git as a submodule (run command from root of your repo):</p>
-
-<div class="hl-code"><div class="sh-hl-main"><pre><span class="sh-hl-identifier">git</span> <span class="sh-hl-identifier">submodule</span> <span class="sh-hl-identifier">add</span> <span class="sh-hl-identifier">https</span><span class="sh-hl-code">://</span><span class="sh-hl-identifier">github</span><span class="sh-hl-code">.</span><span class="sh-hl-identifier">com</span><span class="sh-hl-code">/</span><span class="sh-hl-identifier">yiiext</span><span class="sh-hl-code">/</span><span class="sh-hl-identifier">comment</span><span class="sh-hl-code">-</span><span class="sh-hl-identifier">module</span><span class="sh-hl-code">.</span><span class="sh-hl-identifier">git</span> <span class="sh-hl-identifier">protected</span><span class="sh-hl-code">/</span><span class="sh-hl-identifier">extensions</span><span class="sh-hl-code">/</span><span class="sh-hl-identifier">comment</span><span class="sh-hl-code">-</span><span class="sh-hl-identifier">module</span></pre></div></div>
-
-<p>Add module to your application config:</p>
+<p>Add module to your application config (optional config values are commented):</p>
 
 <div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-inlinetags">&lt;?php</span>
     <span class="php-hl-comment">//</span><span class="php-hl-comment"> ...</span>
@@ -87,7 +108,13 @@ Clone git repo or <a href="https://github.com/yiiext/comment-module/tags">downlo
             </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> set this to the username attribute of User model class</span>
             <span class="php-hl-quotes">'</span><span class="php-hl-string">userNameAttribute</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">username</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
             </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> set this to the email attribute of User model class</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">userEmailAttribute</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">email</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">userEmailAttribute</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">email</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> you can set controller filters that will be added to the comment controller {@see CController::filters()}</span>
+<span class="php-hl-comment">//</span><span class="php-hl-comment">          'controllerFilters'=&gt;array(),</span>
+            <span class="php-hl-comment">//</span><span class="php-hl-comment"> you can set accessRules that will be added to the comment controller {@see CController::accessRules()}</span>
+<span class="php-hl-comment">//</span><span class="php-hl-comment">          'controllerAccessRules'=&gt;array(),</span>
+            <span class="php-hl-comment">//</span><span class="php-hl-comment"> you can extend comment class and use your extended one, set path alias here</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">commentModelClass</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">comment.models.Comment</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
         </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
         </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> ...</span>
     <span class="php-hl-brackets">)</span><span class="php-hl-code">,
@@ -112,9 +139,9 @@ You can use the database migration provieded by this extension or create a table
 <div class="hl-code"><div class="sql-hl-main"><pre><span class="sql-hl-reserved">CREATE</span> <span class="sql-hl-reserved">TABLE</span> <span class="sql-hl-identifier">IF</span> <span class="sql-hl-reserved">NOT</span> <span class="sql-hl-var">EXISTS</span> <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">posts_comments_nm</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-brackets">(</span>
       <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">postId</span><span class="sql-hl-quotes">`</span>    <span class="sql-hl-reserved">int</span><span class="sql-hl-brackets">(</span><span class="sql-hl-number">11</span><span class="sql-hl-brackets">)</span> <span class="sql-hl-identifier">UNSIGNED</span> <span class="sql-hl-reserved">NOT</span> <span class="sql-hl-reserved">NULL</span><span class="sql-hl-code">,
       </span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">commentId</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-reserved">int</span><span class="sql-hl-brackets">(</span><span class="sql-hl-number">11</span><span class="sql-hl-brackets">)</span> <span class="sql-hl-identifier">UNSIGNED</span> <span class="sql-hl-reserved">NOT</span> <span class="sql-hl-reserved">NULL</span><span class="sql-hl-code">,
-      </span><span class="sql-hl-reserved">PRIMARY</span> <span class="sql-hl-reserved">KEY</span> <span class="sql-hl-brackets">(</span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">taskId</span><span class="sql-hl-quotes">`</span><span class="sql-hl-code">,</span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">commentId</span><span class="sql-hl-quotes">`</span><span class="sql-hl-brackets">)</span><span class="sql-hl-code">,
-      </span><span class="sql-hl-reserved">KEY</span> <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">fk_tasks_comments_comments</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-brackets">(</span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">commentId</span><span class="sql-hl-quotes">`</span><span class="sql-hl-brackets">)</span><span class="sql-hl-code">,
-      </span><span class="sql-hl-reserved">KEY</span> <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">fk_tasks_comments_tasks</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-brackets">(</span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">taskId</span><span class="sql-hl-quotes">`</span><span class="sql-hl-brackets">)</span>
+      </span><span class="sql-hl-reserved">PRIMARY</span> <span class="sql-hl-reserved">KEY</span> <span class="sql-hl-brackets">(</span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">postId</span><span class="sql-hl-quotes">`</span><span class="sql-hl-code">,</span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">commentId</span><span class="sql-hl-quotes">`</span><span class="sql-hl-brackets">)</span><span class="sql-hl-code">,
+      </span><span class="sql-hl-reserved">KEY</span> <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">fk_posts_comments_comments</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-brackets">(</span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">commentId</span><span class="sql-hl-quotes">`</span><span class="sql-hl-brackets">)</span><span class="sql-hl-code">,
+      </span><span class="sql-hl-reserved">KEY</span> <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">fk_posts_comments_posts</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-brackets">(</span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">postId</span><span class="sql-hl-quotes">`</span><span class="sql-hl-brackets">)</span>
     <span class="sql-hl-brackets">)</span> <span class="sql-hl-identifier">ENGINE</span><span class="sql-hl-code">=</span><span class="sql-hl-identifier">InnoDB</span> <span class="sql-hl-reserved">DEFAULT</span> <span class="sql-hl-identifier">CHARSET</span><span class="sql-hl-code">=</span><span class="sql-hl-identifier">utf8</span> <span class="sql-hl-reserved">COLLATE</span><span class="sql-hl-code">=</span><span class="sql-hl-identifier">utf8_unicode_ci</span><span class="sql-hl-code">;</span></pre></div></div>
 
 <p>You might want to add foreign keys here too.</p>
@@ -143,12 +170,53 @@ You can use the database migration provieded by this extension or create a table
     <span class="php-hl-quotes">'</span><span class="php-hl-string">model</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-var">$model</span>
 <span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-inlinetags">?&gt;</span></pre></div></div>
 
-<p>If there is something missing here, or you think one step should be described more detailed please <a href="https://github.com/yiiext/comment-module/issues/new">report it</a>. Thanks!</p>
+<h2>Extending Comment-Module</h2>
+
+<p>Comment module raises <a href="http://www.yiiframework.com/doc/guide/1.1/en/basics.component#component-event">events</a>
+to which you can attach event handlers to handle them.
+See <a href="http://www.yiiframework.com/doc/guide/1.1/en/basics.component#component-event">The Definitive Guide to Yii</a> on how to do this.</p>
+
+<p>You can also attach <a href="http://www.yiiframework.com/doc/guide/1.1/en/basics.component#component-behavior">behaviors</a>
+to CommentModule by setting <code>'behaviors'=&gt;array(/* ... */)</code> to the config described above.
+See <a href="http://www.yiiframework.com/doc/api/1.1/CModule#behaviors-detail">CModule::behaviors</a> on how to add behaviors to a module.</p>
+
+<h3>onNewComment</h3>
+
+<p>This event is raised when a new comment has been saved.
+The following attributes are available on the <code>$event</code> gives as the first parameter to the event handler:</p>
+
+<ul>
+<li><code>$event-&gt;comment</code> is the currently added comment.</li>
+<li><code>$event-&gt;commentedModel</code> is the model the comment was added to.</li>
+</ul>
+
+<p>Possible use cases:</p>
+
+<ul>
+<li>Send an E-Mail-Notification</li>
+</ul>
+
+<p>Events coming soon:</p>
+
+<h3>onCommentEdited</h3>
+
+<h3>onCommentDelete</h3>
 
     
     <h2 id="changelog">Changelog</h2>
 
-    <i>No changelog available</i>
+    <h3>next release (tdb)</h3>
+
+<ul>
+<li>...</li>
+</ul>
+
+<h3>0.5.0 (2011-12-19)</h3>
+
+<ul>
+<li>initial public release (cebe)</li>
+</ul>
+
 
 </div>
 
@@ -177,12 +245,16 @@ You can use the database migration provieded by this extension or create a table
 
     <h2>Downloads (Tags)</h2>
     <ul>
+            <li>0.5.0 -
+        <a href="https://github.com/yiiext/comment-module/tarball/0.5.0">tar</a>,
+        <a href="https://github.com/yiiext/comment-module/zipball/0.5.0">zip</a>
+        </li>
         </ul>
 
     <h2>Resources</h2>
     <ul>
         <li><a href="https://github.com/yiiext/comment-module">Browse Code</a></li>
-        <li><a href="https://github.com/yiiext/comment-module/issues">Issues</a> (1)</li>        <li><a href="https://github.com/yiiext/comment-module/wiki">Wiki</a></li>        <li>...</li>
+        <li><a href="https://github.com/yiiext/comment-module/issues">Issues</a> (4)</li>        <li><a href="https://github.com/yiiext/comment-module/wiki">Wiki</a></li>        <li>...</li>
     </ul>
 
 </div>
