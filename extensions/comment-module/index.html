@@ -177,13 +177,13 @@ to which you can attach event handlers to handle them.
 See <a href="http://www.yiiframework.com/doc/guide/1.1/en/basics.component#component-event">The Definitive Guide to Yii</a> on how to do this.</p>
 
 <p>You can also attach <a href="http://www.yiiframework.com/doc/guide/1.1/en/basics.component#component-behavior">behaviors</a>
-to CommentModule by setting <code>'behaviors'=&gt;array(/* ... */)</code> to the config described above.
+to CommentModule by setting <code>'behaviors'=&gt;array(/* ... */)</code> in the module config described above.
 See <a href="http://www.yiiframework.com/doc/api/1.1/CModule#behaviors-detail">CModule::behaviors</a> on how to add behaviors to a module.</p>
 
 <h3>onNewComment</h3>
 
 <p>This event is raised when a new comment has been saved.
-The following attributes are available on the <code>$event</code> gives as the first parameter to the event handler:</p>
+The following attributes are available on the <code>$event</code> given as the first parameter to the event handler:</p>
 
 <ul>
 <li><code>$event-&gt;comment</code> is the currently added comment.</li>
@@ -205,10 +205,10 @@ The following attributes are available on the <code>$event</code> gives as the f
     
     <h2 id="changelog">Changelog</h2>
 
-    <h3>next release (tdb)</h3>
+    <h3>0.6.0 (to be released)</h3>
 
 <ul>
-<li>...</li>
+<li>added getCommentCount() to CommentableBehavior (cebe)</li>
 </ul>
 
 <h3>0.5.0 (2011-12-19)</h3>
