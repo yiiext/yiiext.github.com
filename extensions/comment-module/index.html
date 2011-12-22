@@ -48,9 +48,10 @@
 Features:</p>
 
 <ul>
-<li>Ajax creation of comment</li>
+<li>Create, Update, Delete comments with ajax</li>
 <li>Gravatar support</li>
 <li>define multiple models that can be commented</li>
+<li>Events raised on new, update, delete</li>
 <li>more coming soon...</li>
 </ul>
 
@@ -194,7 +195,7 @@ See <a href="http://www.yiiframework.com/doc/api/1.1/CModule#behaviors-detail">C
 The following attributes are available on the <code>$event</code> given as the first parameter to the event handler:</p>
 
 <ul>
-<li><code>$event-&gt;comment</code> is the currently added comment.</li>
+<li><code>$event-&gt;comment</code> is the ActiveRecord instance of the currently added comment.</li>
 <li><code>$event-&gt;commentedModel</code> is the model the comment was added to.</li>
 </ul>
 
@@ -204,19 +205,36 @@ The following attributes are available on the <code>$event</code> given as the f
 <li>Send an E-Mail-Notification</li>
 </ul>
 
-<p>Events coming soon:</p>
+<h3>onUpdateComment</h3>
 
-<h3>onCommentEdited</h3>
+<p>This event is raised when a user edited a comment.
+The following attributes are available on the <code>$event</code> given as the first parameter to the event handler:</p>
 
-<h3>onCommentDelete</h3>
+<ul>
+<li><code>$event-&gt;comment</code> is the ActiveRecord instance of the updated comment.</li>
+</ul>
+
+<h3>onDeleteComment</h3>
+
+<p>This event is raised when a user deleted a comment.
+The following attributes are available on the <code>$event</code> given as the first parameter to the event handler:</p>
+
+<ul>
+<li><code>$event-&gt;comment</code> is the ActiveRecord instance of the deleted comment.</li>
+</ul>
 
     
     <h2 id="changelog">Changelog</h2>
 
-    <h4>0.6.0 (to be released)</h4>
+    <h4>0.7.0 (to be released)</h4>
+
+<h4>0.6.0 (2011-12-22)</h4>
 
 <ul>
 <li>added getCommentCount() to CommentableBehavior (cebe)</li>
+<li>added delete button and action (cebe)</li>
+<li>added update button and action (cebe)</li>
+<li>fixed problem with sqlite timestamp (cebe)</li>
 </ul>
 
 <h4>0.5.0 (2011-12-19)</h4>
