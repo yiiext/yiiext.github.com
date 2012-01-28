@@ -66,7 +66,7 @@ please <a href="https://github.com/yiiext/migrate-command/issues">report it</a> 
 <h2>Resources</h2>
 
 <ul>
-<li><a href="https://github.com/yiiext/migrate-command">GIT</a>, <a href="http://code.google.com/p/yiiext/source/browse/trunk/app/extensions/yiiext/commands/migrate">SVN</a> (deprecated)</li>
+<li><a href="https://github.com/yiiext/migrate-command">GIT</a></li>
 <li><a href="http://www.yiiframework.com/doc/guide/1.1/en/database.migration">Yii Database Migration Documentation</a></li>
 <li><a href="http://www.yiiframework.com/forum/index.php?/topic/22471-extension-extended-database-migration/">Discuss</a></li>
 <li><a href="https://github.com/yiiext/migrate-command/issues">Report a bug/request feature</a></li>
@@ -97,7 +97,7 @@ extension with any yii version.</li>
             <span class="php-hl-quotes">'</span><span class="php-hl-string">migrationTable</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">tbl_migration</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
             </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> the application migrations are in a pseudo-module called &quot;core&quot; by default</span>
             <span class="php-hl-quotes">'</span><span class="php-hl-string">applicationModuleName</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">core</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> define all available modules</span>
+            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> define all available modules (if you do not set this, modules will be set from yii app config)</span>
             <span class="php-hl-quotes">'</span><span class="php-hl-string">modulePaths</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
                 <span class="php-hl-quotes">'</span><span class="php-hl-string">admin</span><span class="php-hl-quotes">'</span><span class="php-hl-code">      =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">application.modules.admin.db.migrations</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
                 </span><span class="php-hl-quotes">'</span><span class="php-hl-string">user</span><span class="php-hl-quotes">'</span><span class="php-hl-code">       =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">application.modules.user.db.migrations</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
@@ -174,10 +174,12 @@ If you do not specify a module the command behaves like the native one but does 
 
     <h3>Changelog</h3>
 
-<h4>0.7.0 (2011-09-21)</h4>
+<h4>0.7.0 (2012-01-28)</h4>
 
 <ul>
 <li>adjusted sql commands to be compatible with nearly all pdo db systems (cebe)</li>
+<li>modules are now loaded from yii application config if not set (cebe)</li>
+<li>improved create action error handling (cebe)</li>
 </ul>
 
 <h4>0.6.0 (2011-09-12) not released, did not work</h4>
@@ -263,12 +265,16 @@ If you do not specify a module the command behaves like the native one but does 
         <a href="https://github.com/yiiext/migrate-command/tarball/0.6.0">tar</a>,
         <a href="https://github.com/yiiext/migrate-command/zipball/0.6.0">zip</a>
         </li>
+            <li>0.7.0 -
+        <a href="https://github.com/yiiext/migrate-command/tarball/0.7.0">tar</a>,
+        <a href="https://github.com/yiiext/migrate-command/zipball/0.7.0">zip</a>
+        </li>
         </ul>
 
     <h2>Resources</h2>
     <ul>
         <li><a href="https://github.com/yiiext/migrate-command">Browse Code</a></li>
-        <li><a href="https://github.com/yiiext/migrate-command/issues">Issues</a> (7)</li>        <li><a href="https://github.com/yiiext/migrate-command/wiki">Wiki</a></li>        <li>...</li>
+        <li><a href="https://github.com/yiiext/migrate-command/issues">Issues</a> (5)</li>        <li><a href="https://github.com/yiiext/migrate-command/wiki">Wiki</a></li>        <li>...</li>
     </ul>
 
 </div>
