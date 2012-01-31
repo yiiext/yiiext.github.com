@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="language" content="en" />
+
+	<!-- blueprint CSS framework -->
+	<link rel="stylesheet" type="text/css" href="/css/main.css" />
+	<link rel="stylesheet" type="text/css" href="/css/screen.css" media="screen, projection" />
+	<link rel="stylesheet" type="text/css" href="/css/print.css" media="print" />
+	<!--[if lt IE 8]>
+	<link rel="stylesheet" type="text/css" href="/css/ie.css" media="screen, projection" />
+	<![endif]-->
+
+	<link rel="stylesheet" type="text/css" href="/css/web.css" />
+	<link rel="stylesheet" type="text/css" href="/css/form.css" />
+
+	<title>yiiext - RepoReadme Site</title>
+</head>
+
+<body>
+
+<a href="https://github.com/yiiext/chart"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
+
+<div class="container" id="page">
+
+	<div id="header">
+        <div class="extensions-count"><b>53</b> great Yii extensions!</div>
+		<div id="logo">
+            <h1>yiiext</h1>
+            unofficial Yii extension repository
+        </div>
+	</div><!-- header -->
+
+	<div id="mainmenu">
+		<ul id="yw0">
+<li><a href="/index.html">Extensions</a></li>
+<li><a href="/faq.html">FAQ</a></li>
+<li><a href="/contact.html">Contact</a></li>
+</ul>
+	</div><!-- mainmenu -->
+
+    <div id="content">
+        <div id="repo">
+            <h1>Chart</h1>
+
+<p>This extension provides a set of charting widgets based
+on <a href="http://g.raphaeljs.com/">gRaphaël</a>.</p>
+
+<h2>Installing and configuring</h2>
+
+<p>Extract files to your application extension directory.</p>
+
+<h2>Using Pie Chart</h2>
+
+<p>You can use the folowing code in order to use this type of widget:</p>
+
+<pre>$this-&gt;widget(&#039;ext.chart.PieChart&#039;, array(
+    &#039;data&#039;=&gt;$data, //Chart data
+    &#039;legendPosition&#039;=&gt;&#039;west&#039;, // Legend block position. Can be &#039;east&#039;, &#039;west&#039;, &#039;north&#039; or &#039;south&#039;. Default is &#039;west&#039;.
+    // Settings for the pie chart
+    &#039;options&#039;=&gt;array(
+        &#039;centerTop&#039;=&gt;130, // Distance from widget&#039;s left side to the center of pie chart
+        &#039;centerLeft&#039;=&gt;130, // Distance from widget&#039;s top side to the center of pie chart
+        &#039;radius&#039;=&gt;100 // Radius of the chart
+    ),
+    // Set of JavaScript event handlers for the chart. Array indexes have to be a valid event name.
+    // Value can be either a string with callback function or array of strings of the same content.
+    &#039;eventHandlers&#039;=&gt;array(
+        &#039;click&#039;=&gt;&#039;function(){alert($(this).attr(&quot;id&quot;));}&#039;,
+        &#039;hover&#039;=&gt;array(
+            &#039;function(){alert(&quot;In!&quot;);}&#039;,
+            &#039;function(){alert(&quot;Out!&quot;);}&#039;
+        ),
+    ),
+    // Settings for chart label. Params &#039;left&#039; and &#039;top&#039; could be &#039;auto&#039;.
+    // In this case label would be centered in corresponding direction
+    &#039;label&#039;=&gt;array(
+        &#039;left&#039;=&gt;&#039;auto&#039;, // Distance from the widget&#039;s left side to the middle of the label text
+        &#039;top&#039;=&gt;10,// Distance from the widget&#039;s top side to the middle of the label text
+        &#039;text&#039;=&gt;&#039;Simple Pie Chart&#039;, // Label text
+        &#039;font&#039;=&gt;&#039;10px sans-serif&#039;, // Label font settings, default is &#039;12px sans-serif&#039;
+    ),
+    // HTML options for the widget container
+    &#039;htmlOptions&#039;=&gt;array(
+        &#039;style&#039;=&gt;&#039;width: 300px; height:240px;&#039;
+    ),
+));
+</pre>
+
+<p>Data for this type of widget have to be in following format:</p>
+
+<pre>array(
+    array(
+        &#039;legend&#039;=&gt;&#039;Param1&#039;, // Legend for the current item
+        &#039;value&#039;=&gt;10, // Item&#039;s value
+        &#039;href&#039;=&gt;&#039;http://google.com&#039;, // Link assigned to the current item
+    ),
+    ...
+);
+</pre>
+
+<h2>Using Bar Chart</h2>
+
+<p>You can use the folowing code in order to use this type of widget:</p>
+
+<pre>$this-&gt;widget(&#039;ext.chart.BarChart&#039;, array(
+    &#039;data&#039;=&gt;$data, // Chart data
+    &#039;stacked&#039;=&gt;true, // If chart bars should be stacked. Default is false.
+    &#039;barType&#039;=&gt;&#039;soft&#039;, // Type of chart bars. Can be &#039;soft&#039;, &#039;round&#039;, &#039;sharp&#039; or &#039;square&#039;. Default is &#039;soft&#039;.
+    &#039;chartType&#039;=&gt;&#039;horizontal&#039;, // Type of the chart. Can be either &#039;vertical&#039; or &#039;horizontal&#039;. Default is &#039;vertical&#039;.
+    //Settings for the chart&#039;s label. Params are &#039;left&#039; and &#039;top&#039;. Could be &#039;auto&#039;.
+    // In this case label would be centered in corresponding direction.
+    &#039;label&#039;=&gt;array(
+        &#039;left&#039;=&gt;&#039;auto&#039;, // Distance from the widget&#039;s left side to the middle of the label text.
+        &#039;top&#039;=&gt;10, // Distance from the widget&#039;s top side to the middle of the label text.
+        &#039;text&#039;=&gt;&#039;Sinmple Pie Chart&#039;, // Label text
+        &#039;font&#039;=&gt;&#039;10px sans-serif&#039;, // Label font settings, default is &#039;12px sans-serif&#039;
+    ),
+    // Settings for bar chart
+    &#039;options&#039;=&gt;array(
+        &#039;top&#039;=&gt;10, // Distance from the widget&#039;s left side to the left side of the bar chart.
+        &#039;left&#039;=&gt;10, // Distance from the widget&#039;s top side to the top side of the bar chart.
+        &#039;width&#039;=&gt;300, // Width of the bar chart
+        &#039;height&#039;=&gt;220, // Height of the bar chart
+    ),
+    // Set of the JavaScript event handlers for the chart. Array indexe has to be a valid event name.
+    // Value can be either a string or an array. String is for event that needs one callback function.
+    // array is for event that needs multiple handlers.
+    &#039;eventHandlers&#039;=&gt;array(
+        &#039;click&#039;=&gt;&#039;function(){alert($(this).attr(&quot;id&quot;));}&#039;,
+        &#039;hover&#039;=&gt;array(
+            &#039;function(){alert(&quot;In!&quot;);}&#039;,
+            &#039;function(){alert(&quot;Out!&quot;);}&#039;
+        ),
+    ),
+    // HTML options for the widget container
+    &#039;htmlOptions&#039;=&gt;array(
+        &#039;style&#039;=&gt;&#039;width: 300px; height:240px;&#039;
+    ),
+));
+</pre>
+
+<p>Data for this type of widget have to be in following format:</p>
+
+<pre>array(
+    array(10, 20, 30),
+    array(30, 20, 50),
+    array(20, 80, 10),
+    array(15, 25, 35),
+)
+</pre>
+
+<p>Each subarray is a set of values for one chart item and can contain any number of items.</p>
+
+<h2>Credits</h2>
+
+<p>This extension is brought to you by <a href="http://clevertech.biz/">CleverTech</a>.</p>
+
+    
+    <h2 id="changelog">Changelog</h2>
+
+    <h3>1.0</h3>
+
+<ul>
+<li>Initial release (Dmytro Zasyadko, Alex Makarov).</li>
+</ul>
+
+
+</div>
+
+<div id="repo-sidebar">
+    <div class="repo noreadme">
+    <div class="repo-head">
+        <h3><a href="/extensions/chart/index.html">chart</a></h3>
+    </div>
+    <p>A set of charting widgets</p>
+
+    <div class="contributors">
+            <a href="https://github.com/samdark" title="samdark">
+            <img src="https://secure.gravatar.com/avatar/c13375ba1016846e39bc0e48260d0bb1?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="samdark" style="height: 24px; width: 24px;"/>
+        </a>
+        </div>
+
+
+    </div>
+
+
+    <h2>Documentation</h2>
+    <ul>
+            <li><a href="/extensions/chart/readme.en.html">readme en</a></li>
+        <li><a href="/extensions/chart/index.html#changelog">changelog </a></li>
+    </ul>
+
+    <h2>Downloads (Tags)</h2>
+    <ul>
+            <li>v1.0 -
+        <a href="https://github.com/yiiext/chart/tarball/v1.0">tar</a>,
+        <a href="https://github.com/yiiext/chart/zipball/v1.0">zip</a>
+        </li>
+        </ul>
+
+    <h2>Resources</h2>
+    <ul>
+        <li><a href="https://github.com/yiiext/chart">Browse Code</a></li>
+        <li><a href="https://github.com/yiiext/chart/issues">Issues</a> (0)</li>        <li><a href="https://github.com/yiiext/chart/wiki">Wiki</a></li>        <li>...</li>
+    </ul>
+
+</div>
+
+<br style="clear: both;"/>
+
+
+    </div>
+
+    <div id="footer">
+        Powered by <a href="http://www.yiiframework.com/" rel="external">Yii Framework</a>.
+    </div><!-- footer -->
+
+</div><!-- page -->
+</body>
+</html>
