@@ -104,7 +104,7 @@ extension with any yii version.</li>
                 </span><span class="php-hl-quotes">'</span><span class="php-hl-string">yourModule</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">application.any.other.path.possible</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
                 </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> ...</span>
             <span class="php-hl-brackets">)</span><span class="php-hl-code">,
-            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> here you can configrue which modules should be active, you can disable a module by adding its name to this array</span>
+            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> here you can configure which modules should be active, you can disable a module by adding its name to this array</span>
             <span class="php-hl-quotes">'</span><span class="php-hl-string">disabledModules</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
                 <span class="php-hl-quotes">'</span><span class="php-hl-string">admin</span><span class="php-hl-quotes">'</span><span class="php-hl-code">, </span><span class="php-hl-quotes">'</span><span class="php-hl-string">anOtherModule</span><span class="php-hl-quotes">'</span><span class="php-hl-code">, </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> ...</span>
             <span class="php-hl-brackets">)</span><span class="php-hl-code">,
@@ -159,7 +159,7 @@ Some Examples:</p>
 </pre>
 
 <p>will show you which migrations have been applied for modules core and user in the past.
-If you do not specify a module the command behaves like the native one but does the migration for all modules.</p>
+If you do not specify a module the command behaves like the native one and does the migration for all modules.</p>
 
 <h3>add a module</h3>
 
@@ -178,6 +178,7 @@ If you do not specify a module the command behaves like the native one but does 
 
 <ul>
 <li>fix for getTable trying to hit a db cache and die in endless loop (cebe)</li>
+<li>made sure that  mark  and  to  action are working correctly (cebe)</li>
 </ul>
 
 <h4>0.7.0 (2012-01-28)</h4>
