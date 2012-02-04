@@ -15,7 +15,7 @@
 	<link rel="stylesheet" type="text/css" href="/css/web.css" />
 	<link rel="stylesheet" type="text/css" href="/css/form.css" />
 
-	<title>yiiext - Repo Site</title>
+	<title>yiiext - RepoReadme Site</title>
 </head>
 
 <body>
@@ -42,15 +42,114 @@
 
     <div id="content">
         <div id="repo">
-            <h1>Extension pdf</h1>
+            <h1>PDF</h1>
 
+<p>PDF extension is intended to provide features for PDF manipulation, such as
+filling PDF forms, merging PDF files together or outputting PDF to the browser
+directly.</p>
 
-        <p>Sorry, no readme files available jet. Please choose resources on right navigation.</p>
+<h2>Installing and Configuring</h2>
+
+<p>Unpack extension files into extensions directory of your application. Add the following
+to includes list in the main config:</p>
+
+<pre>&#039;ext.pdf.*&#039;
+</pre>
+
+<p>Make sure you have <a href="http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/">pdftk</a>
+installed. You can specify path to the pdftk console command using Pdftk::$path variable.
+By default it checks 'pdftk' and '/usr/bin/pdftk' paths.</p>
+
+<h2>Usage</h2>
+
+<p>If you want to output a PDF file to the browser you can use following code:</p>
+
+<pre>$pdf = new PdfFile(&#039;/home/user/mypdf.pdf&#039;);
+$pdf-&gt;output();
+</pre>
+
+<p>If you want to change the name of the file outputted you can add an argument
+to the output method:</p>
+
+<pre>$pdf = new PdfFile(&#039;/home/user/mypdf.pdf&#039;);
+$pdf-&gt;output(&#039;new_pdf_name.pdf&#039;);
+</pre>
+
+<p>If you need to fill out a PDF form and output result to the browser you should
+extend PdfForm:</p>
+
+<pre>TestPdfForm extends PdfForm
+{
+
+    function filePath()
+    {
+        return &#039;/home/user/testPdfForm.pdf&#039;;
+    }
+
+    function rules()
+    {
+        return array(
+            array(&#039;field1, field2, checkbox&#039;, &#039;safe&#039;),
+        );
+    }
+
+}
+</pre>
+
+<p>And now you can use it in your controller this way:</p>
+
+<pre>$pdfForm = new TestPdfForm;
+$pdfForm-&gt;attributes = array(&#039;field1&#039; =&gt; &#039;value1&#039;, &#039;field2&#039; =&gt; &#039;value2&#039;, &#039;checkbox&#039; =&gt; &#039;Yes&#039;);
+if (false !== ($filledPdf = $pdfForm-&gt;fill()))
+    $filledPdf-&gt;output(&#039;filledPdfForm.pdf&#039;);
+</pre>
+
+<p>You can also merge some PDF files together:</p>
+
+<pre>$pdf1 = new PdfFile(&#039;/home/user/pdf1.pdf&#039;);
+$pdf2 = new PdfFile(&#039;/home/user/pdf2.pdf&#039;);
+$pdf3 = new PdfFile(&#039;/home/user/pdf3.pdf&#039;);
+$mergedPdf = $pdf1-&gt;merge($pdf2, $pdf3);
+if ($mergedPdf instanceOf Pdf)
+    $mergedPdf-&gt;output(&#039;out.pdf&#039;);
+</pre>
+
+<p>You can even merge PDF with itself</p>
+
+<pre>$pdf = new PdfFile(&#039;/home/user/pdf.pdf&#039;);
+$mergedPdf = $pdf-&gt;merge($pdf);
+if ($mergedPdf instanceOf Pdf)
+    $mergedPdf-&gt;output(&#039;out.pdf&#039;);
+</pre>
+
+<h2>Credits</h2>
+
+<p>This extension is brought to you by <a href="http://clevertech.biz/">CleverTech</a>.</p>
 
     
     <h2 id="changelog">Changelog</h2>
 
-    <i>No changelog available</i>
+    <h3>1.0</h3>
+
+<ul>
+<li>PdfForm class made abstract and extends CModel (Rinat Silnov)</li>
+<li>Added PdfMetaData class (Rinat Silnov)</li>
+<li>Documentation improvements, code formatting (Alex Makarov)</li>
+</ul>
+
+<h3>0.7</h3>
+
+<ul>
+<li>Added Pdftk wrapper class for pdftk (Rinat Silnov)</li>
+<li>Added ability to merge few pdf files together using PdfFile::merge method (Rinat Silnov)</li>
+</ul>
+
+<h3>0.6</h3>
+
+<ul>
+<li>Initial release (Rinat Silnov)</li>
+</ul>
+
 
 </div>
 
@@ -62,6 +161,9 @@
     <p>Extension for PDF management</p>
 
     <div class="contributors">
+            <a href="https://github.com/mashingan" title="mashingan">
+            <img src="https://secure.gravatar.com/avatar/bbc4f2587db2a40f408423e83a7987c5?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="mashingan" style="height: 24px; width: 24px;"/>
+        </a>
         </div>
 
 
@@ -70,11 +172,16 @@
 
     <h2>Documentation</h2>
     <ul>
+            <li><a href="/extensions/pdf/readme.en.html">readme en</a></li>
         <li><a href="/extensions/pdf/index.html#changelog">changelog </a></li>
     </ul>
 
     <h2>Downloads (Tags)</h2>
     <ul>
+            <li>v1.0 -
+        <a href="https://github.com/yiiext/pdf/tarball/v1.0">tar</a>,
+        <a href="https://github.com/yiiext/pdf/zipball/v1.0">zip</a>
+        </li>
         </ul>
 
     <h2>Resources</h2>
