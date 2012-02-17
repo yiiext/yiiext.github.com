@@ -54,7 +54,7 @@ It's implemented as Active Record behavior.</p>
 <div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-reserved">public</span> <span class="php-hl-reserved">function</span> <span class="php-hl-identifier">behaviors</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span>
 <span class="php-hl-brackets">{</span>
     <span class="php-hl-reserved">return</span> <span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-        <span class="php-hl-quotes">'</span><span class="php-hl-string">NestedSetBehavior</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+        <span class="php-hl-quotes">'</span><span class="php-hl-string">nestedSetBehavior</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
             <span class="php-hl-quotes">'</span><span class="php-hl-string">class</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">ext.yiiext.behaviors.model.trees.NestedSetBehavior</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
             </span><span class="php-hl-quotes">'</span><span class="php-hl-string">leftAttribute</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">lft</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
             </span><span class="php-hl-quotes">'</span><span class="php-hl-string">rightAttribute</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">rgt</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
@@ -144,10 +144,10 @@ DB:</p>
 
 <h3>Getting parent of a node</h3>
 
-<p>Using <code>NestedSetBehavior::getParent()</code>:</p>
+<p>Using <code>NestedSetBehavior::parent()</code>:</p>
 
 <div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$category</span><span class="php-hl-code">=</span><span class="php-hl-identifier">Category</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">9</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$parent</span><span class="php-hl-code">=</span><span class="php-hl-var">$category</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">parent</span><span class="php-hl-code">;</span></pre></div></div>
+</span><span class="php-hl-var">$parent</span><span class="php-hl-code">=</span><span class="php-hl-var">$category</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">parent</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">find</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
 
 <p>Result:</p>
 
@@ -155,11 +155,11 @@ DB:</p>
 
 <h3>Getting node siblings</h3>
 
-<p>Using <code>NestedSetBehavior::getPrevSibling()</code> or
-<code>NestedSetBehavior::getNextSibling()</code>:</p>
+<p>Using <code>NestedSetBehavior::prev()</code> or
+<code>NestedSetBehavior::next()</code>:</p>
 
 <div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$category</span><span class="php-hl-code">=</span><span class="php-hl-identifier">Category</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">9</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$nextSibling</span><span class="php-hl-code">=</span><span class="php-hl-var">$category</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">nextSibling</span><span class="php-hl-code">;</span></pre></div></div>
+</span><span class="php-hl-var">$nextSibling</span><span class="php-hl-code">=</span><span class="php-hl-var">$category</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">next</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">find</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
 
 <p>Result:</p>
 
@@ -384,83 +384,91 @@ a new root. All descendants are moved as well in this case.</p>
     
     <h2 id="changelog">Changelog</h2>
 
-    <h3>1.05</h3>
+    <h3>1.06</h3>
 
 <ul>
-<li>External transaction support for NestedSetBehavior::delete() method (creocoder)</li>
+<li>Changed the name of the methods getParent(), getPrevSibling(), getNextSibling() to parent(), prev(), next(). Also changed the return type of methods. (creocoder)</li>
+<li>Updated readmes. (creocoder)</li>
+<li>Added upgrade. (creocoder)</li>
+</ul>
+
+<h3>1.05</h3>
+
+<ul>
+<li>External transaction support for NestedSetBehavior::delete() method. (creocoder)</li>
 </ul>
 
 <h3>1.04</h3>
 
 <ul>
-<li>Fix for $depth parameter of NestedSetBehavior::ancestors() method (creocoder)</li>
+<li>Fix for $depth parameter of NestedSetBehavior::ancestors() method. (creocoder)</li>
 </ul>
 
 <h3>1.03</h3>
 
 <ul>
-<li>Class renamed to NestedSetBehavior (creocoder)</li>
-<li>Rare bug with cache correction after NestedSetBehavior::addNode() fixed (creocoder)</li>
-<li>Readmes non-recursive tree traversal algorithm fix (creocoder)</li>
+<li>Class renamed to NestedSetBehavior. (creocoder)</li>
+<li>Rare bug with cache correction after NestedSetBehavior::addNode() fixed. (creocoder)</li>
+<li>Readmes non-recursive tree traversal algorithm fix. (creocoder)</li>
 </ul>
 
 <h3>1.02</h3>
 
 <ul>
-<li>Added moveAsRoot() method (creocoder)</li>
-<li>Updated readmes (Sam Dark)</li>
+<li>Added moveAsRoot() method. (creocoder)</li>
+<li>Updated readmes. (Sam Dark)</li>
 </ul>
 
 <h3>1.01</h3>
 
 <ul>
-<li>Added not integer pk support (creocoder)</li>
-<li>Remove <code>final</code> from class (creocoder)</li>
+<li>Added not integer pk support. (creocoder)</li>
+<li>Remove <code>final</code> from class. (creocoder)</li>
 </ul>
 
 <h3>1.00</h3>
 
 <ul>
-<li>Some behavior refactoring before release (creocoder)</li>
-<li>Advanced doc added (creocoder)</li>
+<li>Some behavior refactoring before release. (creocoder)</li>
+<li>Advanced doc added. (creocoder)</li>
 </ul>
 
 <h3>0.99b</h3>
 
 <ul>
-<li>Allow to use multiply change tree operations (creocoder)</li>
-<li>Method saveNode() now create root in "single root mode" (creocoder)</li>
-<li>Unit tests refactored (creocoder)</li>
-<li>Some behavior refactoring (creocoder)</li>
+<li>Allow to use multiply change tree operations. (creocoder)</li>
+<li>Method saveNode() now create root in "single root mode". (creocoder)</li>
+<li>Unit tests refactored. (creocoder)</li>
+<li>Some behavior refactoring. (creocoder)</li>
 </ul>
 
 <h3>0.99</h3>
 
 <ul>
-<li>Added note about removing fields from <code>rules</code> (Sam Dark)</li>
-<li>Added Unit tests for single root mode (creocoder)</li>
-<li>All attributes are now correctly quoted (creocoder)</li>
-<li>Renamed fields: 'root'=>'rootAttribute', 'left'=>'leftAttribute', 'right'=>'rightAttribute', 'level'=>'levelAttribute' (creocoder)</li>
-<li>Renamed method parent() => getParent() (creocoder)</li>
+<li>Added note about removing fields from <code>rules</code>. (Sam Dark)</li>
+<li>Added Unit tests for single root mode. (creocoder)</li>
+<li>All attributes are now correctly quoted. (creocoder)</li>
+<li>Renamed fields: 'root'=>'rootAttribute', 'left'=>'leftAttribute', 'right'=>'rightAttribute', 'level'=>'levelAttribute'. (creocoder)</li>
+<li>Renamed method parent() => getParent(). (creocoder)</li>
 </ul>
 
 <h3>0.95</h3>
 
 <ul>
-<li>Unit tests added (creocoder)</li>
-<li>Incorrect usage of save() and delete() instead of behavior's saveNode() and deleteNode() is now detected (creocoder)</li>
+<li>Unit tests added. (creocoder)</li>
+<li>Incorrect usage of save() and delete() instead of behavior's saveNode() and deleteNode() is now detected. (creocoder)</li>
 </ul>
 
 <h3>0.90</h3>
 
 <ul>
-<li>Moving a node to a different root is now supported (creocoder)</li>
+<li>Moving a node to a different root is now supported. (creocoder)</li>
 </ul>
 
 <h3>0.85</h3>
 
 <ul>
-<li>Initial public release (creocoder)</li>
+<li>Initial public release. (creocoder)</li>
 </ul>
 
 
@@ -474,11 +482,11 @@ a new root. All descendants are moved as well in this case.</p>
     <p>AR models behavior that allows to work with nested sets tree.</p>
 
     <div class="contributors">
-            <a href="https://github.com/samdark" title="samdark">
-            <img src="https://secure.gravatar.com/avatar/c13375ba1016846e39bc0e48260d0bb1?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="samdark" style="height: 24px; width: 24px;"/>
-        </a>
             <a href="https://github.com/creocoder" title="creocoder">
             <img src="https://secure.gravatar.com/avatar/f64f1abec364538cdc727fd154f18e71?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="creocoder" style="height: 24px; width: 24px;"/>
+        </a>
+            <a href="https://github.com/samdark" title="samdark">
+            <img src="https://secure.gravatar.com/avatar/c13375ba1016846e39bc0e48260d0bb1?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="samdark" style="height: 24px; width: 24px;"/>
         </a>
             <a href="https://github.com/cebe" title="cebe">
             <img src="https://secure.gravatar.com/avatar/2ebfe57beabd0b9f8eb9ded1237a275d?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="cebe" style="height: 24px; width: 24px;"/>
@@ -504,6 +512,10 @@ a new root. All descendants are moved as well in this case.</p>
             <li>v1.0.5 -
         <a href="https://github.com/yiiext/nested-set-behavior/tarball/v1.0.5">tar</a>,
         <a href="https://github.com/yiiext/nested-set-behavior/zipball/v1.0.5">zip</a>
+        </li>
+            <li>v1.0.6 -
+        <a href="https://github.com/yiiext/nested-set-behavior/tarball/v1.0.6">tar</a>,
+        <a href="https://github.com/yiiext/nested-set-behavior/zipball/v1.0.6">zip</a>
         </li>
         </ul>
 
