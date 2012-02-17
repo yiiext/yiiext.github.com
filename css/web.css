@@ -141,6 +141,10 @@ body
     padding: 0 3px;
 }
 
+.repo .contributors a {
+    text-decoration: none;
+}
+
 .repo h3 {
     margin: 0;
     padding: 0;
