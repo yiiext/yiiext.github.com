@@ -104,6 +104,8 @@ extension with any yii version.</li>
                 </span><span class="php-hl-quotes">'</span><span class="php-hl-string">yourModule</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">application.any.other.path.possible</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
                 </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> ...</span>
             <span class="php-hl-brackets">)</span><span class="php-hl-code">,
+            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> you can customize the modules migrations subdirectory which is used when you are using yii module config</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">migrationSubPath</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">migrations</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
             </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> here you can configure which modules should be active, you can disable a module by adding its name to this array</span>
             <span class="php-hl-quotes">'</span><span class="php-hl-string">disabledModules</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
                 <span class="php-hl-quotes">'</span><span class="php-hl-string">admin</span><span class="php-hl-quotes">'</span><span class="php-hl-code">, </span><span class="php-hl-quotes">'</span><span class="php-hl-string">anOtherModule</span><span class="php-hl-quotes">'</span><span class="php-hl-code">, </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> ...</span>
@@ -173,6 +175,12 @@ If you do not specify a module the command behaves like the native one and does 
     <h2 id="changelog">Changelog</h2>
 
     <h3>Changelog</h3>
+
+<h4>0.8.0 (to be released)</h4>
+
+<ul>
+<li>Enh: #12 added customization of 'migrations' subdirectory via $migrationSubPath (cebe thanks to redguy666)</li>
+</ul>
 
 <h4>0.7.1 (2012-01-31)</h4>
 

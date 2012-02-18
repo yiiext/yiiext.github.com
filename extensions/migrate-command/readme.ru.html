@@ -104,6 +104,8 @@
                 </span><span class="php-hl-quotes">'</span><span class="php-hl-string">yourModule</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">application.any.other.path.possible</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
                 </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> ...</span>
             <span class="php-hl-brackets">)</span><span class="php-hl-code">,
+            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> можно задать имя поддиректории для хранения миграций в директории модуля</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">migrationSubPath</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">migrations</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
             </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> отключаем некоторые модули</span>
             <span class="php-hl-quotes">'</span><span class="php-hl-string">disabledModules</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
                 <span class="php-hl-quotes">'</span><span class="php-hl-string">admin</span><span class="php-hl-quotes">'</span><span class="php-hl-code">, </span><span class="php-hl-quotes">'</span><span class="php-hl-string">anOtherModule</span><span class="php-hl-quotes">'</span><span class="php-hl-code">, </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> ...</span>
@@ -182,6 +184,12 @@
     <h2 id="changelog">Changelog</h2>
 
     <h3>Changelog</h3>
+
+<h4>0.8.0 (to be released)</h4>
+
+<ul>
+<li>Enh: #12 added customization of 'migrations' subdirectory via $migrationSubPath (cebe thanks to redguy666)</li>
+</ul>
 
 <h4>0.7.1 (2012-01-31)</h4>
 
