@@ -122,6 +122,12 @@ if ($mergedPdf instanceOf Pdf)
     $mergedPdf-&gt;output(&#039;out.pdf&#039;);
 </pre>
 
+<p>There is an ability to apply one PDF file as a background for another one:</p>
+
+<pre>$pdf = new PdfFile(&#039;/home/user/in.pdf&#039;);
+$pdf-&gt;applyBackground(new PdfFile(&#039;/home/user/back.pdf&#039;))-&gt;output(&#039;pdf_with_watermark&#039;);
+</pre>
+
 <h2>Credits</h2>
 
 <p>This extension is brought to you by <a href="http://clevertech.biz/">CleverTech</a>.</p>
@@ -129,7 +135,14 @@ if ($mergedPdf instanceOf Pdf)
     
     <h2 id="changelog">Changelog</h2>
 
-    <h3>1.0</h3>
+    <h3>1.1</h3>
+
+<ul>
+<li>Added ability to apply one PDF file as a background on another one (Rinat Silnov)</li>
+<li>Added PDF form field value escaping (Rinat Silnov)</li>
+</ul>
+
+<h3>1.0</h3>
 
 <ul>
 <li>PdfForm class made abstract and extends CModel (Rinat Silnov)</li>
