@@ -42,91 +42,7 @@
 
     <div id="content">
         <div id="repo">
-            <p>Transfer-Encoding: chunked
-Connection: keep-alive
-Status: 200 OK
-Connection: close
-ETag: "db18bb2d82ffcfb890c39869677d1139"
-Content-Type: text/plain; charset=utf-8
-Content-Length: 6099
-X-RateLimit-Limit: 100
-Content-Disposition: inline
-Content-Transfer-Encoding: binary
-X-Content-Type-Options: nosniff
-X-Runtime: 13
-X-RateLimit-Remaining: 100
-Cache-Control: private
-X-Frame-Options: deny</p>
-
-<p>ETag: "db18bb2d82ffcfb890c39869677d1139"
-Content-Type: text/plain; charset=utf-8
-Content-Length: 6099
-X-RateLimit-Limit: 100
-Content-Disposition: inline
-Content-Transfer-Encoding: binary
-X-Content-Type-Options: nosniff
-X-Runtime: 13
-X-RateLimit-Remaining: 100
-Cache-Control: private
-X-Frame-Options: deny</p>
-
-<p>Content-Length: 6099
-X-RateLimit-Limit: 100
-Content-Disposition: inline
-Content-Transfer-Encoding: binary
-X-Content-Type-Options: nosniff
-X-Runtime: 13
-X-RateLimit-Remaining: 100
-Cache-Control: private
-X-Frame-Options: deny</p>
-
-<p>X-RateLimit-Limit: 100
-Content-Disposition: inline
-Content-Transfer-Encoding: binary
-X-Content-Type-Options: nosniff
-X-Runtime: 13
-X-RateLimit-Remaining: 100
-Cache-Control: private
-X-Frame-Options: deny</p>
-
-<p>Content-Disposition: inline
-Content-Transfer-Encoding: binary
-X-Content-Type-Options: nosniff
-X-Runtime: 13
-X-RateLimit-Remaining: 100
-Cache-Control: private
-X-Frame-Options: deny</p>
-
-<p>Content-Transfer-Encoding: binary
-X-Content-Type-Options: nosniff
-X-Runtime: 13
-X-RateLimit-Remaining: 100
-Cache-Control: private
-X-Frame-Options: deny</p>
-
-<p>X-Content-Type-Options: nosniff
-X-Runtime: 13
-X-RateLimit-Remaining: 100
-Cache-Control: private
-X-Frame-Options: deny</p>
-
-<p>X-Runtime: 13
-X-RateLimit-Remaining: 100
-Cache-Control: private
-X-Frame-Options: deny</p>
-
-<p>X-RateLimit-Remaining: 100
-Cache-Control: private
-X-Frame-Options: deny</p>
-
-<p>Cache-Control: private
-X-Frame-Options: deny</p>
-
-<p>X-Frame-Options: deny</p>
-
-<p>e69</p>
-
-<h1>Yii web shell</h1>
+            <h1>Yii web shell</h1>
 
 <p>Веб-консоль для Yii. Позволяет запускать консольные команды из браузера. Полезна на
 серверах без SSH и в админках консольного стиля.</p>
@@ -198,27 +114,58 @@ X-Frame-Options: deny</p>
 
 <p>Общие команды добавляются чере свойство commands модуля <code>WebShellModule</code>:</p>
 
-<p>~~~
-[php]
-'commands' => array(
-    // js callback в качестве команды
-    'test' => array('js:function(tokens){return "Hello, world!";}', 'Just a test.'),</p>
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-quotes">'</span><span class="php-hl-string">commands</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+    <span class="php-hl-comment">//</span><span class="php-hl-comment"> js callback в качестве команды</span>
+    <span class="php-hl-quotes">'</span><span class="php-hl-string">test</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">js:function(tokens){return &quot;Hello, world!&quot;;}</span><span class="php-hl-quotes">'</span><span class="php-hl-code">, </span><span class="php-hl-quotes">'</span><span class="php-hl-string">Just a test.</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+ 
+    </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> ajax-команда с URL </span><span class="php-hl-url">http://yourwebsite/post/index?action=cli</span><span class="php-hl-comment"> (при наличии правил маршрутизации URL будет изменён соответственно)</span>
+    <span class="php-hl-quotes">'</span><span class="php-hl-string">postlist</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">/post/index</span><span class="php-hl-quotes">'</span><span class="php-hl-code">, </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">action</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">cli</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">, </span><span class="php-hl-quotes">'</span><span class="php-hl-string">Описание.</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+ 
+    </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> «залипающая» команда. Для выхода из неё надо набрать 'exit'.</span>
+    <span class="php-hl-quotes">'</span><span class="php-hl-string">stickyhandler</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+        <span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+            <span class="php-hl-comment">//</span><span class="php-hl-comment"> необязательно: вызывается при наборе 'stickyhandler'. Может быть как URL, так и callback JavaScript.</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">START_HOOK</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">/post/index</span><span class="php-hl-quotes">'</span><span class="php-hl-code">, </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">action</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">start</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> необязательно: вызывается при наборе 'exit'. Может быть как URL, так и callback JavaScript.</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">EXIT_HOOK</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">&quot;</span><span class="php-hl-string">js:function(){ return 'bye!'; }</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-code">,
+            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> требуется: cвызывается при наборе параметра. Может быть как URL, так и callback JavaScript.</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">DISPATCH</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">&quot;</span><span class="php-hl-string">js:function(tokens){ return </span><span class="php-hl-quotes">&quot;</span><span class="php-hl-identifier">Hi</span><span class="php-hl-code">, </span><span class="php-hl-identifier">Jack</span><span class="php-hl-code">!</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-string">; }</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-code">,
+            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> необязательно: своя строка запроса</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">PS1</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">advanced &gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+        </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+        </span><span class="php-hl-quotes">'</span><span class="php-hl-string">Advanced command.</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+    </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+</span><span class="php-hl-brackets">)</span><span class="php-hl-code">,</span></pre></div></div>
 
-<pre>// ajax-команда с URL http://yourwebsite/post/index?action=cli (при наличии правил маршрутизации URL будет изменён соответственно)
-&#039;postlist&#039; =&gt; array(array(&#039;/post/index&#039;, array(&#039;action&#039; =&gt; &#039;cli&#039;)), &#039;Описание.&#039;),
+<p>Обработчик общей команды должен выглядеть примерно так:</p>
 
-// «залипающая» команда. Для выхода из неё надо набрать &#039;exit&#039;.
-&#039;stickyhandler&#039; =&gt; array(
-    array(
-        // необязательно: вызывае
-</pre>
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-reserved">function</span> <span class="php-hl-identifier">actionMyCommandHandler</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">{</span>
+    <span class="php-hl-var">$tokens</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">explode</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">&quot;</span> <span class="php-hl-quotes">&quot;</span><span class="php-hl-code">, </span><span class="php-hl-var">$_GET</span><span class="php-hl-brackets">[</span><span class="php-hl-quotes">'</span><span class="php-hl-string">tokens</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">]</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+    </span><span class="php-hl-identifier">print_r</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$tokens</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-brackets">}</span></pre></div></div>
 
-<p>96a
-тся при наборе 'stickyhandler'. Может быть как URL, так и callback JavaScript.
-            'START_HOOK' => array('/post/index', array('action' => 'start')),
-            // необязательно: вызывается при наборе 'exit'. Может быть как URL, так и callback JavaScript.
-            'EXIT_HOOK' => "js:function(){ return 'bye!'; }",
-            // требуется: cвызывается при наборе па�</p>
+<p>Создание команд yiic описано в руководстве в разделе «<a href="http://yiiframework.ru/doc/guide/ru/topics.console">Консольные приложения</a>».</p>
+
+<h2>Безопасность</h2>
+
+<p>Для обеспечения безопасности консоли в модуле есть два свойства:</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-comment">//</span><span class="php-hl-comment"> IP, с которых доступна консоль. По умолчанию доступен только запуск с локальной машины. Для доступа со всех IP выставить в false.</span>
+<span class="php-hl-quotes">'</span><span class="php-hl-string">ipFilters</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">127.0.0.1</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,</span><span class="php-hl-quotes">'</span><span class="php-hl-string">::1</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+</span><span class="php-hl-comment">//</span><span class="php-hl-comment"> PHP callback, возвращающий true/false и определяющий, есть ли доступ к веб-консоли.</span>
+<span class="php-hl-comment">//</span><span class="php-hl-comment"> Привер приведён для PHP 5.3.</span>
+<span class="php-hl-quotes">'</span><span class="php-hl-string">checkAccessCallback</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">function</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$controller</span><span class="php-hl-code">, </span><span class="php-hl-var">$action</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">{</span>
+    <span class="php-hl-reserved">return</span><span class="php-hl-code"> !</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">user</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">isGuest</span><span class="php-hl-code">;
+</span><span class="php-hl-brackets">}</span></pre></div></div>
+
+<h2>Большое спасибо</h2>
+
+<ul>
+<li><p><a href="http://www.yiiframework.com/forum/index.php?/user/4786-tydeas-dr/">Dimitrios Meggidis</a> за
+отличную идею и за то, что показал wterm.
+Кстати, у него есть <a href="http://github.com/dmtrs/EWebTerm">неплохой виджет для Yii, позволяющий использовать wterm</a>.</p></li>
+<li><p><a href="http://www.yiiframework.com/about/">Qiang Xue</a> за Yii и код ipFilters.</p></li>
+</ul>
 
     
     <h2 id="changelog">Changelog</h2>

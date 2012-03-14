@@ -44,39 +44,37 @@
         <div id="repo">
             <h1>PDF</h1>
 
-<p>PDF extension is intended to provide features for PDF manipulation, such as
-filling PDF forms, merging PDF files together or outputting PDF to the browser
-directly.</p>
+<p>Расширение PDF позволяет выполнять некоторые действия с PDF-документами, такие как
+заполнение PDF-форм, слияние нескольких PDF-документов в один или вывод содержимого
+PDF-документа непосредственно в браузер.</p>
 
-<h2>Installing and Configuring</h2>
+<h2>Установка и настройка</h2>
 
-<p>Unpack extension files into extensions directory of your application. Add the following
-to includes list in the main config:</p>
+<p>Поместите файлы расширения в директорию 'extensions' Вашего приложения.
+И добавьте следующую строку в секцию 'import' файла конфигурации:</p>
 
 <pre>&#039;ext.pdf.*&#039;
 </pre>
 
-<p>Make sure you have <a href="http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/">pdftk</a>
-installed. You can specify path to the pdftk console command using Pdftk::$path variable.
-By default it checks 'pdftk' and '/usr/bin/pdftk' paths.</p>
+<p>Убедитесь, что у Вас установлена утилита <a href="http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/">pdftk</a>.
+Вы можете указать путь к исполняемому файлу pdftk используя переменную Pdftk::$path.
+По умолчанию используются пути 'pdftk' и '/usr/bin/pdftk'.</p>
 
-<h2>Usage</h2>
+<h2>Использование</h2>
 
-<p>If you want to output a PDF file to the browser you can use following code:</p>
+<p>Если вы хотите вывести содержимое PDF-документа, используйте следующий код:</p>
 
 <pre>$pdf = new PdfFile(&#039;/home/user/mypdf.pdf&#039;);
 $pdf-&gt;output();
 </pre>
 
-<p>If you want to change the name of the file outputted you can add an argument
-to the output method:</p>
+<p>Для того, чтобы изменить имя выводимого документа, добавьте аргумент при вызове метода:</p>
 
 <pre>$pdf = new PdfFile(&#039;/home/user/mypdf.pdf&#039;);
 $pdf-&gt;output(&#039;new_pdf_name.pdf&#039;);
 </pre>
 
-<p>If you need to fill out a PDF form and output result to the browser you should
-extend PdfForm:</p>
+<p>Если Вам нужно заполнить PDF-форму и вывести результаты в браузер, Вы должны расширить класс PdfForm:</p>
 
 <pre>TestPdfForm extends PdfForm
 {
@@ -96,7 +94,7 @@ extend PdfForm:</p>
 }
 </pre>
 
-<p>And now you can use it in your controller this way:</p>
+<p>Теперь Вы можете использовать расширенный класс в Вашем контроллере следующим образом:</p>
 
 <pre>$pdfForm = new TestPdfForm;
 $pdfForm-&gt;attributes = array(&#039;field1&#039; =&gt; &#039;value1&#039;, &#039;field2&#039; =&gt; &#039;value2&#039;, &#039;checkbox&#039; =&gt; &#039;Yes&#039;);
@@ -104,7 +102,7 @@ if (false !== ($filledPdf = $pdfForm-&gt;fill()))
     $filledPdf-&gt;output(&#039;filledPdfForm.pdf&#039;);
 </pre>
 
-<p>You can also merge some PDF files together:</p>
+<p>Вы также можете объединить несколько PDF-документов в один:</p>
 
 <pre>$pdf1 = new PdfFile(&#039;/home/user/pdf1.pdf&#039;);
 $pdf2 = new PdfFile(&#039;/home/user/pdf2.pdf&#039;);
@@ -114,7 +112,7 @@ if ($mergedPdf instanceOf Pdf)
     $mergedPdf-&gt;output(&#039;out.pdf&#039;);
 </pre>
 
-<p>You can even merge PDF with itself</p>
+<p>Вы даже можете объединить PDF-документ с самим собой:</p>
 
 <pre>$pdf = new PdfFile(&#039;/home/user/pdf.pdf&#039;);
 $mergedPdf = $pdf-&gt;merge($pdf);
@@ -122,15 +120,15 @@ if ($mergedPdf instanceOf Pdf)
     $mergedPdf-&gt;output(&#039;out.pdf&#039;);
 </pre>
 
-<p>There is an ability to apply one PDF file as a background for another one:</p>
+<p>Можно применять один PDF-документ в качестве фона для другого:</p>
 
 <pre>$pdf = new PdfFile(&#039;/home/user/in.pdf&#039;);
 $pdf-&gt;applyBackground(new PdfFile(&#039;/home/user/back.pdf&#039;))-&gt;output(&#039;pdf_with_watermark&#039;);
 </pre>
 
-<h2>Credits</h2>
+<h2>Авторы</h2>
 
-<p>This extension is brought to you by <a href="http://clevertech.biz/">CleverTech</a>.</p>
+<p>Расширение предоставлено для Вас <a href="http://clevertech.biz/">CleverTech</a>.</p>
 
     
     <h2 id="changelog">Changelog</h2>
