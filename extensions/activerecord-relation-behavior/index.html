@@ -44,6 +44,46 @@
         <div id="repo">
             <p>Readme coming soon...</p>
 
+<h1>Install</h1>
+
+<p>you need php 5.3 to run the test.
+behavior should work on PHP 5.1.0 or above without problems
+I try to be at least that backwards compatible as Yii is, which is PHP 5.1.0 , if there are any problems with php versions, please report!</p>
+
+<h1>How to use</h1>
+
+<ul>
+<li>
+<ul>
+<li>This will only work for AR that have PrimaryKey defined!
+make sure you at least overrided primaryKey()</li>
+</ul></li>
+</ul>
+
+<h1>What can I do?</h1>
+
+<ul>
+<li>reloading relations:</li>
+<li>if you saved a BELONGS_TO relation you have to reload the corresponding HAS_ONE relation on the object you set.</li>
+<li>if you saved a...</li>
+<li></li>
+<li></li>
+<li></li>
+</ul>
+
+<h1>What can't I do?</h1>
+
+<ul>
+<li>once you use this behavior you cannot set relations by setting related key values anymore
+for example if you set $model->author_id it will have no effect since ARRelationBehavior will overwrite it
+with null if there is no related record or set it to related records primary key.
+instead simply assign the value to the relation: $model->author = 1; / $model->author = null;</li>
+</ul>
+
+<h1>Best practise</h1>
+
+<h1>Exceptions explained</h1>
+
     
     <h2 id="changelog">Changelog</h2>
 
