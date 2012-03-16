@@ -84,6 +84,13 @@ instead simply assign the value to the relation: $model->author = 1; / $model->a
 
 <h1>Exceptions explained</h1>
 
+<p>throw new CDbException('You can not save a record that has new related records!');
+throw new CDbException('You can not save a record that has new related records!');
+throw new CDbException('You can not save a record that has new related records!');
+throw new CDbException('A HAS_MANY relation needs to be an array of records or primary keys!');
+throw new CDbException('A MANY_MANY relation needs to be an array of records or primary keys!');
+throw new CDbException('Related record with primary key "'.print_r($pk,true).'" does not exist!');</p>
+
     
     <h2 id="changelog">Changelog</h2>
 
