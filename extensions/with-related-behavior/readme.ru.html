@@ -250,34 +250,6 @@
 и сохранение происходит только в том случае, если все модели, подготовленные для записи,
 валидны. Это можно изменить выставив параметр <code>$runValidation</code> метода в <code>false</code>.</p>
 
-<h2>Комплексная рекурсивная валидация</h2>
-
-<p>В отличие от штатного <code>CModel::validate()</code>, метод <code>WithRelatedBehavior::validate()</code>
-проводит комплексную валидацию модели и всех связанных моделей. Результат валидации
-возвращается в виде булева значения. В том случае, если хотя-бы одна из моделей,
-принимающих участие в валидации, невалидна, результат работы метода — <code>false</code>.
-Если же все модели валидны, результат работы — <code>true</code>. Возможно ограничение валидации
-по атрибутам моделей. Это показано в следующем примере:</p>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-inlinetags">&lt;?php</span>
-<span class="php-hl-var">$post</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Post</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">title</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Relational validation is not a dream anymore.</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">content</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Since WithRelatedBehavior released...</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
- 
-</span><span class="php-hl-var">$comment1</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Comment</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$comment1</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">content</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Was it hard?</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$comment2</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Comment</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$comment2</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">content</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Yes, but we made it.</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
- 
-</span><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">comments</span><span class="php-hl-code">=</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$comment1</span><span class="php-hl-code">,</span><span class="php-hl-var">$comment2</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
- 
-</span><span class="php-hl-var">$result</span><span class="php-hl-code">=</span><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">withRelated</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">validate</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-    <span class="php-hl-quotes">'</span><span class="php-hl-string">title</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,        </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> будет проверен только атрибут `title` модели Post</span>
-    <span class="php-hl-quotes">'</span><span class="php-hl-string">comments</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-        <span class="php-hl-quotes">'</span><span class="php-hl-string">content</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,  </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> будет проверен только атрибут `content` модели Comment</span>
-    <span class="php-hl-brackets">)</span><span class="php-hl-code">,
-</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
-
 <h2>Продвинутое использование</h2>
 
 <h3>Интеграция собственных стратегий обновления</h3>
@@ -352,11 +324,14 @@
             <a href="https://github.com/samdark" title="samdark">
             <img src="https://secure.gravatar.com/avatar/c13375ba1016846e39bc0e48260d0bb1?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="samdark" style="height: 24px; width: 24px;"/>
         </a>
-            <a href="https://github.com/Akhristenko" title="Akhristenko">
-            <img src="https://secure.gravatar.com/avatar/6de105f11211929f4cacf7b4ce26ef77?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="Akhristenko" style="height: 24px; width: 24px;"/>
+            <a href="https://github.com/creocoder" title="creocoder">
+            <img src="https://secure.gravatar.com/avatar/06fd73f7c33c2255fda723aa0b0690cd?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="creocoder" style="height: 24px; width: 24px;"/>
         </a>
             <a href="https://github.com/kirs" title="kirs">
             <img src="https://secure.gravatar.com/avatar/ab074ca0a48f06ab110c374fc7db258e?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="kirs" style="height: 24px; width: 24px;"/>
+        </a>
+            <a href="https://github.com/Akhristenko" title="Akhristenko">
+            <img src="https://secure.gravatar.com/avatar/6de105f11211929f4cacf7b4ce26ef77?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="Akhristenko" style="height: 24px; width: 24px;"/>
         </a>
             <a href="https://github.com/larshjo" title="larshjo">
             <img src="https://secure.gravatar.com/avatar/a73e2df86c9c7a3cb304829d7cdb1cee?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="larshjo" style="height: 24px; width: 24px;"/>
@@ -389,7 +364,7 @@
     <h2>Resources</h2>
     <ul>
         <li><a href="https://github.com/yiiext/with-related-behavior">Browse Code</a></li>
-        <li><a href="https://github.com/yiiext/with-related-behavior/issues">Issues</a> (1)</li>        <li><a href="https://github.com/yiiext/with-related-behavior/wiki">Wiki</a></li>        <li>...</li>
+        <li><a href="https://github.com/yiiext/with-related-behavior/issues">Issues</a> (0)</li>        <li><a href="https://github.com/yiiext/with-related-behavior/wiki">Wiki</a></li>        <li>...</li>
     </ul>
 
 </div>

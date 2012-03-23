@@ -250,33 +250,6 @@ start its own transaction. By default, same as <code>CActiveRecord::save()</code
 models it's going to save are valid. You can disable validation by passing <code>false</code>
 to <code>$runValidation</code> parameter.</p>
 
-<h2>Recursive composite validation</h2>
-
-<p>As opposed to standard <code>CModel::validate()</code> method, <code>WithRelatedBehavior::validate()</code>
-does composite model validation. That means it validates all related models as
-well. Validation result is returned as a boolean value. If any of the models is not valid
-than result will be <code>false</code>. If all models are valid than result will be <code>true</code>.
-Additionally you can limit validation to model attributes as follows:</p>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-inlinetags">&lt;?php</span>
-<span class="php-hl-var">$post</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Post</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">title</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Relational validation is not a dream anymore.</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">content</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Since WithRelatedBehavior released...</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
- 
-</span><span class="php-hl-var">$comment1</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Comment</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$comment1</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">content</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Was it hard?</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$comment2</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Comment</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$comment2</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">content</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Yes, but we made it.</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
- 
-</span><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">comments</span><span class="php-hl-code">=</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$comment1</span><span class="php-hl-code">,</span><span class="php-hl-var">$comment2</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
- 
-</span><span class="php-hl-var">$result</span><span class="php-hl-code">=</span><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">withRelated</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">validate</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-    <span class="php-hl-quotes">'</span><span class="php-hl-string">title</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,        </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> only `title` attribute of the Post model will be validated</span>
-    <span class="php-hl-quotes">'</span><span class="php-hl-string">comments</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-        <span class="php-hl-quotes">'</span><span class="php-hl-string">content</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,  </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> only `content` attribute of the Comment model will be validated</span>
-    <span class="php-hl-brackets">)</span><span class="php-hl-code">,
-</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
-
 <h2>Advanced usage</h2>
 
 <h3>Using custom update strategies</h3>
@@ -350,11 +323,14 @@ inside a transaction. Extension takes care about all these.</p>
             <a href="https://github.com/samdark" title="samdark">
             <img src="https://secure.gravatar.com/avatar/c13375ba1016846e39bc0e48260d0bb1?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="samdark" style="height: 24px; width: 24px;"/>
         </a>
-            <a href="https://github.com/Akhristenko" title="Akhristenko">
-            <img src="https://secure.gravatar.com/avatar/6de105f11211929f4cacf7b4ce26ef77?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="Akhristenko" style="height: 24px; width: 24px;"/>
+            <a href="https://github.com/creocoder" title="creocoder">
+            <img src="https://secure.gravatar.com/avatar/06fd73f7c33c2255fda723aa0b0690cd?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="creocoder" style="height: 24px; width: 24px;"/>
         </a>
             <a href="https://github.com/kirs" title="kirs">
             <img src="https://secure.gravatar.com/avatar/ab074ca0a48f06ab110c374fc7db258e?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="kirs" style="height: 24px; width: 24px;"/>
+        </a>
+            <a href="https://github.com/Akhristenko" title="Akhristenko">
+            <img src="https://secure.gravatar.com/avatar/6de105f11211929f4cacf7b4ce26ef77?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="Akhristenko" style="height: 24px; width: 24px;"/>
         </a>
             <a href="https://github.com/larshjo" title="larshjo">
             <img src="https://secure.gravatar.com/avatar/a73e2df86c9c7a3cb304829d7cdb1cee?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="larshjo" style="height: 24px; width: 24px;"/>
@@ -387,7 +363,7 @@ inside a transaction. Extension takes care about all these.</p>
     <h2>Resources</h2>
     <ul>
         <li><a href="https://github.com/yiiext/with-related-behavior">Browse Code</a></li>
-        <li><a href="https://github.com/yiiext/with-related-behavior/issues">Issues</a> (1)</li>        <li><a href="https://github.com/yiiext/with-related-behavior/wiki">Wiki</a></li>        <li>...</li>
+        <li><a href="https://github.com/yiiext/with-related-behavior/issues">Issues</a> (0)</li>        <li><a href="https://github.com/yiiext/with-related-behavior/wiki">Wiki</a></li>        <li>...</li>
     </ul>
 
 </div>
