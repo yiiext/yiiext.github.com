@@ -1,0 +1,1054 @@
+<html>
+    <head>
+        <script type="text/javascript" src="../../../../js/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="../../../../syntax_highlighter/scripts/shCore.js"></script>
+        <script type="text/javascript" src="../../../../syntax_highlighter/scripts/shBrushJScript.js"></script>
+        <script type="text/javascript" src="../../../../syntax_highlighter/scripts/shBrushPhp.js"></script>
+        <script type="text/javascript" src="../../../../syntax_highlighter/scripts/shBrushXml.js"></script>
+        <link href="../../../../syntax_highlighter/styles/shCore.css" rel="stylesheet" type="text/css" />
+        <link href="../../../../syntax_highlighter/styles/shCoreEclipse.css" rel="stylesheet" type="text/css" />
+        <link href="../../../../syntax_highlighter/styles/shThemeWordpress.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+/**
+ * EActiveRecordRelationBehavior unit tests
+ *
+ * @author Carsten Brandt &lt;mail@cebe.cc&gt;
+ * @link http://yiiext.github.com/extensions/activerecord-relation-behavior/index.html
+ * @copyright Copyright &amp;copy; 2012 Carsten Brandt
+ * @license https://github.com/yiiext/activerecord-relation-behavior/blob/master/LICENSE#L1
+ *
+ * How to run this test
+ * --------------------
+ *
+ * 1. make sure yii framework is available under ./yii/framework
+ *    you can do this by
+ *    - cloning the yii git repo with `git clone https://github.com/yiisoft/yii.git yii`
+ *    - or linking existing yii directory here with `ln -s ../../path/to/yii yii`
+ *
+ * 2. make sure you have phpunit installed and available in PATH (http://www.phpunit.de/manual/3.6/en/installation.html)
+ *
+ * 3. run `phpunit --colors EActiveRecordRelationBehaviorTest.php` or if you want coverage information in html,
+ *    run `phpunit --coverage-html tmp/coverage --colors EActiveRecordRelationBehaviorTest.php`
+ */
+
+namespace yiiext\behaviors\activeRecordRelation\tests;
+define('TEST_NAMESPACE', 'yiiext\behaviors\activeRecordRelation\tests');
+
+if (!defined('YII_PATH')) {
+	$yii = dirname(__FILE__).'/yii/framework/yiit.php';
+	require_once($yii);
+}
+
+require_once(dirname(__FILE__).'/EActiveRecordRelationBehavior.php');
+
+/**
+ * unit test class for EActiveRecordRelationBehavior
+ *
+ * these things are not covered and should be kept in mind while developing:
+ *
+ * - make sure it works with any custom db connection
+ *   therefor only use $this-&gt;owner-&gt;dbConnection
+ * - make sure it works with any possible configuration that works for yii
+ *
+ * these things should be added in test
+ * @todo make sure it works with and without table prefix
+ * @todo make sure it works with and without defined primary keys
+ * @todo make sure 'through' relations are not touched until they are supported
+ *
+ * @author Carsten Brandt &lt;mail@cebe.cc&gt;
+ * @package yiiext.behaviors.activeRecordRelation.tests
+ */
+class EActiveRecordRelationBehaviorTest extends \CTestCase
+{
+	public $db;
+	/** @var EActiveRecordRelationBehaviorTestMigration */
+	protected $migration;
+
+	/**
+	 * set up environment with yii application and migrate up db
+	 */
+	public function setUp()
+	{
+		$basePath=dirname(__FILE__).'/tmp';
+		if (!file_exists($basePath))
+			mkdir($basePath, 0777, true);
+		if (!file_exists($basePath.'/runtime'))
+			mkdir($basePath.'/runtime', 0777, true);
+
+		if (!$this-&gt;db)
+			$this-&gt;db = $basePath.'/test.'.uniqid(time()).'.db';
+
+		// create webapp
+		if (\Yii::app()===null) {
+			\Yii::createWebApplication(array(
+			    'basePath'=&gt;$basePath,
+			));
+		}
+		\CActiveRecord::$db=null;
+		\Yii::app()-&gt;setComponent('db', new \CDbConnection('sqlite:'.$this-&gt;db));
+
+		// create db
+		$this-&gt;migration = new EActiveRecordRelationBehaviorTestMigration();
+		$this-&gt;migration-&gt;dbConnection = \Yii::app()-&gt;db;
+		$this-&gt;migration-&gt;up();
+
+	}
+
+	/**
+	 * migrate down db when test succeeds
+	 */
+	public function tearDown()
+	{
+		if (!$this-&gt;hasFailed() &amp;&amp; $this-&gt;migration &amp;&amp; $this-&gt;db) {
+			$this-&gt;migration-&gt;down();
+			unlink($this-&gt;db);
+		}
+	}
+
+	/**
+	 * dataprovider that lists possible configuration options for foreign keys, so
+	 * we make sure to have our models configured in many ways and it still works
+	 * @return array (configType, transactional)
+	 */
+	public function fkConfigurationProvider()
+	{
+		$configOptions = array(
+			'normal', // all fks configured as string
+//			'fkarray', // will be supported when support for composite pks is added
+//			'fkcomma', // will be used when composite pks are supported
+		);
+
+		// @todo mix them!
+		$configs = array();
+		foreach($configOptions as $option) {
+			$configs[] = array(array('Profile'=&gt;$option, 'User'=&gt;$option, 'Post'=&gt;$option, 'Category'=&gt;$option), true);
+			$configs[] = array(array('Profile'=&gt;$option, 'User'=&gt;$option, 'Post'=&gt;$option, 'Category'=&gt;$option), false);
+		}
+		return $configs;
+	}
+
+	protected function setConfig($config)
+	{
+		Profile::$configurationType = $config['Profile'];
+		User::$configurationType = $config['User'];
+		Post::$configurationType = $config['Post'];
+		Category::$configurationType = $config['Category'];
+	}
+
+	protected function startTransaction($t)
+	{
+		$this-&gt;assertNull(\Yii::app()-&gt;db-&gt;currentTransaction, 'there shouldn\'t be a transaction at start');
+		if ($t) {
+			\Yii::app()-&gt;db-&gt;beginTransaction();
+			$this-&gt;assertNotNull(\Yii::app()-&gt;db-&gt;currentTransaction, 'there should be a transaction after beginTransaction');
+		}
+	}
+
+	protected function endTransaction($t)
+	{
+		if ($t) {
+			$this-&gt;assertNotNull(\Yii::app()-&gt;db-&gt;currentTransaction, 'there should be a transaction, we created one at start');
+			\Yii::app()-&gt;db-&gt;currentTransaction-&gt;commit();
+			$this-&gt;assertNull(\Yii::app()-&gt;db-&gt;currentTransaction, 'there shouldn\'t be a transaction after commit');
+		} else {
+			$this-&gt;assertNull(\Yii::app()-&gt;db-&gt;currentTransaction, 'there shouldn\'t be a transaction anymore, behavior should have committed or rolledBack');
+		}
+	}
+
+	/**
+	 * test creation of AR and assigning a relation with BELONGS_TO
+	 *
+	 * @dataProvider fkConfigurationProvider
+	 */
+	public function testBelongsTo($config, $transactional)
+	{
+		$this-&gt;setConfig($config);
+		$this-&gt;startTransaction($transactional);
+
+		$john = $this-&gt;getJohn();
+		$p = new Post();
+		$p-&gt;title = 'hi testing!';
+		$p-&gt;author = $john;
+
+		// saving with a related record that is new should fail
+		$exception=false;
+		try {
+			$p-&gt;save();
+		} catch (\CDbException $e) {
+			$exception=true;
+		}
+		$this-&gt;assertTrue($exception, 'Expected CDbException on saving with a non saved record.');
+
+		$this-&gt;assertSaveSuccess($p-&gt;author); // saved john
+		$this-&gt;assertSaveSuccess($p);
+
+		$this-&gt;assertEquals($p-&gt;author_id, $john-&gt;id);
+		$p-&gt;refresh();
+		$this-&gt;assertEquals($p-&gt;author_id, $john-&gt;id);
+		$this-&gt;assertNotNull($p-&gt;author);
+		$this-&gt;assertEquals($p-&gt;author-&gt;id, $john-&gt;id);
+
+		$jane = $this-&gt;getJane(10, true);
+		$p = new Post();
+		$p-&gt;title = 'hi testing2!';
+		$p-&gt;author = $jane-&gt;id;
+
+		$this-&gt;assertSaveSuccess($p);
+
+		$this-&gt;assertEquals($p-&gt;author_id, $jane-&gt;id);
+		$p-&gt;refresh();
+		$this-&gt;assertEquals($p-&gt;author_id, $jane-&gt;id);
+		$this-&gt;assertNotNull($p-&gt;author);
+		$this-&gt;assertEquals($p-&gt;author-&gt;id, $jane-&gt;id);
+
+		$this-&gt;endTransaction($transactional);
+	}
+
+	/**
+	 * test creation of AR and assigning a relation with HAS_ONE
+	 * this also tests the HAS_ONE oposite BELONGS_TO
+	 *
+	 * @dataProvider fkConfigurationProvider
+	 */
+	public function testHasOne($config, $transactional)
+	{
+		$this-&gt;setConfig($config);
+		$this-&gt;startTransaction($transactional);
+
+		// check if the normal thing works
+		$john = $this-&gt;getJohn();
+		$this-&gt;assertSaveSuccess($john);
+
+		// create a jane to make sure her relation does not change
+		$jane = $this-&gt;getJane();
+		$this-&gt;assertSaveSuccess($jane);
+
+		$this-&gt;assertNull($john-&gt;profile);
+		$this-&gt;assertEquals(array(), $john-&gt;posts);
+		$this-&gt;assertEquals($this-&gt;getJohn(1)-&gt;attributes, $john-&gt;attributes);
+
+		$john-&gt;refresh();
+
+		$this-&gt;assertNull($john-&gt;profile);
+		$this-&gt;assertEquals(array(), $john-&gt;posts);
+		$this-&gt;assertEquals($this-&gt;getJohn(1)-&gt;attributes, $john-&gt;attributes);
+
+		$john-&gt;profile = new Profile();
+		$this-&gt;assertNotNull($john-&gt;profile);
+		$this-&gt;assertEquals(array(), $john-&gt;posts);
+		$this-&gt;assertEquals($this-&gt;getJohn(1)-&gt;attributes, $john-&gt;attributes);
+
+		$john-&gt;profile-&gt;website = 'http://www.example.com/';
+		$this-&gt;assertEquals('http://www.example.com/', $john-&gt;profile-&gt;website);
+
+		// saving with a related record that is new should fail
+		$exception=false;
+		try {
+			$john-&gt;save();
+		} catch (\CDbException $e) {
+			$exception=true;
+		}
+		$this-&gt;assertTrue($exception, 'Expected CDbException on saving with a non saved record.');
+
+		$this-&gt;assertSaveFailure($john-&gt;profile, array('owner_id')); // owner_id is required and not set by EActiveRecordRelationBehavior
+		$john-&gt;profile-&gt;owner = $john;
+		$this-&gt;assertSaveSuccess($john-&gt;profile);
+
+		// after profile is saved, john should be saved
+		$this-&gt;assertSaveSuccess($john);
+		$this-&gt;assertNotNull($john-&gt;profile);
+
+		/** @var Profile $profile */
+		$this-&gt;assertNotNull($profile=Profile::model()-&gt;findByPk($john-&gt;profile-&gt;owner_id));
+		/** @var User $user */
+		$this-&gt;assertNotNull($user=User::model()-&gt;findByPk($john-&gt;id));
+
+		$this-&gt;assertEquals($profile, $user-&gt;profile);
+		$this-&gt;assertEquals($user, $profile-&gt;owner);
+
+		$this-&gt;assertNull($jane-&gt;profile);
+		$jane-&gt;refresh();
+		$this-&gt;assertNull($jane-&gt;profile);
+
+		// this can not work since pk of profile can not be null
+		// @todo should be supported
+		/*$p = $john-&gt;profile;
+		$this-&gt;assertNotNull($john-&gt;profile);
+		$john-&gt;profile = null;
+		$this-&gt;assertNull($john-&gt;profile);
+		$this-&gt;assertSaveSuccess($john);
+		$this-&gt;assertNull($john-&gt;profile);
+		$john-&gt;refresh();
+		$this-&gt;assertNull($john-&gt;profile);
+		$p-&gt;refresh();*/
+
+		$this-&gt;endTransaction($transactional);
+	}
+
+	/**
+	 * test creation of AR and assigning a relation with HAS_MANY as pk values
+	 * one record is added as object later
+	 *
+	 * @dataProvider fkConfigurationProvider
+	 */
+	public function testHasManyPk($config, $transactional)
+	{
+		$this-&gt;setConfig($config);
+		$this-&gt;startTransaction($transactional);
+
+		$author = $this-&gt;getJohn();
+		$this-&gt;assertSaveSuccess($author);
+
+		$this-&gt;assertEquals(array(), $author-&gt;posts);
+		$posts = $this-&gt;getPosts(10);
+		for($n=1;$n&lt;10;$n++) {
+			$posts[$n] = $posts[$n]-&gt;id;
+		}
+		$author-&gt;posts = $posts;
+		$this-&gt;assertEquals(9, count($author-&gt;posts));
+		$this-&gt;assertSaveSuccess($author);
+
+		$this-&gt;assertEquals(9, count($author-&gt;posts));
+		$author-&gt;refresh();
+		$this-&gt;assertEquals(9, count($author-&gt;posts));
+
+		// remove some records
+		unset($posts[1]);
+		unset($posts[3]);
+
+		$author-&gt;posts = $posts;
+		$this-&gt;assertEquals(7, count($author-&gt;posts));
+		$this-&gt;assertSaveSuccess($author);
+
+		$this-&gt;assertEquals(7, count($author-&gt;posts));
+		$author-&gt;refresh();
+		$this-&gt;assertEquals(7, count($author-&gt;posts));
+
+		// remove some, add some records
+		unset($posts[4]);
+		unset($posts[5]);
+		$p = new Post();
+		$p-&gt;title = 'testtitle';
+		$this-&gt;assertSaveSuccess($p);
+		$posts[] = $p; // this one is mixed
+
+		$author-&gt;posts = $posts;
+		$this-&gt;assertEquals(6, count($author-&gt;posts));
+		$this-&gt;assertSaveSuccess($author);
+
+		$this-&gt;assertEquals(6, count($author-&gt;posts));
+		$author-&gt;refresh();
+		$this-&gt;assertEquals(6, count($author-&gt;posts));
+
+		// remove all records
+		$author-&gt;posts = array();
+		$this-&gt;assertEquals(0, count($author-&gt;posts));
+		$this-&gt;assertSaveSuccess($author);
+
+		$this-&gt;assertEquals(0, count($author-&gt;posts));
+		$author-&gt;refresh();
+		$this-&gt;assertEquals(0, count($author-&gt;posts));
+
+		$this-&gt;endTransaction($transactional);
+	}
+
+	/**
+	 * test creation of AR and assigning a relation with HAS_MANY as objects values
+	 * one record is added as pk later
+	 *
+	 * @dataProvider fkConfigurationProvider
+	 */
+	public function testHasManyObject($config, $transactional)
+	{
+		$this-&gt;setConfig($config);
+		$this-&gt;startTransaction($transactional);
+
+		$author = $this-&gt;getJohn();
+		$this-&gt;assertSaveSuccess($author);
+
+		$this-&gt;assertEquals(array(), $author-&gt;posts);
+		$posts = $this-&gt;getPosts();
+		$author-&gt;posts = $posts;
+		$this-&gt;assertEquals(9, count($author-&gt;posts));
+		// saving with a related record that is new should fail
+		$exception=false;
+		try {
+			$author-&gt;save();
+		} catch (\CDbException $e) {
+			$exception=true;
+		}
+		$this-&gt;assertTrue($exception, 'Expected CDbException on saving with a non saved record.');
+		// saving last record
+		$this-&gt;assertSaveSuccess(end($posts));
+		$this-&gt;assertEquals(9, count($author-&gt;posts));
+		$this-&gt;assertSaveSuccess($author);
+
+		$this-&gt;assertEquals(9, count($author-&gt;posts));
+		$author-&gt;refresh();
+		$this-&gt;assertEquals(9, count($author-&gt;posts));
+
+		// remove some records
+		unset($posts[1]);
+		unset($posts[3]);
+
+		$author-&gt;posts = $posts;
+		$this-&gt;assertEquals(7, count($author-&gt;posts));
+		$this-&gt;assertSaveSuccess($author);
+
+		$this-&gt;assertEquals(7, count($author-&gt;posts));
+		$author-&gt;refresh();
+		$this-&gt;assertEquals(7, count($author-&gt;posts));
+
+		// remove some, add some records
+		unset($posts[4]);
+		unset($posts[5]);
+		$p = new Post();
+		$p-&gt;title = 'testtitle';
+		$this-&gt;assertSaveSuccess($p);
+		$posts[] = $p-&gt;id; // this one is mixed
+
+		$author-&gt;posts = $posts;
+		$this-&gt;assertEquals(6, count($author-&gt;posts));
+		$this-&gt;assertSaveSuccess($author);
+
+		$this-&gt;assertEquals(6, count($author-&gt;posts));
+		$author-&gt;refresh();
+		$this-&gt;assertEquals(6, count($author-&gt;posts));
+
+		// remove all records
+		$author-&gt;posts = array();
+		$this-&gt;assertEquals(0, count($author-&gt;posts));
+		$this-&gt;assertSaveSuccess($author);
+
+		$this-&gt;assertEquals(0, count($author-&gt;posts));
+		$author-&gt;refresh();
+		$this-&gt;assertEquals(0, count($author-&gt;posts));
+
+		$this-&gt;endTransaction($transactional);
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function beforeManyMany()
+	{
+		$untouchedCategory1 = new Category();
+		$untouchedCategory1-&gt;name = 'untouched1';
+		$this-&gt;assertEquals(0, count($untouchedCategory1-&gt;posts));
+		$this-&gt;assertSaveSuccess($untouchedCategory1);
+		$this-&gt;assertEquals(0, count($untouchedCategory1-&gt;posts));
+
+		$untouchedCategory2 = new Category();
+		$untouchedCategory2-&gt;name = 'untouched2';
+		$untouchedCategory2-&gt;posts = $this-&gt;getPosts(10, true);
+		$this-&gt;assertEquals(9, count($untouchedCategory2-&gt;posts));
+		$this-&gt;assertSaveSuccess($untouchedCategory2);
+		$this-&gt;assertEquals(9, count($untouchedCategory2-&gt;posts));
+
+		return array($untouchedCategory1, $untouchedCategory2);
+	}
+
+	/**
+	 * @param Category $untouchedCategory1
+	 * @param Category $untouchedCategory2
+	 */
+	protected function afterManyMany($untouchedCategory1, $untouchedCategory2)
+	{
+		$this-&gt;assertEquals('untouched1', $untouchedCategory1-&gt;name);
+		$this-&gt;assertEquals(0, count($untouchedCategory1-&gt;posts));
+		$untouchedCategory1-&gt;refresh();
+		$this-&gt;assertEquals('untouched1', $untouchedCategory1-&gt;name);
+		$this-&gt;assertEquals(0, count($untouchedCategory1-&gt;posts));
+
+		$this-&gt;assertEquals('untouched2', $untouchedCategory2-&gt;name);
+		$this-&gt;assertEquals(9, count($untouchedCategory2-&gt;posts));
+		$untouchedCategory2-&gt;refresh();
+		$this-&gt;assertEquals('untouched2', $untouchedCategory2-&gt;name);
+		$this-&gt;assertEquals(9, count($untouchedCategory2-&gt;posts));
+	}
+
+	public function manymanyData()
+	{
+		$data = array(
+			array(true, 1), // only pks
+			array(true, 2), // mixed
+			array(false, 1), // only model objects
+		);
+
+		// mix in data from @dataProvider fkConfigurationProvider
+		$return = array();
+		foreach($this-&gt;fkConfigurationProvider() as $row) {
+			foreach($data as $dataRow) {
+				$return[] = array_merge($dataRow, $row);
+			}
+		}
+		return $return;
+	}
+
+	/**
+	 * test creation of AR and assigning a relation with MANY_MANY as pk values
+	 *
+	 * @dataProvider manymanyData
+	 */
+	public function testManyMany($postsAsPk, $modulo, $config, $transactional)
+	{
+		$this-&gt;setConfig($config);
+		$this-&gt;startTransaction($transactional);
+
+		if ($postsAsPk) { // first with pk data
+			$posts=$this-&gt;getPosts(10, true);
+			for($n=1;$n&lt;10;$n++) {
+				if ($n % $modulo == 0) {
+					$posts[$n] = $posts[$n]-&gt;id;
+				}
+			}
+		} else {
+			$posts = $this-&gt;getPosts(10, true); // second with object data
+		}
+
+		list($un1, $un2) = $this-&gt;beforeManyMany();
+
+		// begin real test
+		$category = new Category();
+		$category-&gt;name = 'my new cat';
+		$this-&gt;assertEquals(array(), $category-&gt;posts);
+		$category-&gt;save();
+		$this-&gt;assertEquals(array(), $category-&gt;posts);
+
+		$category-&gt;save();
+
+		$this-&gt;assertEquals(0, count($category-&gt;posts));
+		$category-&gt;posts = $posts;
+		$this-&gt;assertEquals(9, count($category-&gt;posts));
+		$category-&gt;save();
+		$this-&gt;assertEquals(9, count($category-&gt;posts));
+
+		// remove some records
+		unset($posts[1]);
+		unset($posts[3]);
+
+		$this-&gt;assertEquals(9, count($category-&gt;posts));
+		$category-&gt;posts = $posts;
+		$this-&gt;assertEquals(7, count($category-&gt;posts));
+		$category-&gt;save();
+		$this-&gt;assertEquals(7, count($category-&gt;posts));
+
+		// remove some, add some records
+		unset($posts[4]);
+		unset($posts[5]);
+		$p = new Post();
+		$p-&gt;title = 'testtitle';
+		$this-&gt;assertSaveSuccess($p);
+		$posts[] = $p-&gt;id; // this one is mixed
+
+		$this-&gt;assertEquals(7, count($category-&gt;posts));
+		$category-&gt;posts = $posts;
+		$this-&gt;assertEquals(6, count($category-&gt;posts));
+		$category-&gt;save();
+		$this-&gt;assertEquals(6, count($category-&gt;posts));
+
+
+		// @todo test if additional relation data is touched
+
+		// end real test, checking untouched
+		$this-&gt;afterManyMany($un1, $un2);
+		$this-&gt;endTransaction($transactional);
+	}
+
+	/**
+	 * @expectedException CDbException
+	 * @dataProvider fkConfigurationProvider
+	 */
+	public function testManyManyException($config, $transactional)
+	{
+		$this-&gt;setConfig($config);
+		$this-&gt;startTransaction($transactional);
+
+		$cat = new Category();
+		$cat-&gt;posts = 1;
+		$cat-&gt;save();
+
+		$this-&gt;endTransaction($transactional);
+	}
+
+	/**
+	 * @expectedException CDbException
+	 * @dataProvider fkConfigurationProvider
+	 */
+	public function testYiiException1($config, $transactional)
+	{
+		$this-&gt;setConfig($config);
+		$this-&gt;startTransaction($transactional);
+
+		$cat = new Category();
+		$cat-&gt;broken = true;
+		$cat-&gt;posts = array();
+		$cat-&gt;save();
+
+		$this-&gt;endTransaction($transactional);
+	}
+
+	/**
+	 * @expectedException CDbException
+	 * @dataProvider fkConfigurationProvider
+	 */
+	public function testYiiException2($config, $transactional)
+	{
+		$this-&gt;setConfig($config);
+		$this-&gt;startTransaction($transactional);
+
+		$cat = new Category();
+		$this-&gt;migration-&gt;dropRelationTable();
+		$cat-&gt;posts = array();
+		$cat-&gt;save();
+
+		$this-&gt;endTransaction($transactional);
+	}
+
+	/**
+	 * @param \CActiveRecord $ar
+	 */
+	public function assertSaveSuccess($ar)
+	{
+		$this-&gt;assertTrue($ar-&gt;save(), 'Expected saving of AR '.get_class($ar).' without errors: '.print_r($ar-&gt;getErrors(),true));
+	}
+
+	/**
+	 * @param \CActiveRecord $ar
+	 */
+	public function assertSaveFailure($ar, $failedAttributes=null)
+	{
+		$this-&gt;assertFalse($ar-&gt;save(), 'Expected saving of AR '.get_class($ar).' to fail.');
+		if ($failedAttributes!==null)
+			$this-&gt;assertEquals($failedAttributes, array_keys($ar-&gt;getErrors()));
+	}
+
+	public static function assertEquals($expected, $actual, $message = '', $delta = 0, $maxDepth = 10)
+	{
+		if ($expected instanceof \CActiveRecord) {
+			/** @var \CActiveRecord $expected */
+			self::assertNotNull($actual, 'Failed asserting that two ActiveRecords are equal. Second is null. '.$message);
+			self::assertTrue($expected-&gt;equals($actual), 'Failed asserting that two ActiveRecords are equal. '.$message);
+		} elseif ($actual instanceof \CActiveRecord) {
+			/** @var \CActiveRecord $actual */
+			self::assertNotNull($expected, 'Failed asserting that two ActiveRecords are equal. First is null. '.$message);
+			self::assertTrue($actual-&gt;equals($expected), 'Failed asserting that two ActiveRecords are equal. '.$message);
+		} else {
+			parent::assertEquals($expected, $actual, $message, $delta, $maxDepth);
+		}
+	}
+
+	/**
+	 * @return User
+	 */
+	protected function getJohn($id=null, $save=false)
+	{
+		$john = new User();
+		if ($id)
+			$john-&gt;id = $id;
+		$john-&gt;username = 'John';
+		$john-&gt;password = '123456';
+		$john-&gt;email = 'john@doe.com';
+		if ($save)
+			$this-&gt;assertSaveSuccess($john);
+		return $john;
+	}
+
+	/**
+	 * @return User
+	 */
+	protected function getJane($id=null, $save=false)
+	{
+		$jane = new User();
+		if ($id)
+			$jane-&gt;id = $id;
+		$jane-&gt;username = 'Jane';
+		$jane-&gt;password = '654321';
+		$jane-&gt;email = 'jane@doe.com';
+		if ($save)
+			$this-&gt;assertSaveSuccess($jane);
+		return $jane;
+	}
+
+	protected function getPosts($saveUntil=9, $addAuthor=false)
+	{
+		$posts = array();
+		for($n=1;$n&lt;10;$n++) {
+			$p = new Post();
+			$p-&gt;title = 'title'.$n;
+			$p-&gt;content = 'content'.$n;
+			if ($n &lt; $saveUntil) {
+				if ($addAuthor) {
+					$p-&gt;author = ($n % 2 == 0) ? $this-&gt;getJane(null, true) : $this-&gt;getJohn(null, true);
+				}
+				$this-&gt;assertSaveSuccess($p);
+			}
+			$posts[$n] = $p;
+		}
+		return $posts;
+	}
+
+}
+
+class EActiveRecordRelationBehaviorTestMigration extends \CDbMigration
+{
+	private $relationTableDropped=true;
+	public function up()
+	{
+		ob_start();
+		// these are the tables from yii definitive guide
+		// http://www.yiiframework.com/doc/guide/1.1/en/database.arr
+		$this-&gt;createTable('tbl_user', array(
+             'id'=&gt;'pk',
+             'username'=&gt;'string',
+             'password'=&gt;'string',
+             'email'=&gt;'string',
+		));
+		$this-&gt;createTable('tbl_profile', array(
+             'owner_id'=&gt;'pk',
+             'photo'=&gt;'binary',
+             'website'=&gt;'string',
+		     'FOREIGN KEY (owner_id) REFERENCES tbl_user(id)',
+		));
+		$this-&gt;createTable('tbl_post', array(
+             'id'=&gt;'pk',
+             'title'=&gt;'string',
+             'content'=&gt;'text',
+             'create_time'=&gt;'timestamp',
+             'author_id'=&gt;'integer',
+             'FOREIGN KEY (author_id) REFERENCES tbl_user(id)',
+		));
+		$this-&gt;createTable('tbl_post_category', array(
+             'post_id'=&gt;'integer',
+             'category_id'=&gt;'integer',
+             'post_order'=&gt;'integer', // added this row to test additional attributes added to a relation
+		     'PRIMARY KEY(post_id, category_id)',
+		     'FOREIGN KEY (post_id) REFERENCES tbl_post(id)',
+		     'FOREIGN KEY (category_id) REFERENCES tbl_category(id)',
+		));
+		$this-&gt;relationTableDropped=false;
+		$this-&gt;createTable('tbl_category', array(
+             'id'=&gt;'pk',
+             'name'=&gt;'string',
+		));
+		ob_end_clean();
+	}
+
+	public function down()
+	{
+		ob_start();
+		if (!$this-&gt;relationTableDropped) {
+			$this-&gt;dropTable('tbl_post_category');
+		}
+		$this-&gt;dropTable('tbl_category');
+		$this-&gt;dropTable('tbl_post');
+		$this-&gt;dropTable('tbl_profile');
+		$this-&gt;dropTable('tbl_user');
+		ob_end_clean();
+	}
+
+	public function dropRelationTable()
+	{
+		ob_start();
+		$this-&gt;dropTable('tbl_post_category');
+		$this-&gt;relationTableDropped=true;
+		ob_end_clean();
+	}
+}
+
+/**
+ * This is the model class for table &quot;tbl_profile&quot;.
+ *
+ * @property int $owner_id
+ * @property string $photo
+ * @property string $website
+ *
+ * The followings are the available model relations:
+ * @property User $owner
+ */
+class Profile extends \CActiveRecord
+{
+	public static $configurationType='normal';
+	/**
+	 * Returns the static model of the specified AR class.
+	 * @param string $className active record class name.
+	 * @return Profile the static model class
+	 */
+	public static function model($className=__CLASS__)
+	{
+		return parent::model($className);
+	}
+
+	/**
+	 * @return string the associated database table name
+	 */
+	public function tableName()
+	{
+		return 'tbl_profile';
+	}
+
+	/*
+	 * @return array the behavior configurations (behavior name=&gt;behavior configuration)
+	 */
+	public function behaviors()
+	{
+		return array('activeRecordRelationBehavior'=&gt;'EActiveRecordRelationBehavior');
+	}
+
+	/**
+	 * @return array validation rules for model attributes.
+	 */
+	public function rules()
+	{
+		return array(
+			array('owner_id', 'required'),
+			array('photo, website', 'safe'),
+		);
+	}
+
+	/**
+	 * @return array relational rules.
+	 */
+	public function relations()
+	{
+		switch(static::$configurationType)
+		{
+			default:
+				return array(
+					'owner' =&gt; array(self::BELONGS_TO, TEST_NAMESPACE.'\User', 'owner_id'),
+				);
+			case 'fkarray':
+				return array(
+					'owner' =&gt; array(self::BELONGS_TO, TEST_NAMESPACE.'\User', array('owner_id'=&gt;'id')),
+				);
+		}
+	}
+}
+
+/**
+ * This is the model class for table &quot;tbl_user&quot;.
+ *
+ * @property int $id
+ * @property string $username
+ * @property string $password
+ * @property string $email
+ *
+ * The followings are the available model relations:
+ * @property Profile $profile
+ * @property Post[] $posts
+ */
+class User extends \CActiveRecord
+{
+	public static $configurationType='normal';
+	/**
+	 * Returns the static model of the specified AR class.
+	 * @param string $className active record class name.
+	 * @return User the static model class
+	 */
+	public static function model($className=__CLASS__)
+	{
+		return parent::model($className);
+	}
+
+	/**
+	 * @return string the associated database table name
+	 */
+	public function tableName()
+	{
+		return 'tbl_user';
+	}
+
+	/*
+	 * @return array the behavior configurations (behavior name=&gt;behavior configuration)
+	 */
+	public function behaviors()
+	{
+		return array('activeRecordRelationBehavior'=&gt;'EActiveRecordRelationBehavior');
+	}
+
+	/**
+	 * @return array validation rules for model attributes.
+	 */
+	public function rules()
+	{
+		return array(
+//			array('id', 'required'),
+			array('username, password, email', 'safe'),
+		);
+	}
+
+	/**
+	 * @return array relational rules.
+	 */
+	public function relations()
+	{
+		switch(static::$configurationType)
+		{
+			default:
+				return array(
+					'posts' =&gt; array(self::HAS_MANY, TEST_NAMESPACE.'\Post', 'author_id'),
+					'profile' =&gt; array(self::HAS_ONE, TEST_NAMESPACE.'\Profile', 'owner_id'),
+				);
+			case 'fkarray':
+				return array(
+					'posts' =&gt; array(self::HAS_MANY, TEST_NAMESPACE.'\Post', array('id'=&gt;'author_id')),
+					'profile' =&gt; array(self::HAS_ONE, TEST_NAMESPACE.'\Profile', array('id'=&gt;'owner_id')),
+				);
+		}
+	}
+}
+
+/**
+ * This is the model class for table &quot;tbl_post&quot;.
+ *
+ * @property int $id
+ * @property string $title
+ * @property string $content
+ * @property string $create_time
+ * @property int $author_id
+ *
+ * The followings are the available model relations:
+ * @property User $author
+ * @property Category[] $categories
+ */
+class Post extends \CActiveRecord
+{
+	public static $configurationType='normal';
+	/**
+	 * Returns the static model of the specified AR class.
+	 * @param string $className active record class name.
+	 * @return Post the static model class
+	 */
+	public static function model($className=__CLASS__)
+	{
+		return parent::model($className);
+	}
+
+	/**
+	 * @return string the associated database table name
+	 */
+	public function tableName()
+	{
+		return 'tbl_post';
+	}
+
+	/*
+	 * @return array the behavior configurations (behavior name=&gt;behavior configuration)
+	 */
+	public function behaviors()
+	{
+		return array('activeRecordRelationBehavior'=&gt;'EActiveRecordRelationBehavior');
+	}
+
+	/**
+	 * @return array validation rules for model attributes.
+	 */
+	public function rules()
+	{
+		return array(
+//			array('id', 'required'),
+			array('title, content, create_time, author_id', 'safe'),
+		);
+	}
+
+	/**
+	 * @return array relational rules.
+	 */
+	public function relations()
+	{
+		switch(static::$configurationType)
+		{
+			default:
+				return array(
+					'categories' =&gt; array(self::MANY_MANY, TEST_NAMESPACE.'\Category', 'tbl_post_category(post_id, category_id)'),
+					'author' =&gt; array(self::BELONGS_TO, TEST_NAMESPACE.'\User', 'author_id'),
+				);
+			case 'fkarray':
+				return array(
+					'categories' =&gt; array(self::MANY_MANY, TEST_NAMESPACE.'\Category', 'tbl_post_category(post_id, category_id)'),
+					'author' =&gt; array(self::BELONGS_TO, TEST_NAMESPACE.'\User', array('author_id'=&gt;'id')),
+				);
+		}
+	}
+}
+
+/**
+ * This is the model class for table &quot;tbl_category&quot;.
+ *
+ * @property int $id
+ * @property string $name
+ *
+ * The followings are the available model relations:
+ * @property Post[] $posts
+ */
+class Category extends \CActiveRecord
+{
+	public $broken = false;
+	public static $configurationType='normal';
+	/**
+	 * Returns the static model of the specified AR class.
+	 * @param string $className active record class name.
+	 * @return Category the static model class
+	 */
+	public static function model($className=__CLASS__)
+	{
+		return parent::model($className);
+	}
+
+	/**
+	 * @return string the associated database table name
+	 */
+	public function tableName()
+	{
+		return 'tbl_category';
+	}
+
+	/*
+	 * @return array the behavior configurations (behavior name=&gt;behavior configuration)
+	 */
+	public function behaviors()
+	{
+		return array('activeRecordRelationBehavior'=&gt;'EActiveRecordRelationBehavior');
+	}
+
+	/**
+	 * @return array validation rules for model attributes.
+	 */
+	public function rules()
+	{
+		return array(
+//			array('id', 'required'),
+			array('name', 'safe'),
+		);
+	}
+
+	/**
+	 * @return array relational rules.
+	 */
+	public function relations()
+	{
+		if (!$this-&gt;broken) {
+			switch(static::$configurationType)
+			{
+				default:
+					return array(
+						'posts' =&gt; array(self::MANY_MANY, TEST_NAMESPACE.'\Post', 'tbl_post_category(category_id, post_id)'),
+					);
+			}
+		}
+		return array(
+			'posts' =&gt; array(self::MANY_MANY, TEST_NAMESPACE.'\Post', 'tbl_post_category'),
+		);
+	}
+}
+</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all()
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>

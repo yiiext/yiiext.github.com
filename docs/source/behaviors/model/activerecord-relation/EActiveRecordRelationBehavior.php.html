@@ -1,0 +1,473 @@
+<html>
+    <head>
+        <script type="text/javascript" src="../../../../js/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="../../../../syntax_highlighter/scripts/shCore.js"></script>
+        <script type="text/javascript" src="../../../../syntax_highlighter/scripts/shBrushJScript.js"></script>
+        <script type="text/javascript" src="../../../../syntax_highlighter/scripts/shBrushPhp.js"></script>
+        <script type="text/javascript" src="../../../../syntax_highlighter/scripts/shBrushXml.js"></script>
+        <link href="../../../../syntax_highlighter/styles/shCore.css" rel="stylesheet" type="text/css" />
+        <link href="../../../../syntax_highlighter/styles/shCoreEclipse.css" rel="stylesheet" type="text/css" />
+        <link href="../../../../syntax_highlighter/styles/shThemeWordpress.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+/**
+ * EActiveRecordRelationBehavior class file.
+ *
+ * @author Carsten Brandt &lt;mail@cebe.cc&gt;
+ * @link http://yiiext.github.com/extensions/activerecord-relation-behavior/index.html
+ * @copyright Copyright &amp;copy; 2012 Carsten Brandt
+ * @license https://github.com/yiiext/activerecord-relation-behavior/blob/master/LICENSE#L1
+ */
+
+/**
+ * EActiveRecordRelationBehavior adds the possiblity to handle activerecord relations more intuitively
+ *
+ * @todo use AR-&gt;hasRelated($name)
+ *
+ * For details on how to use it please refer to the README.* files that ship with it.
+ *
+ * Inspired by and put together the awesomeness of the following yii extensions:
+ *
+ * - can save MANY_MANY relations like cadvancedarbehavior, eadvancedarbehavior, esaverelatedbehavior and advancedrelationsbehavior
+ * - cares about relations when records get deleted like eadvancedarbehavior (*)
+ * - can save BELONGS_TO, HAS_MANY, HAS_ONE like eadvancedarbehavior, esaverelatedbehavior and advancedrelationsbehavior
+ * - saves with transaction and can handle external transactions like with-related-behavior, esaverelatedbehavior and saverbehavior
+ * - does not touch additional data in MANY_MANY table (cadvancedarbehavior deleted it)
+ * - validates for array on HAS_MANY and MANY_MANY relation to have more clear semantic
+ *
+ * (*) not yet implemented, see github issue #7
+ *
+ * these are the extensions mentioned above
+ * - cadvancedarbehavior        http://www.yiiframework.com/extension/cadvancedarbehavior/
+ * - eadvancedarbehavior        http://www.yiiframework.com/extension/eadvancedarbehavior
+ * - advancedrelationsbehavior  http://www.yiiframework.com/extension/advancedrelationsbehavior
+ * - saverbehavior              http://www.yiiframework.com/extension/saverbehavior
+ * - with-related-behavior      https://github.com/yiiext/with-related-behavior
+ * - CSaveRelationsBehavior     http://code.google.com/p/yii-save-relations-ar-behavior/
+ * - esaverelatedbehavior       http://www.yiiframework.com/extension/esaverelatedbehavior
+ *
+ * reviewed but did not take something out:
+ * - xrelationbehavior          http://www.yiiframework.com/extension/xrelationbehavior
+ * - save-relations-ar-behavior http://www.yiiframework.com/extension/save-relations-ar-behavior
+ *
+ *
+ * Limitations:
+ * - currently does not support composite primary keys
+ * - currently handles all existing relations, will add support for limitation shortly
+ * - relations defined with 'through' are not supported yet (http://www.yiiframework.com/doc/guide/1.1/en/database.arr#relational-query-with-through)
+ *
+ * @property CActiveRecord $owner The owner AR that this behavior is attached to.
+ *
+ * @author Carsten Brandt &lt;mail@cebe.cc&gt;
+ * @package yiiext.behaviors.activeRecordRelation
+ */
+class EActiveRecordRelationBehavior extends CActiveRecordBehavior
+{
+	/**
+	 * @var bool set this to false if you dbms does not support transaction
+	 * This behavior will use transactions to save MANY_MANY tables to ensure consistent data
+	 * If you start a transaction yourself you can use without anything to configure. this behavior will
+	 * run inside your transaction without touching it
+	 */
+	public $useTransaction=true;
+	/** @var CDbTransaction */
+	private $_transaction;
+
+	/**
+	 * Declares events and the corresponding event handler methods.
+	 * @return array events (array keys) and the corresponding event handler methods (array values).
+	 * @see CBehavior::events
+	 */
+	public function events()
+	{
+		return array(
+			'onBeforeValidate'=&gt;'beforeValidate',
+			'onBeforeSave'=&gt;'beforeSave',
+			'onAfterSave'=&gt;'afterSave',
+//			'onBeforeDelete'=&gt;'beforeDelete',
+//			'onAfterDelete'=&gt;'afterDelete',
+		);
+	}
+
+	/**
+	 * Responds to {@link CModel::onBeforeValidate} event.
+	 * @throws CDbException
+	 * @param CModelEvent $event event parameter
+	 */
+	public function beforeValidate($event)
+	{
+		foreach($this-&gt;owner-&gt;relations() as $name =&gt; $relation)
+		{
+			switch($relation[0]) // relation type such as BELONGS_TO, HAS_ONE, HAS_MANY, MANY_MANY
+			{
+				// BELONGS_TO: if the relationship between table A and B is one-to-many, then B belongs to A
+				//             (e.g. Post belongs to User);
+				// attribute of $this-&gt;owner has to be changed
+				case CActiveRecord::BELONGS_TO:
+
+					if (!$this-&gt;isRelationSupported($relation))
+						break;
+
+					$pk=null;
+					if (($related=$this-&gt;owner-&gt;getRelated($name, false))!==null) {
+						if (is_object($related)) {
+							/** @var CActiveRecord $related */
+							if ($related-&gt;isNewRecord)
+								throw new CDbException('You can not save a record that has new related records!');
+							$pk=$related-&gt;getPrimaryKey();
+						} else {
+							$pk=$related;
+						}
+					}
+
+					// @todo add support for composite primary keys
+					if (!is_array($pk)) {
+						$this-&gt;owner-&gt;setAttribute($relation[2], $pk);
+					}
+
+				break;
+			}
+		}
+	}
+
+	/**
+	 * Responds to {@link CActiveRecord::onBeforeSave} event.
+	 * @param CModelEvent $event event parameter
+	 */
+	public function beforeSave($event)
+	{
+		// ensure transactions
+		if ($this-&gt;useTransaction &amp;&amp; $this-&gt;owner-&gt;dbConnection-&gt;currentTransaction===null)
+			$this-&gt;_transaction=$this-&gt;owner-&gt;dbConnection-&gt;beginTransaction();
+	}
+
+	/**
+	 * Responds to {@link CActiveRecord::onAfterSave} event.
+	 * @throws CDbException
+	 * @param CModelEvent $event event parameter
+	 */
+	public function afterSave($event)
+	{
+		try {
+			/** @var CDbCommandBuilder $commandBuilder */
+			$commandBuilder=$this-&gt;owner-&gt;dbConnection-&gt;commandBuilder;
+
+			foreach($this-&gt;owner-&gt;relations() as $name =&gt; $relation)
+			{
+				switch($relation[0]) // relation type such as BELONGS_TO, HAS_ONE, HAS_MANY, MANY_MANY
+				{
+					/* MANY_MANY: this corresponds to the many-to-many relationship in database.
+					 *            An associative table is needed to break a many-to-many relationship into one-to-many
+					 *            relationships, as most DBMS do not support many-to-many relationship directly.
+					 */
+					case CActiveRecord::MANY_MANY:
+
+						if (!$this-&gt;isRelationSupported($relation))
+							break;
+
+						Yii::trace('updating MANY_MANY table for relation '.get_class($this-&gt;owner).'.'.$name,'system.db.ar.CActiveRecord');
+
+						// get table and fk information
+						list($relationTable, $fks)=$this-&gt;parseManyManyFk($name, $relation);
+
+						// get pks of the currently related records
+						$newPKs=$this-&gt;getNewManyManyPks($name);
+
+
+						// 1. delete relation table entries for records that have been removed from relation
+						// @todo add support for composite primary keys
+						$criteria=new CDbCriteria();
+						$criteria-&gt;addNotInCondition($fks[1], $newPKs)
+								 -&gt;addColumnCondition(array($fks[0]=&gt;$this-&gt;owner-&gt;getPrimaryKey()));
+						$commandBuilder-&gt;createDeleteCommand($relationTable, $criteria)-&gt;execute();
+
+
+						// 2. add new entries to relation table
+						// @todo add support for composite primary keys
+						$oldPKs=$this-&gt;getOldManyManyPks($name);
+						foreach($newPKs as $fk) {
+							if (!in_array($fk, $oldPKs)) {
+								$commandBuilder-&gt;createInsertCommand($relationTable, array(
+									$fks[0] =&gt; $this-&gt;owner-&gt;getPrimaryKey(),
+									$fks[1] =&gt; $fk,
+								))-&gt;execute();
+							}
+						}
+
+						// refresh relation data
+						//$this-&gt;owner-&gt;getRelated($name, true); // will come back with github issue #4
+
+					break;
+					// HAS_MANY: if the relationship between table A and B is one-to-many, then A has many B
+					//           (e.g. User has many Post);
+					// HAS_ONE: this is special case of HAS_MANY where A has at most one B
+					//          (e.g. User has at most one Profile);
+					// need to change the foreign ARs attributes
+					case CActiveRecord::HAS_MANY:
+					case CActiveRecord::HAS_ONE:
+
+						if (!$this-&gt;isRelationSupported($relation))
+							break;
+
+						Yii::trace(
+							'updating '.(($relation[0]==CActiveRecord::HAS_ONE)?'HAS_ONE':'HAS_MANY').
+							' foreign-key field for relation '.get_class($this-&gt;owner).'.'.$name,
+							'system.db.ar.CActiveRecord'
+						);
+
+						$newRelatedRecords=$this-&gt;owner-&gt;getRelated($name, false);
+
+						if ($relation[0]==CActiveRecord::HAS_MANY &amp;&amp; !is_array($newRelatedRecords))
+							throw new CDbException('A HAS_MANY relation needs to be an array of records or primary keys!');
+
+						// HAS_ONE is special case of HAS_MANY, so we have array with one or no element
+						if ($relation[0]==CActiveRecord::HAS_ONE) {
+							if ($newRelatedRecords===null)
+								$newRelatedRecords=array();
+							else
+								$newRelatedRecords=array($newRelatedRecords);
+						}
+
+						// get related records as objects and primary keys
+						$newRelatedRecords=$this-&gt;primaryKeysToObjects($newRelatedRecords, $relation[1]);
+						$newPKs=$this-&gt;objectsToPrimaryKeys($newRelatedRecords);
+
+						// update all not anymore related records
+						$criteria=new ECompositeDbCriteria();
+						$criteria-&gt;addNotInCondition(CActiveRecord::model($relation[1])-&gt;tableSchema-&gt;primaryKey, $newPKs);
+						// @todo add support for composite primary keys
+						$criteria-&gt;addColumnCondition(array($relation[2]=&gt;$this-&gt;owner-&gt;getPrimaryKey()));
+						if (CActiveRecord::model($relation[1])-&gt;tableSchema-&gt;getColumn($relation[2])-&gt;allowNull) {
+							CActiveRecord::model($relation[1])-&gt;updateAll(array($relation[2]=&gt;null), $criteria);
+						} else {
+							CActiveRecord::model($relation[1])-&gt;deleteAll($criteria);
+						}
+
+						/** @var CActiveRecord $record */
+						foreach($newRelatedRecords as $record) {
+							// only save if relation did not exist
+							// @todo add support for composite primary keys
+							if ($record-&gt;{$relation[2]}===null || $record-&gt;{$relation[2]} !=  $this-&gt;owner-&gt;getPrimaryKey()) {
+								$record-&gt;saveAttributes(array($relation[2] =&gt; $this-&gt;owner-&gt;getPrimaryKey()));
+							}
+						}
+
+					break;
+				}
+			}
+			// commit internal transaction if one exists
+			if ($this-&gt;_transaction!==null)
+				$this-&gt;_transaction-&gt;commit();
+
+		} catch(Exception $e) {
+			// roll back internal transaction if one exists
+			if ($this-&gt;_transaction!==null)
+				$this-&gt;_transaction-&gt;rollback();
+			// re-throw exception
+			throw $e;
+		}
+	}
+
+	/**
+	 * do not do anything with relations defined with 'through' or have limiting 'condition'/'scopes' defined
+	 *
+	 * @param array $relation
+	 * @return bool
+	 */
+	protected function isRelationSupported($relation)
+	{
+		// @todo not sure about 'together', also check for joinType
+		// @todo not sure what to do if limit/offset is set
+		return !isset($relation['on']) &amp;&amp;
+			   !isset($relation['through']) &amp;&amp;
+			   !isset($relation['condition']) &amp;&amp;
+			   !isset($relation['group']) &amp;&amp;
+			   !isset($relation['join']) &amp;&amp;
+			   !isset($relation['having']) &amp;&amp;
+			   !isset($relation['scopes']);
+	}
+
+	/**
+	 * converts an array of AR objects or primary keys to only primary keys
+	 *
+	 * @throws CDbException
+	 * @param CActiveRecord[] $records
+	 * @return array
+	 */
+	protected function objectsToPrimaryKeys($records)
+	{
+		$pks=array();
+		foreach($records as $record) {
+			if (is_object($record) &amp;&amp; $record-&gt;isNewRecord)
+				throw new CDbException('You can not save a record that has new related records!');
+
+			$pks[]=is_object($record) ? $record-&gt;getPrimaryKey() : $record;
+		}
+		return $pks;
+	}
+
+	/**
+	 * converts an array of AR objects or primary keys to only AR objects
+	 *
+	 * @throws CDbException
+	 * @param CActiveRecord[] $pks
+	 * @param string $className classname of the ARs to instantiate
+	 * @return array
+	 */
+	protected function primaryKeysToObjects($pks, $className)
+	{
+		// @todo increase performance by running on query with findAllByPk()
+		$records=array();
+		foreach($pks as $pk) {
+			$record=$pk;
+			if (is_object($record) &amp;&amp; $record-&gt;isNewRecord)
+				throw new CDbException('You can not save a record that has new related records!');
+			if (!is_object($record))
+				$record=CActiveRecord::model($className)-&gt;findByPk($pk);
+			if ($record===null)
+				throw new CDbException('Related record with primary key &quot;'.print_r($pk,true).'&quot; does not exist!');
+
+			$records[]=$record;
+		}
+		return $records;
+	}
+
+	/**
+	 * returns all primary keys of the currently assigned records
+	 *
+	 * @throws CDbException
+	 * @param string $relationName name of the relation
+	 * @return array
+	 */
+	protected function getNewManyManyPks($relationName)
+	{
+		$newRelatedRecords=$this-&gt;owner-&gt;getRelated($relationName, false);
+		if (!is_array($newRelatedRecords)) {
+			throw new CDbException('A MANY_MANY relation needs to be an array of records or primary keys!');
+		}
+		// get new related records primary keys
+		return $this-&gt;objectsToPrimaryKeys($newRelatedRecords);
+	}
+
+	/**
+	 * returns all primary keys of the old assigned records(in database)
+	 *
+	 * @param string $relationName name of the relation
+	 * @return array
+	 */
+	protected function getOldManyManyPks($relationName)
+	{
+		// @todo improve performance by doing simple select query instead of using AR
+		$tmpAr=CActiveRecord::model(get_class($this-&gt;owner))-&gt;findByPk($this-&gt;owner-&gt;getPrimaryKey());
+		return $this-&gt;objectsToPrimaryKeys($tmpAr-&gt;getRelated($relationName, true));
+	}
+
+	/**
+	 * parses the foreign key definition of a MANY_MANY relation
+	 *
+	 * the first 7 lines are copied from CActiveFinder:561-568
+	 * https://github.com/yiisoft/yii/blob/2353e0adf98c8a912f0faf29cc2558c0ccd6fec7/framework/db/ar/CActiveFinder.php#L561
+	 *
+	 * @todo this method should be removed and using code should implement solution of https://github.com/yiisoft/yii/issues/508 when it is fixed
+	 *
+	 * @throws CDbException
+	 * @param string $name name of the relation
+	 * @param array $relation relation definition
+	 * @return array ($joinTable, $fks)
+	 *               joinTable is the many-many-relation-table
+	 *               fks are primary key of that table defining the relation
+	 */
+	protected function parseManyManyFk($name, $relation)
+	{
+		if(!preg_match('/^\s*(.*?)\((.*)\)\s*$/',$relation[2],$matches))
+			throw new CDbException(Yii::t('yii','The relation &quot;{relation}&quot; in active record class &quot;{class}&quot; is specified with an invalid foreign key. The format of the foreign key must be &quot;joinTable(fk1,fk2,...)&quot;.',
+				array('{class}'=&gt;get_class($this-&gt;owner),'{relation}'=&gt;$name)));
+		if(($joinTable=$this-&gt;owner-&gt;dbConnection-&gt;schema-&gt;getTable($matches[1]))===null)
+			throw new CDbException(Yii::t('yii','The relation &quot;{relation}&quot; in active record class &quot;{class}&quot; is not specified correctly: the join table &quot;{joinTable}&quot; given in the foreign key cannot be found in the database.',
+				array('{class}'=&gt;get_class($this-&gt;owner), '{relation}'=&gt;$name, '{joinTable}'=&gt;$matches[1])));
+		$fks=preg_split('/\s*,\s*/',$matches[2],-1,PREG_SPLIT_NO_EMPTY);
+
+		return array($joinTable, $fks);
+	}
+}
+
+/**
+ * Extension of CDbCriteria that adds support for composite pks to conditions
+ *
+ * @todo CDbCommandBuilder::createInCondition() supports composite pk, check if we can use it
+ *
+ * @author Carsten Brandt &lt;mail@cebe.cc&gt;
+ * @package yiiext.behaviors.activeRecordRelation
+ */
+class ECompositeDbCriteria extends CDbCriteria
+{
+	/**
+	 * Adds support for composite keys if first param is array
+	 *
+	 * for further details {@see CDbCriteria::addInCondition}
+	 *
+	 * @param $column
+	 * @param $values
+	 * @param string $operator
+	 * @return CDbCriteria
+	 */
+	public function addInCondition($column,$values,$operator='AND')
+	{
+		if (is_array($column)) {
+			return $this-&gt;addCondition(
+				$this-&gt;createCompositeInCondition($column, $values),
+				$operator
+			);
+		}
+		return parent::addInCondition($column,$values,$operator);
+	}
+
+	/**
+	 * Adds support for composite keys if first param is array
+	 *
+	 * for further details {@see CDbCriteria::addNotInCondition}
+	 *
+	 * @param $column
+	 * @param $values
+	 * @param string $operator
+	 * @return CDbCriteria
+	 */
+	public function addNotInCondition($column,$values,$operator='AND')
+	{
+		if (is_array($column)) {
+			return $this-&gt;addCondition(
+				'NOT '.$this-&gt;createCompositeInCondition($column, $values),
+				$operator
+			);
+		}
+		parent::addNotInCondition($column,$values,$operator);
+	}
+
+	private function createCompositeInCondition($columns,$values)
+	{
+		if(count($values)&lt;1)
+			return '0=1'; // 0=1 is used because in MSSQL value alone can't be used in WHERE
+
+		$sql1 = array();
+		foreach($values as $value) {
+			$sql2 = array();
+			foreach($columns as $column) {
+				$sql2[] = $column.'='.self::PARAM_PREFIX.self::$paramCount;
+				$this-&gt;params[self::PARAM_PREFIX.self::$paramCount++]=$value[$column];
+			}
+			$sql1[] = implode(' AND ',$sql2);
+		}
+
+		return '(('.implode(') OR (',$sql1).'))';
+	}
+}
+</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all()
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>

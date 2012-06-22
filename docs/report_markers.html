@@ -42,6 +42,76 @@
 <td>Csrf Validation</td>
 </tr>
 </table></div>
+<h3><a href="#">behaviors/model/activerecord-relation/EActiveRecordRelationBehaviorTest.php<small>3</small></a></h3>
+<div><table>
+<tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>todo</td>
+<td>34</td>
+<td>make sure it works with and without table prefix</td>
+</tr>
+<tr>
+<td>todo</td>
+<td>34</td>
+<td>make sure it works with and without defined primary keys</td>
+</tr>
+<tr>
+<td>todo</td>
+<td>34</td>
+<td>make sure 'through' relations are not touched until they are supported</td>
+</tr>
+</table></div>
+<h3><a href="#">behaviors/model/activerecord-relation/EActiveRecordRelationBehavior.php<small>3</small></a></h3>
+<div><table>
+<tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>todo</td>
+<td>11</td>
+<td>use AR->hasRelated($name)
+For details on how to use it please refer to the README.* files that ship with it.
+Inspired by and put together the awesomeness of the following yii extensions:
+- can save MANY_MANY relations like cadvancedarbehavior, eadvancedarbehavior, esaverelatedbehavior and advancedrelationsbehavior
+- cares about relations when records get deleted like eadvancedarbehavior (*)
+- can save BELONGS_TO, HAS_MANY, HAS_ONE like eadvancedarbehavior, esaverelatedbehavior and advancedrelationsbehavior
+- saves with transaction and can handle external transactions like with-related-behavior, esaverelatedbehavior and saverbehavior
+- does not touch additional data in MANY_MANY table (cadvancedarbehavior deleted it)
+- validates for array on HAS_MANY and MANY_MANY relation to have more clear semantic
+(*) not yet implemented, see github issue #7
+these are the extensions mentioned above
+- cadvancedarbehavior        http://www.yiiframework.com/extension/cadvancedarbehavior/
+- eadvancedarbehavior        http://www.yiiframework.com/extension/eadvancedarbehavior
+- advancedrelationsbehavior  http://www.yiiframework.com/extension/advancedrelationsbehavior
+- saverbehavior              http://www.yiiframework.com/extension/saverbehavior
+- with-related-behavior      https://github.com/yiiext/with-related-behavior
+- CSaveRelationsBehavior     http://code.google.com/p/yii-save-relations-ar-behavior/
+- esaverelatedbehavior       http://www.yiiframework.com/extension/esaverelatedbehavior
+reviewed but did not take something out:
+- xrelationbehavior          http://www.yiiframework.com/extension/xrelationbehavior
+- save-relations-ar-behavior http://www.yiiframework.com/extension/save-relations-ar-behavior
+Limitations:
+- currently does not support composite primary keys
+- currently handles all existing relations, will add support for limitation shortly
+- relations defined with 'through' are not supported yet (http://www.yiiframework.com/doc/guide/1.1/en/database.arr#relational-query-with-through)</td>
+</tr>
+<tr>
+<td>todo</td>
+<td>354</td>
+<td>this method should be removed and using code should implement solution of https://github.com/yiisoft/yii/issues/508 when it is fixed</td>
+</tr>
+<tr>
+<td>todo</td>
+<td>383</td>
+<td>CDbCommandBuilder::createInCondition() supports composite pk, check if we can use it</td>
+</tr>
+</table></div>
 <h3><a href="#">behaviors/model/eav/EEavBehavior.php<small>1</small></a></h3>
 <div><table>
 <tr>

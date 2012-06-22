@@ -3747,6 +3747,1229 @@ $this-&gt;widget('ext.yiiext.widgets.blueprint.EBlueprintWidget');
     </class>
     <source>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</source>
   </file>
+  <file path="behaviors/model/activerecord-relation/EActiveRecordRelationBehaviorTest.php" hash="189e7140fd9bb0a94d4ccf4022acbae2" package="Default">
+    <docblock>
+      <description>EActiveRecordRelationBehavior unit tests</description>
+      <long-description>
+</long-description>
+      <tag line="2" name="author" description="Carsten Brandt &lt;mail@cebe.cc&gt;"/>
+      <tag line="2" name="link" description="http://yiiext.github.com/extensions/activerecord-relation-behavior/index.html" link="http://yiiext.github.com/extensions/activerecord-relation-behavior/index.html"/>
+      <tag line="2" name="copyright" description="Copyright &amp;copy; 2012 Carsten Brandt"/>
+      <tag line="2" name="license" description="https://github.com/yiiext/activerecord-relation-behavior/blob/master/LICENSE#L1&#10;How to run this test&#10;--------------------&#10;1. make sure yii framework is available under ./yii/framework&#10;you can do this by&#10;- cloning the yii git repo with `git clone https://github.com/yiisoft/yii.git yii`&#10;- or linking existing yii directory here with `ln -s ../../path/to/yii yii`&#10;2. make sure you have phpunit installed and available in PATH (http://www.phpunit.de/manual/3.6/en/installation.html)&#10;3. run `phpunit --colors EActiveRecordRelationBehaviorTest.php` or if you want coverage information in html,&#10;run `phpunit --coverage-html tmp/coverage --colors EActiveRecordRelationBehaviorTest.php`"/>
+    </docblock>
+    <parse_markers>
+      <error line="2">No Page-level DocBlock was found in file behaviors/model/activerecord-relation/EActiveRecordRelationBehaviorTest.php</error>
+      <error line="25">No DocBlock was found for Constant TEST_NAMESPACE</error>
+      <error line="53">No DocBlock was found for Property $db</error>
+      <critical line="54">No short description for property $migration</critical>
+      <error line="120">No DocBlock was found for Method setConfig</error>
+      <error line="128">No DocBlock was found for Method startTransaction</error>
+      <error line="137">No DocBlock was found for Method endTransaction</error>
+      <notice line="153">Argument $config is missing from the function Docblock</notice>
+      <notice line="153">Argument $transactional is missing from the function Docblock</notice>
+      <notice line="203">Argument $config is missing from the function Docblock</notice>
+      <notice line="203">Argument $transactional is missing from the function Docblock</notice>
+      <notice line="284">Argument $config is missing from the function Docblock</notice>
+      <notice line="284">Argument $transactional is missing from the function Docblock</notice>
+      <notice line="351">Argument $config is missing from the function Docblock</notice>
+      <notice line="351">Argument $transactional is missing from the function Docblock</notice>
+      <critical line="420">No short description for method beforeManyMany</critical>
+      <critical line="441">No short description for method afterManyMany</critical>
+      <error line="460">No DocBlock was found for Method manymanyData</error>
+      <notice line="483">Argument $postsAsPk is missing from the function Docblock</notice>
+      <notice line="483">Argument $modulo is missing from the function Docblock</notice>
+      <notice line="483">Argument $config is missing from the function Docblock</notice>
+      <notice line="483">Argument $transactional is missing from the function Docblock</notice>
+      <critical line="548">No short description for method testManyManyException</critical>
+      <notice line="552">Argument $config is missing from the function Docblock</notice>
+      <notice line="552">Argument $transactional is missing from the function Docblock</notice>
+      <critical line="564">No short description for method testYiiException1</critical>
+      <notice line="568">Argument $config is missing from the function Docblock</notice>
+      <notice line="568">Argument $transactional is missing from the function Docblock</notice>
+      <critical line="581">No short description for method testYiiException2</critical>
+      <notice line="585">Argument $config is missing from the function Docblock</notice>
+      <notice line="585">Argument $transactional is missing from the function Docblock</notice>
+      <critical line="598">No short description for method assertSaveSuccess</critical>
+      <critical line="606">No short description for method assertSaveFailure</critical>
+      <notice line="609">Argument $failedAttributes is missing from the function Docblock</notice>
+      <error line="616">No DocBlock was found for Method assertEquals</error>
+      <critical line="631">No short description for method getJohn</critical>
+      <notice line="634">Argument $id is missing from the function Docblock</notice>
+      <notice line="634">Argument $save is missing from the function Docblock</notice>
+      <critical line="647">No short description for method getJane</critical>
+      <notice line="650">Argument $id is missing from the function Docblock</notice>
+      <notice line="650">Argument $save is missing from the function Docblock</notice>
+      <error line="663">No DocBlock was found for Method getPosts</error>
+      <error line="683">No DocBlock was found for Class EActiveRecordRelationBehaviorTestMigration</error>
+      <error line="685">No DocBlock was found for Property $relationTableDropped</error>
+      <error line="686">No DocBlock was found for Method up</error>
+      <error line="727">No DocBlock was found for Method down</error>
+      <error line="740">No DocBlock was found for Method dropRelationTable</error>
+      <error line="761">No DocBlock was found for Property $configurationType</error>
+      <critical line="772">No short description for method tableName</critical>
+      <error line="783">No DocBlock was found for Method behaviors</error>
+      <critical line="788">No short description for method rules</critical>
+      <critical line="799">No short description for method relations</critical>
+      <error line="832">No DocBlock was found for Property $configurationType</error>
+      <critical line="843">No short description for method tableName</critical>
+      <error line="854">No DocBlock was found for Method behaviors</error>
+      <critical line="859">No short description for method rules</critical>
+      <critical line="870">No short description for method relations</critical>
+      <error line="906">No DocBlock was found for Property $configurationType</error>
+      <critical line="917">No short description for method tableName</critical>
+      <error line="928">No DocBlock was found for Method behaviors</error>
+      <critical line="933">No short description for method rules</critical>
+      <critical line="944">No short description for method relations</critical>
+      <error line="976">No DocBlock was found for Property $broken</error>
+      <error line="977">No DocBlock was found for Property $configurationType</error>
+      <critical line="988">No short description for method tableName</critical>
+      <error line="999">No DocBlock was found for Method behaviors</error>
+      <critical line="1004">No short description for method rules</critical>
+      <critical line="1015">No short description for method relations</critical>
+    </parse_markers>
+    <include type="Require Once" line="29">
+      <name>$yii</name>
+    </include>
+    <include type="Require Once" line="32">
+      <name>/EActiveRecordRelationBehavior.php</name>
+    </include>
+    <constant namespace="default" line="25" package="Default">
+      <name>TEST_NAMESPACE</name>
+      <value>'yiiext\behaviors\activeRecordRelation\tests'</value>
+    </constant>
+    <class final="false" abstract="false" line="51" namespace="default" package="yiiext\behaviors\activeRecordRelation\tests">
+      <name>EActiveRecordRelationBehaviorTest</name>
+      <extends>\CTestCase</extends>
+      <full_name>\EActiveRecordRelationBehaviorTest</full_name>
+      <docblock>
+        <description>unit test class for EActiveRecordRelationBehavior</description>
+        <long-description>&lt;p&gt;these things are not covered and should be kept in mind while developing:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;make sure it works with any custom db connection
+therefor only use $this-&gt;owner-&gt;dbConnection&lt;/li&gt;
+&lt;li&gt;make sure it works with any possible configuration that works for yii&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;these things should be added in test&lt;/p&gt;
+</long-description>
+        <tag line="34" name="todo" description="make sure it works with and without table prefix"/>
+        <tag line="34" name="todo" description="make sure it works with and without defined primary keys"/>
+        <tag line="34" name="todo" description="make sure 'through' relations are not touched until they are supported"/>
+        <tag line="34" name="author" description="Carsten Brandt &lt;mail@cebe.cc&gt;"/>
+        <tag line="34" name="package" description="yiiext.behaviors.activeRecordRelation.tests"/>
+      </docblock>
+      <property final="false" static="false" visibility="public" line="53" package="Default">
+        <name>$db</name>
+        <default/>
+      </property>
+      <property final="false" static="false" visibility="protected" line="55" package="Default">
+        <name>$migration</name>
+        <default/>
+        <docblock>
+          <description/>
+          <long-description>
+</long-description>
+          <tag line="54" name="var" description="" type="\EActiveRecordRelationBehaviorTestMigration">
+            <type by_reference="false">\EActiveRecordRelationBehaviorTestMigration</type>
+          </tag>
+        </docblock>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" line="60" package="Default">
+        <name>setUp</name>
+        <docblock>
+          <description>set up environment with yii application and migrate up db</description>
+          <long-description>
+</long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="90" package="Default">
+        <name>tearDown</name>
+        <docblock>
+          <description>migrate down db when test succeeds</description>
+          <long-description>
+</long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="103" package="Default">
+        <name>fkConfigurationProvider</name>
+        <docblock>
+          <description>dataprovider that lists possible configuration options for foreign keys, so
+we make sure to have our models configured in many ways and it still works</description>
+          <long-description>
+</long-description>
+          <tag line="98" name="return" description="(configType, transactional)" type="array">
+            <type by_reference="false">\array</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" line="120" package="Default">
+        <name>setConfig</name>
+        <argument line="120">
+          <name>$config</name>
+          <default/>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" line="128" package="Default">
+        <name>startTransaction</name>
+        <argument line="128">
+          <name>$t</name>
+          <default/>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" line="137" package="Default">
+        <name>endTransaction</name>
+        <argument line="137">
+          <name>$t</name>
+          <default/>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="153" package="Default">
+        <name>testBelongsTo</name>
+        <docblock>
+          <description>test creation of AR and assigning a relation with BELONGS_TO</description>
+          <long-description>
+</long-description>
+          <tag line="148" name="dataProvider" description="fkConfigurationProvider"/>
+        </docblock>
+        <argument line="153">
+          <name>$config</name>
+          <default/>
+          <type/>
+        </argument>
+        <argument line="153">
+          <name>$transactional</name>
+          <default/>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="203" package="Default">
+        <name>testHasOne</name>
+        <docblock>
+          <description>test creation of AR and assigning a relation with HAS_ONE
+this also tests the HAS_ONE oposite BELONGS_TO</description>
+          <long-description>
+</long-description>
+          <tag line="197" name="dataProvider" description="fkConfigurationProvider"/>
+        </docblock>
+        <argument line="203">
+          <name>$config</name>
+          <default/>
+          <type/>
+        </argument>
+        <argument line="203">
+          <name>$transactional</name>
+          <default/>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="284" package="Default">
+        <name>testHasManyPk</name>
+        <docblock>
+          <description>test creation of AR and assigning a relation with HAS_MANY as pk values
+one record is added as object later</description>
+          <long-description>
+</long-description>
+          <tag line="278" name="dataProvider" description="fkConfigurationProvider"/>
+        </docblock>
+        <argument line="284">
+          <name>$config</name>
+          <default/>
+          <type/>
+        </argument>
+        <argument line="284">
+          <name>$transactional</name>
+          <default/>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="351" package="Default">
+        <name>testHasManyObject</name>
+        <docblock>
+          <description>test creation of AR and assigning a relation with HAS_MANY as objects values
+one record is added as pk later</description>
+          <long-description>
+</long-description>
+          <tag line="345" name="dataProvider" description="fkConfigurationProvider"/>
+        </docblock>
+        <argument line="351">
+          <name>$config</name>
+          <default/>
+          <type/>
+        </argument>
+        <argument line="351">
+          <name>$transactional</name>
+          <default/>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" line="423" package="Default">
+        <name>beforeManyMany</name>
+        <docblock>
+          <description/>
+          <long-description>
+</long-description>
+          <tag line="420" name="return" description="" type="array">
+            <type by_reference="false">\array</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" line="445" package="Default">
+        <name>afterManyMany</name>
+        <docblock>
+          <description/>
+          <long-description>
+</long-description>
+          <tag line="441" name="param" description="" type="\Category" variable="$untouchedCategory1">
+            <type by_reference="false">\Category</type>
+          </tag>
+          <tag line="441" name="param" description="" type="\Category" variable="$untouchedCategory2">
+            <type by_reference="false">\Category</type>
+          </tag>
+        </docblock>
+        <argument line="445">
+          <name>$untouchedCategory1</name>
+          <default/>
+          <type/>
+        </argument>
+        <argument line="445">
+          <name>$untouchedCategory2</name>
+          <default/>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="460" package="Default">
+        <name>manymanyData</name>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="483" package="Default">
+        <name>testManyMany</name>
+        <docblock>
+          <description>test creation of AR and assigning a relation with MANY_MANY as pk values</description>
+          <long-description>
+</long-description>
+          <tag line="478" name="dataProvider" description="manymanyData"/>
+        </docblock>
+        <argument line="483">
+          <name>$postsAsPk</name>
+          <default/>
+          <type/>
+        </argument>
+        <argument line="483">
+          <name>$modulo</name>
+          <default/>
+          <type/>
+        </argument>
+        <argument line="483">
+          <name>$config</name>
+          <default/>
+          <type/>
+        </argument>
+        <argument line="483">
+          <name>$transactional</name>
+          <default/>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="552" package="Default">
+        <name>testManyManyException</name>
+        <docblock>
+          <description/>
+          <long-description>
+</long-description>
+          <tag line="548" name="expectedException" description="CDbException"/>
+          <tag line="548" name="dataProvider" description="fkConfigurationProvider"/>
+        </docblock>
+        <argument line="552">
+          <name>$config</name>
+          <default/>
+          <type/>
+        </argument>
+        <argument line="552">
+          <name>$transactional</name>
+          <default/>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="568" package="Default">
+        <name>testYiiException1</name>
+        <docblock>
+          <description/>
+          <long-description>
+</long-description>
+          <tag line="564" name="expectedException" description="CDbException"/>
+          <tag line="564" name="dataProvider" description="fkConfigurationProvider"/>
+        </docblock>
+        <argument line="568">
+          <name>$config</name>
+          <default/>
+          <type/>
+        </argument>
+        <argument line="568">
+          <name>$transactional</name>
+          <default/>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="585" package="Default">
+        <name>testYiiException2</name>
+        <docblock>
+          <description/>
+          <long-description>
+</long-description>
+          <tag line="581" name="expectedException" description="CDbException"/>
+          <tag line="581" name="dataProvider" description="fkConfigurationProvider"/>
+        </docblock>
+        <argument line="585">
+          <name>$config</name>
+          <default/>
+          <type/>
+        </argument>
+        <argument line="585">
+          <name>$transactional</name>
+          <default/>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="601" package="Default">
+        <name>assertSaveSuccess</name>
+        <docblock>
+          <description/>
+          <long-description>
+</long-description>
+          <tag line="598" name="param" description="" type="\CActiveRecord" variable="$ar">
+            <type by_reference="false">\CActiveRecord</type>
+          </tag>
+        </docblock>
+        <argument line="601">
+          <name>$ar</name>
+          <default/>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="609" package="Default">
+        <name>assertSaveFailure</name>
+        <docblock>
+          <description/>
+          <long-description>
+</long-description>
+          <tag line="606" name="param" description="" type="\CActiveRecord" variable="$ar">
+            <type by_reference="false">\CActiveRecord</type>
+          </tag>
+        </docblock>
+        <argument line="609">
+          <name>$ar</name>
+          <default/>
+          <type/>
+        </argument>
+        <argument line="609">
+          <name>$failedAttributes</name>
+          <default>null</default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="true" visibility="public" line="616" package="Default">
+        <name>assertEquals</name>
+        <argument line="616">
+          <name>$expected</name>
+          <default/>
+          <type/>
+        </argument>
+        <argument line="616">
+          <name>$actual</name>
+          <default/>
+          <type/>
+        </argument>
+        <argument line="616">
+          <name>$message</name>
+          <default>''</default>
+          <type/>
+        </argument>
+        <argument line="616">
+          <name>$delta</name>
+          <default>0</default>
+          <type/>
+        </argument>
+        <argument line="616">
+          <name>$maxDepth</name>
+          <default>10</default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" line="634" package="Default">
+        <name>getJohn</name>
+        <docblock>
+          <description/>
+          <long-description>
+</long-description>
+          <tag line="631" name="return" description="" type="\User">
+            <type by_reference="false">\User</type>
+          </tag>
+        </docblock>
+        <argument line="634">
+          <name>$id</name>
+          <default>null</default>
+          <type/>
+        </argument>
+        <argument line="634">
+          <name>$save</name>
+          <default>false</default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" line="650" package="Default">
+        <name>getJane</name>
+        <docblock>
+          <description/>
+          <long-description>
+</long-description>
+          <tag line="647" name="return" description="" type="\User">
+            <type by_reference="false">\User</type>
+          </tag>
+        </docblock>
+        <argument line="650">
+          <name>$id</name>
+          <default>null</default>
+          <type/>
+        </argument>
+        <argument line="650">
+          <name>$save</name>
+          <default>false</default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" line="663" package="Default">
+        <name>getPosts</name>
+        <argument line="663">
+          <name>$saveUntil</name>
+          <default>9</default>
+          <type/>
+        </argument>
+        <argument line="663">
+          <name>$addAuthor</name>
+          <default>false</default>
+          <type/>
+        </argument>
+      </method>
+    </class>
+    <class final="false" abstract="false" line="683" namespace="default" package="Default">
+      <name>EActiveRecordRelationBehaviorTestMigration</name>
+      <extends>\CDbMigration</extends>
+      <full_name>\EActiveRecordRelationBehaviorTestMigration</full_name>
+      <property final="false" static="false" visibility="private" line="685" package="Default">
+        <name>$relationTableDropped</name>
+        <default>true</default>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" line="686" package="Default">
+        <name>up</name>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="727" package="Default">
+        <name>down</name>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="740" package="Default">
+        <name>dropRelationTable</name>
+      </method>
+    </class>
+    <class final="false" abstract="false" line="759" namespace="default" package="Default">
+      <name>Profile</name>
+      <extends>\CActiveRecord</extends>
+      <full_name>\Profile</full_name>
+      <docblock>
+        <description>This is the model class for table "tbl_profile".</description>
+        <long-description>
+</long-description>
+        <tag line="749" name="property" description="" type="int" variable="$owner_id">
+          <type by_reference="false">\int</type>
+        </tag>
+        <tag line="749" name="property" description="" type="string" variable="$photo">
+          <type by_reference="false">\string</type>
+        </tag>
+        <tag line="749" name="property" description="The followings are the available model relations:" type="string" variable="$website">
+          <type by_reference="false">\string</type>
+        </tag>
+        <tag line="749" name="property" description="" type="\User" variable="$owner">
+          <type by_reference="false">\User</type>
+        </tag>
+      </docblock>
+      <property final="false" static="true" visibility="public" line="761" package="Default">
+        <name>$configurationType</name>
+        <default>'normal'</default>
+      </property>
+      <method final="false" abstract="false" static="true" visibility="public" line="767" package="Default">
+        <name>model</name>
+        <docblock>
+          <description>Returns the static model of the specified AR class.</description>
+          <long-description>
+</long-description>
+          <tag line="762" name="param" description="active record class name." type="string" variable="$className">
+            <type by_reference="false">\string</type>
+          </tag>
+          <tag line="762" name="return" description="the static model class" type="\Profile">
+            <type by_reference="false">\Profile</type>
+          </tag>
+        </docblock>
+        <argument line="767">
+          <name>$className</name>
+          <default>__CLASS__</default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="775" package="Default">
+        <name>tableName</name>
+        <docblock>
+          <description/>
+          <long-description>
+</long-description>
+          <tag line="772" name="return" description="the associated database table name" type="string">
+            <type by_reference="false">\string</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="783" package="Default">
+        <name>behaviors</name>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="791" package="Default">
+        <name>rules</name>
+        <docblock>
+          <description/>
+          <long-description>
+</long-description>
+          <tag line="788" name="return" description="validation rules for model attributes." type="array">
+            <type by_reference="false">\array</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="802" package="Default">
+        <name>relations</name>
+        <docblock>
+          <description/>
+          <long-description>
+</long-description>
+          <tag line="799" name="return" description="relational rules." type="array">
+            <type by_reference="false">\array</type>
+          </tag>
+        </docblock>
+      </method>
+    </class>
+    <class final="false" abstract="false" line="830" namespace="default" package="Default">
+      <name>User</name>
+      <extends>\CActiveRecord</extends>
+      <full_name>\User</full_name>
+      <docblock>
+        <description>This is the model class for table "tbl_user".</description>
+        <long-description>
+</long-description>
+        <tag line="818" name="property" description="" type="int" variable="$id">
+          <type by_reference="false">\int</type>
+        </tag>
+        <tag line="818" name="property" description="" type="string" variable="$username">
+          <type by_reference="false">\string</type>
+        </tag>
+        <tag line="818" name="property" description="" type="string" variable="$password">
+          <type by_reference="false">\string</type>
+        </tag>
+        <tag line="818" name="property" description="The followings are the available model relations:" type="string" variable="$email">
+          <type by_reference="false">\string</type>
+        </tag>
+        <tag line="818" name="property" description="" type="\Profile" variable="$profile">
+          <type by_reference="false">\Profile</type>
+        </tag>
+        <tag line="818" name="property" description="" type="\Post[]" variable="$posts">
+          <type by_reference="false">\Post[]</type>
+        </tag>
+      </docblock>
+      <property final="false" static="true" visibility="public" line="832" package="Default">
+        <name>$configurationType</name>
+        <default>'normal'</default>
+      </property>
+      <method final="false" abstract="false" static="true" visibility="public" line="838" package="Default">
+        <name>model</name>
+        <docblock>
+          <description>Returns the static model of the specified AR class.</description>
+          <long-description>
+</long-description>
+          <tag line="833" name="param" description="active record class name." type="string" variable="$className">
+            <type by_reference="false">\string</type>
+          </tag>
+          <tag line="833" name="return" description="the static model class" type="\User">
+            <type by_reference="false">\User</type>
+          </tag>
+        </docblock>
+        <argument line="838">
+          <name>$className</name>
+          <default>__CLASS__</default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="846" package="Default">
+        <name>tableName</name>
+        <docblock>
+          <description/>
+          <long-description>
+</long-description>
+          <tag line="843" name="return" description="the associated database table name" type="string">
+            <type by_reference="false">\string</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="854" package="Default">
+        <name>behaviors</name>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="862" package="Default">
+        <name>rules</name>
+        <docblock>
+          <description/>
+          <long-description>
+</long-description>
+          <tag line="859" name="return" description="validation rules for model attributes." type="array">
+            <type by_reference="false">\array</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="873" package="Default">
+        <name>relations</name>
+        <docblock>
+          <description/>
+          <long-description>
+</long-description>
+          <tag line="870" name="return" description="relational rules." type="array">
+            <type by_reference="false">\array</type>
+          </tag>
+        </docblock>
+      </method>
+    </class>
+    <class final="false" abstract="false" line="904" namespace="default" package="Default">
+      <name>Post</name>
+      <extends>\CActiveRecord</extends>
+      <full_name>\Post</full_name>
+      <docblock>
+        <description>This is the model class for table "tbl_post".</description>
+        <long-description>
+</long-description>
+        <tag line="891" name="property" description="" type="int" variable="$id">
+          <type by_reference="false">\int</type>
+        </tag>
+        <tag line="891" name="property" description="" type="string" variable="$title">
+          <type by_reference="false">\string</type>
+        </tag>
+        <tag line="891" name="property" description="" type="string" variable="$content">
+          <type by_reference="false">\string</type>
+        </tag>
+        <tag line="891" name="property" description="" type="string" variable="$create_time">
+          <type by_reference="false">\string</type>
+        </tag>
+        <tag line="891" name="property" description="The followings are the available model relations:" type="int" variable="$author_id">
+          <type by_reference="false">\int</type>
+        </tag>
+        <tag line="891" name="property" description="" type="\User" variable="$author">
+          <type by_reference="false">\User</type>
+        </tag>
+        <tag line="891" name="property" description="" type="\Category[]" variable="$categories">
+          <type by_reference="false">\Category[]</type>
+        </tag>
+      </docblock>
+      <property final="false" static="true" visibility="public" line="906" package="Default">
+        <name>$configurationType</name>
+        <default>'normal'</default>
+      </property>
+      <method final="false" abstract="false" static="true" visibility="public" line="912" package="Default">
+        <name>model</name>
+        <docblock>
+          <description>Returns the static model of the specified AR class.</description>
+          <long-description>
+</long-description>
+          <tag line="907" name="param" description="active record class name." type="string" variable="$className">
+            <type by_reference="false">\string</type>
+          </tag>
+          <tag line="907" name="return" description="the static model class" type="\Post">
+            <type by_reference="false">\Post</type>
+          </tag>
+        </docblock>
+        <argument line="912">
+          <name>$className</name>
+          <default>__CLASS__</default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="920" package="Default">
+        <name>tableName</name>
+        <docblock>
+          <description/>
+          <long-description>
+</long-description>
+          <tag line="917" name="return" description="the associated database table name" type="string">
+            <type by_reference="false">\string</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="928" package="Default">
+        <name>behaviors</name>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="936" package="Default">
+        <name>rules</name>
+        <docblock>
+          <description/>
+          <long-description>
+</long-description>
+          <tag line="933" name="return" description="validation rules for model attributes." type="array">
+            <type by_reference="false">\array</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="947" package="Default">
+        <name>relations</name>
+        <docblock>
+          <description/>
+          <long-description>
+</long-description>
+          <tag line="944" name="return" description="relational rules." type="array">
+            <type by_reference="false">\array</type>
+          </tag>
+        </docblock>
+      </method>
+    </class>
+    <class final="false" abstract="false" line="974" namespace="default" package="Default">
+      <name>Category</name>
+      <extends>\CActiveRecord</extends>
+      <full_name>\Category</full_name>
+      <docblock>
+        <description>This is the model class for table "tbl_category".</description>
+        <long-description>
+</long-description>
+        <tag line="965" name="property" description="" type="int" variable="$id">
+          <type by_reference="false">\int</type>
+        </tag>
+        <tag line="965" name="property" description="The followings are the available model relations:" type="string" variable="$name">
+          <type by_reference="false">\string</type>
+        </tag>
+        <tag line="965" name="property" description="" type="\Post[]" variable="$posts">
+          <type by_reference="false">\Post[]</type>
+        </tag>
+      </docblock>
+      <property final="false" static="false" visibility="public" line="976" package="Default">
+        <name>$broken</name>
+        <default>false</default>
+      </property>
+      <property final="false" static="true" visibility="public" line="977" package="Default">
+        <name>$configurationType</name>
+        <default>'normal'</default>
+      </property>
+      <method final="false" abstract="false" static="true" visibility="public" line="983" package="Default">
+        <name>model</name>
+        <docblock>
+          <description>Returns the static model of the specified AR class.</description>
+          <long-description>
+</long-description>
+          <tag line="978" name="param" description="active record class name." type="string" variable="$className">
+            <type by_reference="false">\string</type>
+          </tag>
+          <tag line="978" name="return" description="the static model class" type="\Category">
+            <type by_reference="false">\Category</type>
+          </tag>
+        </docblock>
+        <argument line="983">
+          <name>$className</name>
+          <default>__CLASS__</default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="991" package="Default">
+        <name>tableName</name>
+        <docblock>
+          <description/>
+          <long-description>
+</long-description>
+          <tag line="988" name="return" description="the associated database table name" type="string">
+            <type by_reference="false">\string</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="999" package="Default">
+        <name>behaviors</name>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="1007" package="Default">
+        <name>rules</name>
+        <docblock>
+          <description/>
+          <long-description>
+</long-description>
+          <tag line="1004" name="return" description="validation rules for model attributes." type="array">
+            <type by_reference="false">\array</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="1018" package="Default">
+        <name>relations</name>
+        <docblock>
+          <description/>
+          <long-description>
+</long-description>
+          <tag line="1015" name="return" description="relational rules." type="array">
+            <type by_reference="false">\array</type>
+          </tag>
+        </docblock>
+      </method>
+    </class>
+    <source>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</source>
+  </file>
+  <file path="behaviors/model/activerecord-relation/EActiveRecordRelationBehavior.php" hash="24ab151745c1f2846c900ab133ce5cbc" package="Default">
+    <docblock>
+      <description>EActiveRecordRelationBehavior class file.</description>
+      <long-description>
+</long-description>
+      <tag line="2" name="author" description="Carsten Brandt &lt;mail@cebe.cc&gt;"/>
+      <tag line="2" name="link" description="http://yiiext.github.com/extensions/activerecord-relation-behavior/index.html" link="http://yiiext.github.com/extensions/activerecord-relation-behavior/index.html"/>
+      <tag line="2" name="copyright" description="Copyright &amp;copy; 2012 Carsten Brandt"/>
+      <tag line="2" name="license" description="https://github.com/yiiext/activerecord-relation-behavior/blob/master/LICENSE#L1"/>
+    </docblock>
+    <parse_markers>
+      <error line="2">No Page-level DocBlock was found in file behaviors/model/activerecord-relation/EActiveRecordRelationBehavior.php</error>
+      <critical line="55">No short description for property $useTransaction</critical>
+      <critical line="62">No short description for property $_transaction</critical>
+      <error line="435">No DocBlock was found for Method createCompositeInCondition</error>
+    </parse_markers>
+    <class final="false" abstract="false" line="53" namespace="default" package="yiiext\behaviors\activeRecordRelation">
+      <name>EActiveRecordRelationBehavior</name>
+      <extends>\CActiveRecordBehavior</extends>
+      <full_name>\EActiveRecordRelationBehavior</full_name>
+      <docblock>
+        <description>EActiveRecordRelationBehavior adds the possiblity to handle activerecord relations more intuitively</description>
+        <long-description>
+</long-description>
+        <tag line="11" name="todo" description="use AR-&gt;hasRelated($name)&#10;For details on how to use it please refer to the README.* files that ship with it.&#10;Inspired by and put together the awesomeness of the following yii extensions:&#10;- can save MANY_MANY relations like cadvancedarbehavior, eadvancedarbehavior, esaverelatedbehavior and advancedrelationsbehavior&#10;- cares about relations when records get deleted like eadvancedarbehavior (*)&#10;- can save BELONGS_TO, HAS_MANY, HAS_ONE like eadvancedarbehavior, esaverelatedbehavior and advancedrelationsbehavior&#10;- saves with transaction and can handle external transactions like with-related-behavior, esaverelatedbehavior and saverbehavior&#10;- does not touch additional data in MANY_MANY table (cadvancedarbehavior deleted it)&#10;- validates for array on HAS_MANY and MANY_MANY relation to have more clear semantic&#10;(*) not yet implemented, see github issue #7&#10;these are the extensions mentioned above&#10;- cadvancedarbehavior        http://www.yiiframework.com/extension/cadvancedarbehavior/&#10;- eadvancedarbehavior        http://www.yiiframework.com/extension/eadvancedarbehavior&#10;- advancedrelationsbehavior  http://www.yiiframework.com/extension/advancedrelationsbehavior&#10;- saverbehavior              http://www.yiiframework.com/extension/saverbehavior&#10;- with-related-behavior      https://github.com/yiiext/with-related-behavior&#10;- CSaveRelationsBehavior     http://code.google.com/p/yii-save-relations-ar-behavior/&#10;- esaverelatedbehavior       http://www.yiiframework.com/extension/esaverelatedbehavior&#10;reviewed but did not take something out:&#10;- xrelationbehavior          http://www.yiiframework.com/extension/xrelationbehavior&#10;- save-relations-ar-behavior http://www.yiiframework.com/extension/save-relations-ar-behavior&#10;Limitations:&#10;- currently does not support composite primary keys&#10;- currently handles all existing relations, will add support for limitation shortly&#10;- relations defined with 'through' are not supported yet (http://www.yiiframework.com/doc/guide/1.1/en/database.arr#relational-query-with-through)"/>
+        <tag line="11" name="property" description="The owner AR that this behavior is attached to." type="\CActiveRecord" variable="$owner">
+          <type by_reference="false">\CActiveRecord</type>
+        </tag>
+        <tag line="11" name="author" description="Carsten Brandt &lt;mail@cebe.cc&gt;"/>
+        <tag line="11" name="package" description="yiiext.behaviors.activeRecordRelation"/>
+      </docblock>
+      <property final="false" static="false" visibility="public" line="61" package="Default">
+        <name>$useTransaction</name>
+        <default>true</default>
+        <docblock>
+          <description/>
+          <long-description>
+</long-description>
+          <tag line="55" name="var" description="set this to false if you dbms does not support transaction This behavior will use transactions to save MANY_MANY tables to ensure consistent data If you start a transaction yourself you can use without anything to configure. this behavior will run inside your transaction without touching it" type="bool">
+            <type by_reference="false">\bool</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="private" line="63" package="Default">
+        <name>$_transaction</name>
+        <default/>
+        <docblock>
+          <description/>
+          <long-description>
+</long-description>
+          <tag line="62" name="var" description="" type="\CDbTransaction">
+            <type by_reference="false">\CDbTransaction</type>
+          </tag>
+        </docblock>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" line="70" package="Default">
+        <name>events</name>
+        <docblock>
+          <description>Declares events and the corresponding event handler methods.</description>
+          <long-description>
+</long-description>
+          <tag line="65" name="return" description="events (array keys) and the corresponding event handler methods (array values)." type="array">
+            <type by_reference="false">\array</type>
+          </tag>
+          <tag line="65" name="see" description="\CBehavior::events" refers="\CBehavior::events"/>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="86" package="Default">
+        <name>beforeValidate</name>
+        <docblock>
+          <description>Responds to {@link CModel::onBeforeValidate} event.</description>
+          <long-description>
+</long-description>
+          <tag line="81" name="throws" description="" type="\CDbException">
+            <type by_reference="false">\CDbException</type>
+          </tag>
+          <tag line="81" name="param" description="event parameter" type="\CModelEvent" variable="$event">
+            <type by_reference="false">\CModelEvent</type>
+          </tag>
+        </docblock>
+        <argument line="86">
+          <name>$event</name>
+          <default/>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="126" package="Default">
+        <name>beforeSave</name>
+        <docblock>
+          <description>Responds to {@link CActiveRecord::onBeforeSave} event.</description>
+          <long-description>
+</long-description>
+          <tag line="122" name="param" description="event parameter" type="\CModelEvent" variable="$event">
+            <type by_reference="false">\CModelEvent</type>
+          </tag>
+        </docblock>
+        <argument line="126">
+          <name>$event</name>
+          <default/>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="138" package="Default">
+        <name>afterSave</name>
+        <docblock>
+          <description>Responds to {@link CActiveRecord::onAfterSave} event.</description>
+          <long-description>
+</long-description>
+          <tag line="133" name="throws" description="" type="\CDbException">
+            <type by_reference="false">\CDbException</type>
+          </tag>
+          <tag line="133" name="param" description="event parameter" type="\CModelEvent" variable="$event">
+            <type by_reference="false">\CModelEvent</type>
+          </tag>
+        </docblock>
+        <argument line="138">
+          <name>$event</name>
+          <default/>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" line="266" package="Default">
+        <name>isRelationSupported</name>
+        <docblock>
+          <description>do not do anything with relations defined with 'through' or have limiting 'condition'/'scopes' defined</description>
+          <long-description>
+</long-description>
+          <tag line="260" name="param" description="" type="array" variable="$relation">
+            <type by_reference="false">\array</type>
+          </tag>
+          <tag line="260" name="return" description="" type="bool">
+            <type by_reference="false">\bool</type>
+          </tag>
+        </docblock>
+        <argument line="266">
+          <name>$relation</name>
+          <default/>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" line="286" package="Default">
+        <name>objectsToPrimaryKeys</name>
+        <docblock>
+          <description>converts an array of AR objects or primary keys to only primary keys</description>
+          <long-description>
+</long-description>
+          <tag line="279" name="throws" description="" type="\CDbException">
+            <type by_reference="false">\CDbException</type>
+          </tag>
+          <tag line="279" name="param" description="" type="\CActiveRecord[]" variable="$records">
+            <type by_reference="false">\CActiveRecord[]</type>
+          </tag>
+          <tag line="279" name="return" description="" type="array">
+            <type by_reference="false">\array</type>
+          </tag>
+        </docblock>
+        <argument line="286">
+          <name>$records</name>
+          <default/>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" line="306" package="Default">
+        <name>primaryKeysToObjects</name>
+        <docblock>
+          <description>converts an array of AR objects or primary keys to only AR objects</description>
+          <long-description>
+</long-description>
+          <tag line="298" name="throws" description="" type="\CDbException">
+            <type by_reference="false">\CDbException</type>
+          </tag>
+          <tag line="298" name="param" description="" type="\CActiveRecord[]" variable="$pks">
+            <type by_reference="false">\CActiveRecord[]</type>
+          </tag>
+          <tag line="298" name="param" description="classname of the ARs to instantiate" type="string" variable="$className">
+            <type by_reference="false">\string</type>
+          </tag>
+          <tag line="298" name="return" description="" type="array">
+            <type by_reference="false">\array</type>
+          </tag>
+        </docblock>
+        <argument line="306">
+          <name>$pks</name>
+          <default/>
+          <type/>
+        </argument>
+        <argument line="306">
+          <name>$className</name>
+          <default/>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" line="331" package="Default">
+        <name>getNewManyManyPks</name>
+        <docblock>
+          <description>returns all primary keys of the currently assigned records</description>
+          <long-description>
+</long-description>
+          <tag line="324" name="throws" description="" type="\CDbException">
+            <type by_reference="false">\CDbException</type>
+          </tag>
+          <tag line="324" name="param" description="name of the relation" type="string" variable="$relationName">
+            <type by_reference="false">\string</type>
+          </tag>
+          <tag line="324" name="return" description="" type="array">
+            <type by_reference="false">\array</type>
+          </tag>
+        </docblock>
+        <argument line="331">
+          <name>$relationName</name>
+          <default/>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" line="347" package="Default">
+        <name>getOldManyManyPks</name>
+        <docblock>
+          <description>returns all primary keys of the old assigned records(in database)</description>
+          <long-description>
+</long-description>
+          <tag line="341" name="param" description="name of the relation" type="string" variable="$relationName">
+            <type by_reference="false">\string</type>
+          </tag>
+          <tag line="341" name="return" description="" type="array">
+            <type by_reference="false">\array</type>
+          </tag>
+        </docblock>
+        <argument line="347">
+          <name>$relationName</name>
+          <default/>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" line="369" package="Default">
+        <name>parseManyManyFk</name>
+        <docblock>
+          <description>parses the foreign key definition of a MANY_MANY relation</description>
+          <long-description>&lt;p&gt;the first 7 lines are copied from CActiveFinder:561-568
+https://github.com/yiisoft/yii/blob/2353e0adf98c8a912f0faf29cc2558c0ccd6fec7/framework/db/ar/CActiveFinder.php#L561&lt;/p&gt;
+</long-description>
+          <tag line="354" name="todo" description="this method should be removed and using code should implement solution of https://github.com/yiisoft/yii/issues/508 when it is fixed"/>
+          <tag line="354" name="throws" description="" type="\CDbException">
+            <type by_reference="false">\CDbException</type>
+          </tag>
+          <tag line="354" name="param" description="name of the relation" type="string" variable="$name">
+            <type by_reference="false">\string</type>
+          </tag>
+          <tag line="354" name="param" description="relation definition" type="array" variable="$relation">
+            <type by_reference="false">\array</type>
+          </tag>
+          <tag line="354" name="return" description="($joinTable, $fks) joinTable is the many-many-relation-table fks are primary key of that table defining the relation" type="array">
+            <type by_reference="false">\array</type>
+          </tag>
+        </docblock>
+        <argument line="369">
+          <name>$name</name>
+          <default/>
+          <type/>
+        </argument>
+        <argument line="369">
+          <name>$relation</name>
+          <default/>
+          <type/>
+        </argument>
+      </method>
+    </class>
+    <class final="false" abstract="false" line="391" namespace="default" package="yiiext\behaviors\activeRecordRelation">
+      <name>ECompositeDbCriteria</name>
+      <extends>\CDbCriteria</extends>
+      <full_name>\ECompositeDbCriteria</full_name>
+      <docblock>
+        <description>Extension of CDbCriteria that adds support for composite pks to conditions</description>
+        <long-description>
+</long-description>
+        <tag line="383" name="todo" description="CDbCommandBuilder::createInCondition() supports composite pk, check if we can use it"/>
+        <tag line="383" name="author" description="Carsten Brandt &lt;mail@cebe.cc&gt;"/>
+        <tag line="383" name="package" description="yiiext.behaviors.activeRecordRelation"/>
+      </docblock>
+      <method final="false" abstract="false" static="false" visibility="public" line="403" package="Default">
+        <name>addInCondition</name>
+        <docblock>
+          <description>Adds support for composite keys if first param is array</description>
+          <long-description>&lt;p&gt;for further details {@see CDbCriteria::addInCondition}&lt;/p&gt;
+</long-description>
+          <tag line="393" name="param" description="" type="" variable="$column"/>
+          <tag line="393" name="param" description="" type="" variable="$values"/>
+          <tag line="393" name="param" description="" type="string" variable="$operator">
+            <type by_reference="false">\string</type>
+          </tag>
+          <tag line="393" name="return" description="" type="\CDbCriteria">
+            <type by_reference="false">\CDbCriteria</type>
+          </tag>
+        </docblock>
+        <argument line="403">
+          <name>$column</name>
+          <default/>
+          <type/>
+        </argument>
+        <argument line="403">
+          <name>$values</name>
+          <default/>
+          <type/>
+        </argument>
+        <argument line="403">
+          <name>$operator</name>
+          <default>'AND'</default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" line="424" package="Default">
+        <name>addNotInCondition</name>
+        <docblock>
+          <description>Adds support for composite keys if first param is array</description>
+          <long-description>&lt;p&gt;for further details {@see CDbCriteria::addNotInCondition}&lt;/p&gt;
+</long-description>
+          <tag line="414" name="param" description="" type="" variable="$column"/>
+          <tag line="414" name="param" description="" type="" variable="$values"/>
+          <tag line="414" name="param" description="" type="string" variable="$operator">
+            <type by_reference="false">\string</type>
+          </tag>
+          <tag line="414" name="return" description="" type="\CDbCriteria">
+            <type by_reference="false">\CDbCriteria</type>
+          </tag>
+        </docblock>
+        <argument line="424">
+          <name>$column</name>
+          <default/>
+          <type/>
+        </argument>
+        <argument line="424">
+          <name>$values</name>
+          <default/>
+          <type/>
+        </argument>
+        <argument line="424">
+          <name>$operator</name>
+          <default>'AND'</default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" line="435" package="Default">
+        <name>createCompositeInCondition</name>
+        <argument line="435">
+          <name>$columns</name>
+          <default/>
+          <type/>
+        </argument>
+        <argument line="435">
+          <name>$values</name>
+          <default/>
+          <type/>
+        </argument>
+      </method>
+    </class>
+    <source>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</source>
+  </file>
   <file path="behaviors/model/trashBin/ETrashBinBehavior.php" hash="b284772c74b33b23d6384edb2ef5a465" package="Default">
     <docblock>
       <description>ETrashBinBehavior class file.</description>
@@ -12504,6 +13727,9 @@ public function filters()
       <package name="fileUpload"/>
     </package>
     <package name="behaviors">
+      <package name="activeRecordRelation">
+        <package name="tests"/>
+      </package>
       <package name="model">
         <package name="taggable"/>
         <package name="trashBin"/>
