@@ -15,297 +15,54 @@
 	<link rel="stylesheet" type="text/css" href="/css/web.css" />
 	<link rel="stylesheet" type="text/css" href="/css/form.css" />
 
-	<title>yiiext - RepoReadme Site</title>
+	<link rel="stylesheet" type="text/css" href="/assets/1378e3b9/listview/styles.css" />
+	<title>yiiext - Site</title>
 </head>
 
 <body>
 
-<a href="https://github.com/yiiext/migrate-command"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
+<a href="https://github.com/yiiext"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
 
 <div class="container" id="page">
 
 	<div id="header">
-        <div class="extensions-count"><b>55</b> great Yii extensions!</div>
+		<div class="extensions-count"><b>55</b> great Yii extensions!</div>
 		<div id="logo">
-            <h1>yiiext</h1>
-            unofficial Yii extension repository
-        </div>
+			<h1>yiiext</h1>
+			unofficial Yii extension repository
+		</div>
 	</div><!-- header -->
 
 	<div id="mainmenu">
-		<ul id="yw0">
-<li><a href="/index.html">Extensions</a></li>
-<li><a href="/faq.html">FAQ</a></li>
-<li><a href="/contact.html">Contact</a></li>
-</ul>
+		<ul id="yw1">
+		</ul>
 	</div><!-- mainmenu -->
 
-    <div id="content">
-        <div id="repo">
-            <h2>Extended Migration Command</h2>
+	<div id="content">
+		<div id="welcome">
+			<h2>Welcome to yiiext</h2>
 
-<p>This extension is an enhanced version of the <a href="http://www.yiiframework.com/doc/guide/1.1/en/database.migration">Yii Database Migration Tool</a>
-that adds module support and many more usefull features. If there is anything you would like to have added, or you found a bug
-please <a href="https://github.com/yiiext/migrate-command/issues">report it</a> on github or <a href="mailto:mail@cebe.cc">contact me</a> via email.</p>
+			<p>
+				yiiext is the unofficial extension repository for the
+				<a href="http://www.yiiframework.com/">Yii Framework</a>.
+				This project was created as an alternative to zii, official extensions repository.
+				All stable extensions here are compatible with latest release version of Yii.<br/>
 
-<h2>Features</h2>
+				If you have any questions have a look at our <a href="/faq.html">FAQ</a> page or <a href="/contact.html">contact us</a> directly.
 
-<ul>
-<li>Module-Support (migrations are distributed in a seperate folder for every module) so you can...
+			</p>
 
-<ul>
-<li>...enable and disable Modules</li>
-<li>...<a href="#hh8">add</a> new module by migrating it up</li>
-<li>...<a href="#hh9">remove</a> a module by running its migrations down</li>
-<li>...<a href="#hh7">select the modules</a> you want to run migrations for in every run</li>
-<li>...declare Module-dependencies (coming soon)</li>
-<li>...different migration templates depending on modules (coming soon)</li>
-</ul></li>
-</ul>
+			<h2>Browse Extensions</h2>
+			<p>This page is outdated, check <a href="https://github.com/yiiext">https://github.com/yiiext</a> for the list of extensions.</p>
 
-<h2>Resources</h2>
+		</div>
+		<br style="clear: both;" />
 
-<ul>
-<li><a href="https://github.com/yiiext/migrate-command">GIT</a></li>
-<li><a href="http://www.yiiframework.com/doc/guide/1.1/en/database.migration">Yii Database Migration Documentation</a></li>
-<li><a href="http://www.yiiframework.com/forum/index.php?/topic/22471-extension-extended-database-migration/">Discuss</a></li>
-<li><a href="https://github.com/yiiext/migrate-command/issues">Report a bug/request feature</a></li>
-</ul>
+	</div>
 
-<h2>Requirements</h2>
-
-<ul>
-<li>Yii 1.1.6 or above (MigrateCommand was introduced in this version)
-if you copy MigrateCommand and <a href="http://www.yiiframework.com/doc/api/1.1/CDbMigration">CDbMigration</a> you should be able to use this
-extension with any yii version.</li>
-</ul>
-
-<h2>Installation</h2>
-
-<ul>
-<li>Extract the release file under <code>protected/extensions</code>.</li>
-<li>Add the following to your <a href="http://www.yiiframework.com/doc/guide/1.1/en/database.migration#customizing-migration-command">config file</a> for yiic command:</li>
-</ul>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-quotes">'</span><span class="php-hl-string">commandMap</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-        <span class="php-hl-quotes">'</span><span class="php-hl-string">migrate</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-            <span class="php-hl-comment">//</span><span class="php-hl-comment"> alias of the path where you extracted the zip file</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">class</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">application.extensions.yiiext.commands.migrate.EMigrateCommand</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> this is the path where you want your core application migrations to be created</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">migrationPath</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">application.db.migrations</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> the name of the table created in your database to save versioning information</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">migrationTable</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">tbl_migration</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> the application migrations are in a pseudo-module called &quot;core&quot; by default</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">applicationModuleName</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">core</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> define all available modules (if you do not set this, modules will be set from yii app config)</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">modulePaths</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-                <span class="php-hl-quotes">'</span><span class="php-hl-string">admin</span><span class="php-hl-quotes">'</span><span class="php-hl-code">      =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">application.modules.admin.db.migrations</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-                </span><span class="php-hl-quotes">'</span><span class="php-hl-string">user</span><span class="php-hl-quotes">'</span><span class="php-hl-code">       =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">application.modules.user.db.migrations</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-                </span><span class="php-hl-quotes">'</span><span class="php-hl-string">yourModule</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">application.any.other.path.possible</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-                </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> ...</span>
-            <span class="php-hl-brackets">)</span><span class="php-hl-code">,
-            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> you can customize the modules migrations subdirectory which is used when you are using yii module config</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">migrationSubPath</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">migrations</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> here you can configure which modules should be active, you can disable a module by adding its name to this array</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">disabledModules</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-                <span class="php-hl-quotes">'</span><span class="php-hl-string">admin</span><span class="php-hl-quotes">'</span><span class="php-hl-code">, </span><span class="php-hl-quotes">'</span><span class="php-hl-string">anOtherModule</span><span class="php-hl-quotes">'</span><span class="php-hl-code">, </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> ...</span>
-            <span class="php-hl-brackets">)</span><span class="php-hl-code">,
-            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> the name of the application component that should be used to connect to the database</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">connectionID</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">db</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> alias of the template file used to create new migrations</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">templateFile</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">application.db.migration_template</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-        </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
-    </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,</span></pre></div></div>
-
-<p><strong>Please note:</strong> if you already used MigrateCommand before, make sure to add the module column to your migrationTable:</p>
-
-<div class="hl-code"><div class="sql-hl-main"><pre><span class="sql-hl-reserved">ALTER</span> <span class="sql-hl-reserved">TABLE</span> <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">tbl_migration</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-reserved">ADD</span> <span class="sql-hl-reserved">COLUMN</span> <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">module</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-reserved">varchar</span><span class="sql-hl-brackets">(</span><span class="sql-hl-number">32</span><span class="sql-hl-brackets">)</span> <span class="sql-hl-reserved">DEFAULT</span> <span class="sql-hl-reserved">NULL</span><span class="sql-hl-code">;
- </span><span class="sql-hl-reserved">UPDATE</span> <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">tbl_migration</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-reserved">SET</span> <span class="sql-hl-reserved">module</span><span class="sql-hl-code">=</span><span class="sql-hl-quotes">'</span><span class="sql-hl-string">core</span><span class="sql-hl-quotes">'</span><span class="sql-hl-code">;</span></pre></div></div>
-
-<h2>Usage</h2>
-
-<h3>General Usage</h3>
-
-<p>You can run <code>yiic migrate help</code> to see all parameters and a short example on how to use them.</p>
-
-<p>The basics are explained in the <a href="http://www.yiiframework.com/doc/guide/1.1/en/database.migration">Definitive Guide to Yii</a>. Read them first if you haven't used database migration before.
-The usage of Extended Migration Command is not much different from the native one.
-The only command that is different is <a href="http://www.yiiframework.com/doc/guide/1.1/en/database.migration#creating-migrations">create</a> where you have to additionally specify the modulename:</p>
-
-<pre>   yiic migrate create modulename create_user_table
-</pre>
-
-<p>This creates a new migration named 'create_user_table' in module 'modulename'. The native usage</p>
-
-<pre>   yiic migrate create create_user_table
-</pre>
-
-<p>creates a new migration named 'create_user_table' in the application(core).</p>
-
-<h3>--module Parameter</h3>
-
-<p>In all other commands (<code>up</code>, <code>down</code>, <code>history</code>, <code>new</code>, <code>to</code> and <code>mark</code>) you can use the parameter <code>--module=&lt;modulenames&gt;</code> where <code>&lt;modulenames&gt;</code> can be a comma seperated list of module names or a single module name. This parameter will limit the current command to affect only the specified modules.
-Some Examples:</p>
-
-<pre>   yiic migrate new --module=core
-</pre>
-
-<p>This will show you all new migrations for module core and</p>
-
-<pre>   yiic migrate up 5 --module=core,user
-</pre>
-
-<p>will migrate up the next 5 new migrations in modules core and user. If there are new migrations in other modules they will be ignored.</p>
-
-<pre>   yiic migrate history --module=core,user
-</pre>
-
-<p>will show you which migrations have been applied for modules core and user in the past.
-If you do not specify a module the command behaves like the native one and does the migration for all modules.</p>
-
-<h3>add a module</h3>
-
-<p>Simply enable it in your config and run <code>yiic migrate up --module=yourModule</code>.</p>
-
-<h3>remove a module</h3>
-
-<p>Run <code>yiic migrate to m000000_000000 --module=yourModule</code>. For this to work all your migrations must have the down()-method implemented correctly.</p>
-
-    
-    <h2 id="changelog">Changelog</h2>
-
-    <h3>Changelog</h3>
-
-<h4>0.8.0 (to be released)</h4>
-
-<ul>
-<li>Enh: #12 added customization of 'migrations' subdirectory via $migrationSubPath (cebe thanks to redguy666)</li>
-</ul>
-
-<h4>0.7.1 (2012-01-31)</h4>
-
-<ul>
-<li>fix for getTable trying to hit a db cache and die in endless loop (cebe)</li>
-<li>made sure that  mark  and  to  action are working correctly (cebe)</li>
-</ul>
-
-<h4>0.7.0 (2012-01-28)</h4>
-
-<ul>
-<li>adjusted sql commands to be compatible with nearly all pdo db systems (cebe)</li>
-<li>modules are now loaded from yii application config if not set (cebe)</li>
-<li>improved create action error handling (cebe)</li>
-</ul>
-
-<h4>0.6.0 (2011-09-12) not released, did not work</h4>
-
-<ul>
-<li>adjusted sql commands to be compatible with sqlite and postgres (cebe thanks to redguy)</li>
-<li>added compatibility with CDbMigration, migrations need not extend EDbMigration (cebe)</li>
-</ul>
-
-<h4>0.5.0 (2011-08-09)</h4>
-
-<ul>
-<li>implemented mark-action so it now works with modules (cebe)</li>
-<li>implemented to-action so it now works with modules (cebe)</li>
-<li>fixed problem that base-migrations where not cretated on mark command (cebe)</li>
-</ul>
-
-<h4>0.4.0 (2011-08-08)</h4>
-
-<ul>
-<li>added confirm() method to EDbMigration (cebe)</li>
-</ul>
-
-<h4>0.3.1 (2011-08-05)</h4>
-
-<ul>
-<li>fixed a problem with finding new migrations (cebe)</li>
-<li>added base migration for every single module (cebe)</li>
-<li>fixed problem with history and down migration when --module parameter is set (cebe)</li>
-<li>added $moduleDelimiter property and replaced string function with multibyte versions (cebe)</li>
-<li>complete refactoring of basic functionality, more stability and more straight forward (cebe)</li>
-</ul>
-
-<h4>0.1.0 (2011-08-04)</h4>
-
-<ul>
-<li>Initial public release (cebe)</li>
-<li>module support for migrations</li>
-<li>extended execute() of CDbMigration with parameter $verbose</li>
-</ul>
-
-
-</div>
-
-<div id="repo-sidebar">
-    <div class="repo noreadme">
-    <div class="repo-head">
-        <h3><a href="/extensions/migrate-command/index.html">migrate-command</a></h3>
-    </div>
-    <p>This is an enhanced version of the Yii Database Migration Tool that adds module support and many more usefull features.</p>
-
-    <div class="contributors">
-            <a href="https://github.com/cebe" title="cebe">
-            <img src="https://secure.gravatar.com/avatar/2ebfe57beabd0b9f8eb9ded1237a275d?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="cebe" style="height: 24px; width: 24px;"/>
-        </a>
-            <a href="https://github.com/samdark" title="samdark">
-            <img src="https://secure.gravatar.com/avatar/c13375ba1016846e39bc0e48260d0bb1?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="samdark" style="height: 24px; width: 24px;"/>
-        </a>
-        </div>
-
-
-    </div>
-
-
-    <h2>Documentation</h2>
-    <ul>
-            <li><a href="/extensions/migrate-command/readme.en.html">readme en</a></li>
-            <li><a href="/extensions/migrate-command/readme.ru.html">readme ru</a></li>
-        <li><a href="/extensions/migrate-command/index.html#changelog">changelog </a></li>
-    </ul>
-
-    <h2>Downloads (Tags)</h2>
-    <ul>
-            <li>0.4.0 -
-        <a href="https://github.com/yiiext/migrate-command/tarball/0.4.0">tar</a>,
-        <a href="https://github.com/yiiext/migrate-command/zipball/0.4.0">zip</a>
-        </li>
-            <li>0.5.0 -
-        <a href="https://github.com/yiiext/migrate-command/tarball/0.5.0">tar</a>,
-        <a href="https://github.com/yiiext/migrate-command/zipball/0.5.0">zip</a>
-        </li>
-            <li>0.6.0 -
-        <a href="https://github.com/yiiext/migrate-command/tarball/0.6.0">tar</a>,
-        <a href="https://github.com/yiiext/migrate-command/zipball/0.6.0">zip</a>
-        </li>
-            <li>0.7.0 -
-        <a href="https://github.com/yiiext/migrate-command/tarball/0.7.0">tar</a>,
-        <a href="https://github.com/yiiext/migrate-command/zipball/0.7.0">zip</a>
-        </li>
-            <li>0.7.1 -
-        <a href="https://github.com/yiiext/migrate-command/tarball/0.7.1">tar</a>,
-        <a href="https://github.com/yiiext/migrate-command/zipball/0.7.1">zip</a>
-        </li>
-        </ul>
-
-    <h2>Resources</h2>
-    <ul>
-        <li><a href="https://github.com/yiiext/migrate-command">Browse Code</a></li>
-        <li><a href="https://github.com/yiiext/migrate-command/issues">Issues</a> (7)</li>        <li><a href="https://github.com/yiiext/migrate-command/wiki">Wiki</a></li>        <li>...</li>
-    </ul>
-
-</div>
-
-<br style="clear: both;"/>
-
-
-    </div>
-
-    <div id="footer">
-        Powered by <a href="http://www.yiiframework.com/" rel="external">Yii Framework</a>.
-    </div><!-- footer -->
+	<div id="footer">
+		Powered by <a href="http://www.yiiframework.com/" rel="external">Yii Framework</a>.
+	</div><!-- footer -->
 
 </div><!-- page -->
 </body>

@@ -15,367 +15,54 @@
 	<link rel="stylesheet" type="text/css" href="/css/web.css" />
 	<link rel="stylesheet" type="text/css" href="/css/form.css" />
 
-	<title>yiiext - RepoReadme Site</title>
+	<link rel="stylesheet" type="text/css" href="/assets/1378e3b9/listview/styles.css" />
+	<title>yiiext - Site</title>
 </head>
 
 <body>
 
-<a href="https://github.com/yiiext/with-related-behavior"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
+<a href="https://github.com/yiiext"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
 
 <div class="container" id="page">
 
 	<div id="header">
-        <div class="extensions-count"><b>55</b> great Yii extensions!</div>
+		<div class="extensions-count"><b>55</b> great Yii extensions!</div>
 		<div id="logo">
-            <h1>yiiext</h1>
-            unofficial Yii extension repository
-        </div>
+			<h1>yiiext</h1>
+			unofficial Yii extension repository
+		</div>
 	</div><!-- header -->
 
 	<div id="mainmenu">
-		<ul id="yw0">
-<li><a href="/index.html">Extensions</a></li>
-<li><a href="/faq.html">FAQ</a></li>
-<li><a href="/contact.html">Contact</a></li>
-</ul>
+		<ul id="yw1">
+		</ul>
 	</div><!-- mainmenu -->
 
-    <div id="content">
-        <div id="repo">
-            <h1>WithRelatedBehavior</h1>
+	<div id="content">
+		<div id="welcome">
+			<h2>Welcome to yiiext</h2>
 
-<p>This behavior allows you to validate, insert, update and save a model along with
-models from its relations. It supports all relation types. All DB queries are
-wrapped into transactions automatically but there's a support for manual transaction
-handling. Composite keys are supported as well.</p>
+			<p>
+				yiiext is the unofficial extension repository for the
+				<a href="http://www.yiiframework.com/">Yii Framework</a>.
+				This project was created as an alternative to zii, official extensions repository.
+				All stable extensions here are compatible with latest release version of Yii.<br/>
 
-<h2>Installation and configuration</h2>
+				If you have any questions have a look at our <a href="/faq.html">FAQ</a> page or <a href="/contact.html">contact us</a> directly.
 
-<p>Copy behavior to <code>extensions/wr</code> directory located inside your application and add
-it to the model of your choice the following way:</p>
+			</p>
 
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-inlinetags">&lt;?php</span><span class="php-hl-code">
-...
-</span><span class="php-hl-reserved">public</span> <span class="php-hl-reserved">function</span> <span class="php-hl-identifier">behaviors</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span>
-<span class="php-hl-brackets">{</span>
-    <span class="php-hl-reserved">return</span> <span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-        <span class="php-hl-quotes">'</span><span class="php-hl-string">withRelated</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">class</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">ext.wr.WithRelatedBehavior</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-        </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
-    </span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-</span><span class="php-hl-brackets">}</span><span class="php-hl-code">
-...</span></pre></div></div>
+			<h2>Browse Extensions</h2>
+			<p>This page is outdated, check <a href="https://github.com/yiiext">https://github.com/yiiext</a> for the list of extensions.</p>
 
-<h2>Models that will be used in this doc examples</h2>
+		</div>
+		<br style="clear: both;" />
 
-<p>In the models below real DB fields are marked with <code>@property</code>.</p>
+	</div>
 
-<h3>Post</h3>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-inlinetags">&lt;?php</span>
-<span class="php-hl-reserved">class</span> <span class="php-hl-identifier">Post</span> <span class="php-hl-reserved">extends</span> <span class="php-hl-identifier">CActiveRecord</span>
-<span class="php-hl-brackets">{</span>
-    <span class="php-hl-comment">/*</span><span class="php-hl-comment">*
-     *</span><span class="php-hl-inlinedoc"> @property </span><span class="php-hl-comment">integer id
-     *</span><span class="php-hl-inlinedoc"> @property </span><span class="php-hl-comment">integer author_id
-     *</span><span class="php-hl-inlinedoc"> @property </span><span class="php-hl-comment">string title
-     *</span><span class="php-hl-inlinedoc"> @property </span><span class="php-hl-comment">string content
-     </span><span class="php-hl-comment">*/</span><span class="php-hl-code">
- 
-    ...
-    </span><span class="php-hl-reserved">public</span> <span class="php-hl-reserved">function</span> <span class="php-hl-identifier">relations</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span>
-    <span class="php-hl-brackets">{</span>
-        <span class="php-hl-reserved">return</span> <span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">author</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-identifier">self</span><span class="php-hl-code">::</span><span class="php-hl-identifier">BELONGS_TO</span><span class="php-hl-code">,</span><span class="php-hl-quotes">'</span><span class="php-hl-string">User</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,</span><span class="php-hl-quotes">'</span><span class="php-hl-string">author_id</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
-            </span><span class="php-hl-quotes">'</span><span class="php-hl-string">comments</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-identifier">self</span><span class="php-hl-code">::</span><span class="php-hl-identifier">HAS_MANY</span><span class="php-hl-code">,</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Comment</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,</span><span class="php-hl-quotes">'</span><span class="php-hl-string">article_id</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
-            </span><span class="php-hl-quotes">'</span><span class="php-hl-string">tags</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-identifier">self</span><span class="php-hl-code">::</span><span class="php-hl-identifier">MANY_MANY</span><span class="php-hl-code">,</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Tag</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,</span><span class="php-hl-quotes">'</span><span class="php-hl-string">post_tag(post_id,tag_id)</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
-        </span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-    </span><span class="php-hl-brackets">}</span><span class="php-hl-code">
-    ...
-</span><span class="php-hl-brackets">}</span></pre></div></div>
-
-<h3>Comment</h3>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-inlinetags">&lt;?php</span>
-<span class="php-hl-reserved">class</span> <span class="php-hl-identifier">Comment</span> <span class="php-hl-reserved">extends</span> <span class="php-hl-identifier">CActiveRecord</span>
-<span class="php-hl-brackets">{</span>
-    <span class="php-hl-comment">/*</span><span class="php-hl-comment">*
-     *</span><span class="php-hl-inlinedoc"> @property </span><span class="php-hl-comment">integer id
-     *</span><span class="php-hl-inlinedoc"> @property </span><span class="php-hl-comment">integer post_id
-     *</span><span class="php-hl-inlinedoc"> @property </span><span class="php-hl-comment">string content
-     </span><span class="php-hl-comment">*/</span><span class="php-hl-code">
-    ...
-</span><span class="php-hl-brackets">}</span></pre></div></div>
-
-<h3>Tag</h3>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-inlinetags">&lt;?php</span>
-<span class="php-hl-reserved">class</span> <span class="php-hl-identifier">Tag</span> <span class="php-hl-reserved">extends</span> <span class="php-hl-identifier">CActiveRecord</span>
-<span class="php-hl-brackets">{</span>
-    <span class="php-hl-comment">/*</span><span class="php-hl-comment">*
-     *</span><span class="php-hl-inlinedoc"> @property </span><span class="php-hl-comment">integer id
-     *</span><span class="php-hl-inlinedoc"> @property </span><span class="php-hl-comment">string name
-     </span><span class="php-hl-comment">*/</span><span class="php-hl-code">
-    ...
-</span><span class="php-hl-brackets">}</span></pre></div></div>
-
-<h3>User</h3>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-inlinetags">&lt;?php</span>
-<span class="php-hl-reserved">class</span> <span class="php-hl-identifier">User</span> <span class="php-hl-reserved">extends</span> <span class="php-hl-identifier">CActiveRecord</span>
-<span class="php-hl-brackets">{</span>
-    <span class="php-hl-comment">/*</span><span class="php-hl-comment">*
-     *</span><span class="php-hl-inlinedoc"> @property </span><span class="php-hl-comment">integer id
-     *</span><span class="php-hl-inlinedoc"> @property </span><span class="php-hl-comment">string username
-     *</span><span class="php-hl-inlinedoc"> @property </span><span class="php-hl-comment">string password
-     *</span><span class="php-hl-inlinedoc"> @property </span><span class="php-hl-comment">string email
-     </span><span class="php-hl-comment">*/</span><span class="php-hl-code">
-    ...
-    </span><span class="php-hl-reserved">public</span> <span class="php-hl-reserved">function</span> <span class="php-hl-identifier">relations</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span>
-    <span class="php-hl-brackets">{</span>
-        <span class="php-hl-reserved">return</span> <span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">profile</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-identifier">self</span><span class="php-hl-code">::</span><span class="php-hl-identifier">HAS_ONE</span><span class="php-hl-code">,</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Profile</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,</span><span class="php-hl-quotes">'</span><span class="php-hl-string">user_id</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
-        </span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-    </span><span class="php-hl-brackets">}</span><span class="php-hl-code">
-    ...
-</span><span class="php-hl-brackets">}</span></pre></div></div>
-
-<h3>Profile</h3>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-inlinetags">&lt;?php</span>
-<span class="php-hl-reserved">class</span> <span class="php-hl-identifier">Profile</span> <span class="php-hl-reserved">extends</span> <span class="php-hl-identifier">CActiveRecord</span>
-<span class="php-hl-brackets">{</span>
-    <span class="php-hl-comment">/*</span><span class="php-hl-comment">*
-     *</span><span class="php-hl-inlinedoc"> @property </span><span class="php-hl-comment">integer user_id
-     *</span><span class="php-hl-inlinedoc"> @property </span><span class="php-hl-comment">string firstname
-     *</span><span class="php-hl-inlinedoc"> @property </span><span class="php-hl-comment">string lastname
-     </span><span class="php-hl-comment">*/</span><span class="php-hl-code">
-    ...
-</span><span class="php-hl-brackets">}</span></pre></div></div>
-
-<h2>Format of the $data parameter for all methods where it's used</h2>
-
-<p>This parameter accepts an associative array where values are attribute or relation
-names.</p>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-inlinetags">&lt;?php</span>
-<span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">withRelated</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">save</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">true</span><span class="php-hl-code">,</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-    <span class="php-hl-quotes">'</span><span class="php-hl-string">id</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,</span><span class="php-hl-quotes">'</span><span class="php-hl-string">title</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,     </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> model attributes</span>
-    <span class="php-hl-quotes">'</span><span class="php-hl-string">comments</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,</span><span class="php-hl-quotes">'</span><span class="php-hl-string">tags</span><span class="php-hl-quotes">'</span> <span class="php-hl-comment">//</span><span class="php-hl-comment"> model relations</span>
-<span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
-
-<p>The name of the relation can be specified as a key. In this case its value is another
-<code>$data</code> array with the same rules. So you there's no limit in how many times you can
-nest these.</p>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-inlinetags">&lt;?php</span>
-<span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">withRelated</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">save</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">true</span><span class="php-hl-code">,</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-    <span class="php-hl-quotes">'</span><span class="php-hl-string">comments</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-        <span class="php-hl-quotes">'</span><span class="php-hl-string">id</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,</span><span class="php-hl-quotes">'</span><span class="php-hl-string">content</span><span class="php-hl-quotes">'</span><span class="php-hl-code">, </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> comments relation attributes</span>
-        <span class="php-hl-quotes">'</span><span class="php-hl-string">author</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,       </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> author relation inside comments relation models</span>
-    <span class="php-hl-brackets">)</span><span class="php-hl-code">,
-</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
-
-<p><strong>Note:</strong> If you'll not specify any attributes, all attributes will be saved.
-For relations it's the opposite: you should specify relations explicitly in order
-for these to be saved.</p>
-
-<h2>Usage</h2>
-
-<h3>Relation types</h3>
-
-<h4>HAS_ONE</h4>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-inlinetags">&lt;?php</span>
-<span class="php-hl-var">$user</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">User</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$user</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">username</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">creocoder</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$user</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">email</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">creocoder@gmail.com</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
- 
-</span><span class="php-hl-var">$user</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">profile</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Profile</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$user</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">profile</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">firstname</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Alexander</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$user</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">profile</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">lastname</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Kochetov</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
- 
-</span><span class="php-hl-var">$user</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">withRelated</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">save</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">true</span><span class="php-hl-code">,</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">profile</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
-
-<h4>HAS_MANY</h4>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-inlinetags">&lt;?php</span>
-<span class="php-hl-var">$post</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Post</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">title</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Relational saving is not a dream anymore.</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">content</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Since WithRelatedBehavior released...</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
- 
-</span><span class="php-hl-var">$comment1</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Comment</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$comment1</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">content</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Was it hard?</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$comment2</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Comment</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$comment2</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">content</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Yes, but we made it.</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
- 
-</span><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">comments</span><span class="php-hl-code">=</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$comment1</span><span class="php-hl-code">,</span><span class="php-hl-var">$comment2</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
- 
-</span><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">withRelated</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">save</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">true</span><span class="php-hl-code">,</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">comments</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
-
-<h4>MANY_MANY</h4>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-inlinetags">&lt;?php</span>
-<span class="php-hl-var">$post</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Post</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">title</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Relational saving is not a dream anymore.</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">content</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Since WithRelatedBehavior released...</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
- 
-</span><span class="php-hl-var">$tag1</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Tag</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$tag1</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">name</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">relation</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$tag2</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Tag</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$tag2</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">name</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">save</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
- 
-</span><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">tags</span><span class="php-hl-code">=</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$tag1</span><span class="php-hl-code">,</span><span class="php-hl-var">$tag2</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
- 
-</span><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">withRelated</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">save</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">true</span><span class="php-hl-code">,</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">tags</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
-
-<h4>BELONGS_TO</h4>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-inlinetags">&lt;?php</span>
-<span class="php-hl-var">$post</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Post</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">title</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Relational saving is not a dream anymore.</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">content</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Since WithRelatedBehavior released...</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
- 
-</span><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">author</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">User</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">author</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">username</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">creocoder</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">author</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">email</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">creocoder@gmail.com</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
- 
-</span><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">withRelated</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">save</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">true</span><span class="php-hl-code">,</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">author</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
-
-<p><strong>Note:</strong> As you can see, API stays the same no matter which relation type is used.
-Also it worth mentioning that a transaction is started before saving if DB supports it.
-If transaction was already started manually, behavior detects it and doesn't
-start its own transaction. By default, same as <code>CActiveRecord::save()</code> does,
-<code>WithRelatedBehavior::save()</code> validates data and starts saving it only if all
-models it's going to save are valid. You can disable validation by passing <code>false</code>
-to <code>$runValidation</code> parameter.</p>
-
-<h2>Advanced usage</h2>
-
-<h3>Using custom update strategies</h3>
-
-<p>TBD.</p>
-
-<h3>An advanced usage example</h3>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-inlinetags">&lt;?php</span>
-<span class="php-hl-var">$post</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Post</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">title</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Post title</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">content</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Post content</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
- 
-</span><span class="php-hl-var">$user</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">User</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$user</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">username</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">someuser</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$user</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">email</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">someuser@example.com</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
- 
-</span><span class="php-hl-var">$user</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">profile</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Profile</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$user</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">profile</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">firstname</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Vasya</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$user</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">profile</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">lastname</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Pupkin</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
- 
-</span><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">author</span><span class="php-hl-code">=</span><span class="php-hl-var">$user</span><span class="php-hl-code">;
- 
-</span><span class="php-hl-var">$comment1</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Comment</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$comment1</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">author</span><span class="php-hl-code">=</span><span class="php-hl-var">$user</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$comment1</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">content</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Some content 1</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$comment2</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Comment</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$comment2</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">author</span><span class="php-hl-code">=</span><span class="php-hl-var">$user</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$comment2</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">content</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Some content 2</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
- 
-</span><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">comments</span><span class="php-hl-code">=</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$comment1</span><span class="php-hl-code">,</span><span class="php-hl-var">$comment2</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
- 
-</span><span class="php-hl-var">$tag1</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Tag</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$tag1</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">name</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">tag1</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$tag2</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Tag</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$tag2</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">name</span><span class="php-hl-code">=</span><span class="php-hl-quotes">'</span><span class="php-hl-string">tag2</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
- 
-</span><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">tags</span><span class="php-hl-code">=</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$tag1</span><span class="php-hl-code">,</span><span class="php-hl-var">$tag2</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
- 
-</span><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">withRelated</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">save</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">true</span><span class="php-hl-code">,</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-    <span class="php-hl-quotes">'</span><span class="php-hl-string">author</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-        <span class="php-hl-quotes">'</span><span class="php-hl-string">profile</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-    </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
-    </span><span class="php-hl-quotes">'</span><span class="php-hl-string">comments</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-        <span class="php-hl-quotes">'</span><span class="php-hl-string">author</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-    </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
-    </span><span class="php-hl-quotes">'</span><span class="php-hl-string">tags</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
-
-<p>In order to save <code>post</code> and related models an extension builds saving plan first.
-In the example above that before saving we need to save <code>user</code> model and its related
-<code>profile</code>. After doing it we'll be able to save <code>post</code>. Then goes <code>comments</code>
-(<code>author</code> is the same <code>user</code>). Last <code>tags</code> is saved. Actions mentioned are executed
-inside a transaction. Extension takes care about all these.</p>
-
-    
-    <h2 id="changelog">Changelog</h2>
-
-    <i>No changelog available</i>
-
-</div>
-
-<div id="repo-sidebar">
-    <div class="repo noreadme">
-    <div class="repo-head">
-        <h3><a href="/extensions/with-related-behavior/index.html">with-related-behavior</a></h3>
-    </div>
-    <p>Allows to manage ralated records</p>
-
-    <div class="contributors">
-            <a href="https://github.com/samdark" title="samdark">
-            <img src="https://secure.gravatar.com/avatar/c13375ba1016846e39bc0e48260d0bb1?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="samdark" style="height: 24px; width: 24px;"/>
-        </a>
-            <a href="https://github.com/creocoder" title="creocoder">
-            <img src="https://secure.gravatar.com/avatar/06fd73f7c33c2255fda723aa0b0690cd?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="creocoder" style="height: 24px; width: 24px;"/>
-        </a>
-            <a href="https://github.com/kirs" title="kirs">
-            <img src="https://secure.gravatar.com/avatar/ab074ca0a48f06ab110c374fc7db258e?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="kirs" style="height: 24px; width: 24px;"/>
-        </a>
-            <a href="https://github.com/Akhristenko" title="Akhristenko">
-            <img src="https://secure.gravatar.com/avatar/6de105f11211929f4cacf7b4ce26ef77?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="Akhristenko" style="height: 24px; width: 24px;"/>
-        </a>
-            <a href="https://github.com/larshjo" title="larshjo">
-            <img src="https://secure.gravatar.com/avatar/a73e2df86c9c7a3cb304829d7cdb1cee?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="larshjo" style="height: 24px; width: 24px;"/>
-        </a>
-        </div>
-
-
-    </div>
-
-
-    <h2>Documentation</h2>
-    <ul>
-            <li><a href="/extensions/with-related-behavior/readme.en.html">readme en</a></li>
-            <li><a href="/extensions/with-related-behavior/readme.ru.html">readme ru</a></li>
-        <li><a href="/extensions/with-related-behavior/index.html#changelog">changelog </a></li>
-    </ul>
-
-    <h2>Downloads (Tags)</h2>
-    <ul>
-            <li>v0.6.0 -
-        <a href="https://github.com/yiiext/with-related-behavior/tarball/v0.6.0">tar</a>,
-        <a href="https://github.com/yiiext/with-related-behavior/zipball/v0.6.0">zip</a>
-        </li>
-            <li>v0.6.1 -
-        <a href="https://github.com/yiiext/with-related-behavior/tarball/v0.6.1">tar</a>,
-        <a href="https://github.com/yiiext/with-related-behavior/zipball/v0.6.1">zip</a>
-        </li>
-        </ul>
-
-    <h2>Resources</h2>
-    <ul>
-        <li><a href="https://github.com/yiiext/with-related-behavior">Browse Code</a></li>
-        <li><a href="https://github.com/yiiext/with-related-behavior/issues">Issues</a> (0)</li>        <li><a href="https://github.com/yiiext/with-related-behavior/wiki">Wiki</a></li>        <li>...</li>
-    </ul>
-
-</div>
-
-<br style="clear: both;"/>
-
-
-    </div>
-
-    <div id="footer">
-        Powered by <a href="http://www.yiiframework.com/" rel="external">Yii Framework</a>.
-    </div><!-- footer -->
+	<div id="footer">
+		Powered by <a href="http://www.yiiframework.com/" rel="external">Yii Framework</a>.
+	</div><!-- footer -->
 
 </div><!-- page -->
 </body>

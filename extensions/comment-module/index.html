@@ -15,288 +15,54 @@
 	<link rel="stylesheet" type="text/css" href="/css/web.css" />
 	<link rel="stylesheet" type="text/css" href="/css/form.css" />
 
-	<title>yiiext - RepoReadme Site</title>
+	<link rel="stylesheet" type="text/css" href="/assets/1378e3b9/listview/styles.css" />
+	<title>yiiext - Site</title>
 </head>
 
 <body>
 
-<a href="https://github.com/yiiext/comment-module"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
+<a href="https://github.com/yiiext"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
 
 <div class="container" id="page">
 
 	<div id="header">
-        <div class="extensions-count"><b>55</b> great Yii extensions!</div>
+		<div class="extensions-count"><b>55</b> great Yii extensions!</div>
 		<div id="logo">
-            <h1>yiiext</h1>
-            unofficial Yii extension repository
-        </div>
+			<h1>yiiext</h1>
+			unofficial Yii extension repository
+		</div>
 	</div><!-- header -->
 
 	<div id="mainmenu">
-		<ul id="yw0">
-<li><a href="/index.html">Extensions</a></li>
-<li><a href="/faq.html">FAQ</a></li>
-<li><a href="/contact.html">Contact</a></li>
-</ul>
+		<ul id="yw1">
+		</ul>
 	</div><!-- mainmenu -->
 
-    <div id="content">
-        <div id="repo">
-            <h2>Comment module</h2>
+	<div id="content">
+		<div id="welcome">
+			<h2>Welcome to yiiext</h2>
 
-<p>makes every entity of your application commentable.
-Features:</p>
+			<p>
+				yiiext is the unofficial extension repository for the
+				<a href="http://www.yiiframework.com/">Yii Framework</a>.
+				This project was created as an alternative to zii, official extensions repository.
+				All stable extensions here are compatible with latest release version of Yii.<br/>
 
-<ul>
-<li>Create, Update, Delete comments with ajax</li>
-<li>Gravatar support</li>
-<li>define multiple models that can be commented</li>
-<li>Events raised on new, update, delete</li>
-<li>more coming soon...</li>
-</ul>
+				If you have any questions have a look at our <a href="/faq.html">FAQ</a> page or <a href="/contact.html">contact us</a> directly.
 
-<p>If there is something missing here, or you think one step should be described more detailed,
-please <a href="https://github.com/yiiext/comment-module/issues/new">report it</a>. Thanks!</p>
+			</p>
 
-<h2>Requirements</h2>
+			<h2>Browse Extensions</h2>
+			<p>This page is outdated, check <a href="https://github.com/yiiext">https://github.com/yiiext</a> for the list of extensions.</p>
 
-<ul>
-<li>Tested with Yii 1.1.8, should work in earlier versions</li>
-<li><a href="https://github.com/malyshev/yii-gravatar">yii-gravatar extension</a> for gravatar support</li>
-</ul>
+		</div>
+		<br style="clear: both;" />
 
-<h2>Resources</h2>
+	</div>
 
-<ul>
-<li>Found a bug or want a feature? <a href="https://github.com/yiiext/comment-module/issues">Report it on github</a></li>
-<li><a href="https://github.com/yiiext/comment-module">Code on github</a></li>
-<li>E-Mail the author: CeBe &lt;<a href="mailto:mail@cebe.cc">mail@cebe.cc</a>></li>
-<li>demo on <a href="http://demo.cebe.cc/comment-module">http://demo.cebe.cc/comment-module</a></li>
-</ul>
-
-<h2>Download</h2>
-
-<p>There are two ways to get this extension working:</p>
-
-<ol>
-<li><p>Clone repo:</p>
-
-<ul>
-<li>Go to your application baseDir (<code>protected</code> in default yii webapp).</li>
-<li><code>git clone https://github.com/yiiext/comment-module.git extensions/comment-module</code>
-
-<ul>
-<li>If your project is in a git repository you can alternatively add comment-module as a submodule like this:</li>
-<li><code>git submodule add https://github.com/yiiext/comment-module.git protected/extensions/comment-module</code></li>
-</ul></li>
-<li>go to new comment-modules base dir and run
-<code>git submodule update --init</code> to get the gravatar extension that's included.</li>
-</ul></li>
-<li><p><a href="https://github.com/yiiext/comment-module/tags">Download</a> latest release and put all the files into
-<code>extensions/comment-module</code> under your application baseDir (<code>protected</code> in default yii webapp).
-To be able to use Gravatar support you have to copy <a href="https://github.com/malyshev/yii-gravatar/tree/master/yii-gravatar">YiiGravatar.php</a>
-into <code>extensions/comment-module/extensions/gravatar</code>.</p></li>
-</ol>
-
-<h2>Quickstart</h2>
-
-<p>Add module to your application config (optional config values are commented):</p>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-inlinetags">&lt;?php</span>
-    <span class="php-hl-comment">//</span><span class="php-hl-comment"> ...</span>
-    <span class="php-hl-quotes">'</span><span class="php-hl-string">modules</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-        <span class="php-hl-comment">//</span><span class="php-hl-comment"> ...</span>
-        <span class="php-hl-quotes">'</span><span class="php-hl-string">comment</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">class</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">ext.comment-module.CommentModule</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-            </span><span class="php-hl-quotes">'</span><span class="php-hl-string">commentableModels</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-                <span class="php-hl-comment">//</span><span class="php-hl-comment"> define commentable Models here (key is an alias that must be lower case, value is the model class name)</span>
-                <span class="php-hl-quotes">'</span><span class="php-hl-string">post</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Post</span><span class="php-hl-quotes">'</span>
-            <span class="php-hl-brackets">)</span><span class="php-hl-code">,
-            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> set this to the class name of the model that represents your users</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">userModelClass</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">User</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> set this to the username attribute of User model class</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">userNameAttribute</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">username</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> set this to the email attribute of User model class</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">userEmailAttribute</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">email</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> you can set controller filters that will be added to the comment controller {@see CController::filters()}</span>
-<span class="php-hl-comment">//</span><span class="php-hl-comment">          'controllerFilters'=&gt;array(),</span>
-            <span class="php-hl-comment">//</span><span class="php-hl-comment"> you can set accessRules that will be added to the comment controller {@see CController::accessRules()}</span>
-<span class="php-hl-comment">//</span><span class="php-hl-comment">          'controllerAccessRules'=&gt;array(),</span>
-            <span class="php-hl-comment">//</span><span class="php-hl-comment"> you can extend comment class and use your extended one, set path alias here</span>
-<span class="php-hl-comment">//</span><span class="php-hl-comment">          'commentModelClass'=&gt;'comment.models.Comment',</span>
-        <span class="php-hl-brackets">)</span><span class="php-hl-code">,
-        </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> ...</span>
-    <span class="php-hl-brackets">)</span><span class="php-hl-code">,
-    </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> ...</span></pre></div></div>
-
-<p>Create database tables:
-You can use the database migration provieded by this extension or create a table (example for mysql):</p>
-
-<div class="hl-code"><div class="sql-hl-main"><pre><span class="sql-hl-reserved">CREATE</span> <span class="sql-hl-reserved">TABLE</span> <span class="sql-hl-identifier">IF</span> <span class="sql-hl-reserved">NOT</span> <span class="sql-hl-var">EXISTS</span> <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">comments</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-brackets">(</span>
-      <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">id</span><span class="sql-hl-quotes">`</span>         <span class="sql-hl-reserved">int</span><span class="sql-hl-brackets">(</span><span class="sql-hl-number">11</span><span class="sql-hl-brackets">)</span> <span class="sql-hl-identifier">UNSIGNED</span> <span class="sql-hl-reserved">NOT</span> <span class="sql-hl-reserved">NULL</span> <span class="sql-hl-identifier">AUTO_INCREMENT</span><span class="sql-hl-code">,
-      </span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">message</span><span class="sql-hl-quotes">`</span>    <span class="sql-hl-identifier">text</span> <span class="sql-hl-reserved">COLLATE</span> <span class="sql-hl-identifier">utf8_unicode_ci</span><span class="sql-hl-code">,
-      </span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">userId</span><span class="sql-hl-quotes">`</span>     <span class="sql-hl-reserved">int</span><span class="sql-hl-brackets">(</span><span class="sql-hl-number">11</span><span class="sql-hl-brackets">)</span> <span class="sql-hl-identifier">UNSIGNED</span> <span class="sql-hl-reserved">DEFAULT</span> <span class="sql-hl-reserved">NULL</span><span class="sql-hl-code">,
-      </span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">createDate</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-identifier">datetime</span> <span class="sql-hl-reserved">DEFAULT</span> <span class="sql-hl-reserved">NULL</span><span class="sql-hl-code">,
-      </span><span class="sql-hl-reserved">PRIMARY</span> <span class="sql-hl-reserved">KEY</span> <span class="sql-hl-brackets">(</span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">id</span><span class="sql-hl-quotes">`</span><span class="sql-hl-brackets">)</span><span class="sql-hl-code">,
-      </span><span class="sql-hl-reserved">KEY</span> <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">fk_comments_userId</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-brackets">(</span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">userId</span><span class="sql-hl-quotes">`</span><span class="sql-hl-brackets">)</span>
-    <span class="sql-hl-brackets">)</span> <span class="sql-hl-identifier">ENGINE</span><span class="sql-hl-code">=</span><span class="sql-hl-identifier">InnoDB</span> <span class="sql-hl-reserved">DEFAULT</span> <span class="sql-hl-identifier">CHARSET</span><span class="sql-hl-code">=</span><span class="sql-hl-identifier">utf8</span> <span class="sql-hl-reserved">COLLATE</span><span class="sql-hl-code">=</span><span class="sql-hl-identifier">utf8_unicode_ci</span><span class="sql-hl-code">;</span></pre></div></div>
-
-<p>You might also want to add a foreign key for <code>userId</code> column that references you user tables pk.</p>
-
-<p>Create a database table for every commentable Model relation:</p>
-
-<div class="hl-code"><div class="sql-hl-main"><pre><span class="sql-hl-reserved">CREATE</span> <span class="sql-hl-reserved">TABLE</span> <span class="sql-hl-identifier">IF</span> <span class="sql-hl-reserved">NOT</span> <span class="sql-hl-var">EXISTS</span> <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">posts_comments_nm</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-brackets">(</span>
-      <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">postId</span><span class="sql-hl-quotes">`</span>    <span class="sql-hl-reserved">int</span><span class="sql-hl-brackets">(</span><span class="sql-hl-number">11</span><span class="sql-hl-brackets">)</span> <span class="sql-hl-identifier">UNSIGNED</span> <span class="sql-hl-reserved">NOT</span> <span class="sql-hl-reserved">NULL</span><span class="sql-hl-code">,
-      </span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">commentId</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-reserved">int</span><span class="sql-hl-brackets">(</span><span class="sql-hl-number">11</span><span class="sql-hl-brackets">)</span> <span class="sql-hl-identifier">UNSIGNED</span> <span class="sql-hl-reserved">NOT</span> <span class="sql-hl-reserved">NULL</span><span class="sql-hl-code">,
-      </span><span class="sql-hl-reserved">PRIMARY</span> <span class="sql-hl-reserved">KEY</span> <span class="sql-hl-brackets">(</span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">postId</span><span class="sql-hl-quotes">`</span><span class="sql-hl-code">,</span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">commentId</span><span class="sql-hl-quotes">`</span><span class="sql-hl-brackets">)</span><span class="sql-hl-code">,
-      </span><span class="sql-hl-reserved">KEY</span> <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">fk_posts_comments_comments</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-brackets">(</span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">commentId</span><span class="sql-hl-quotes">`</span><span class="sql-hl-brackets">)</span><span class="sql-hl-code">,
-      </span><span class="sql-hl-reserved">KEY</span> <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">fk_posts_comments_posts</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-brackets">(</span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">postId</span><span class="sql-hl-quotes">`</span><span class="sql-hl-brackets">)</span>
-    <span class="sql-hl-brackets">)</span> <span class="sql-hl-identifier">ENGINE</span><span class="sql-hl-code">=</span><span class="sql-hl-identifier">InnoDB</span> <span class="sql-hl-reserved">DEFAULT</span> <span class="sql-hl-identifier">CHARSET</span><span class="sql-hl-code">=</span><span class="sql-hl-identifier">utf8</span> <span class="sql-hl-reserved">COLLATE</span><span class="sql-hl-code">=</span><span class="sql-hl-identifier">utf8_unicode_ci</span><span class="sql-hl-code">;</span></pre></div></div>
-
-<p>You might want to add foreign keys here too.</p>
-
-<p>Add commentable behavior to all Models you want to be commented.</p>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-inlinetags">&lt;?php</span>
-    <span class="php-hl-comment">//</span><span class="php-hl-comment"> ...</span>
-    <span class="php-hl-reserved">public</span> <span class="php-hl-reserved">function</span> <span class="php-hl-identifier">behaviors</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span> <span class="php-hl-brackets">{</span>
-        <span class="php-hl-reserved">return</span> <span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">commentable</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-                <span class="php-hl-quotes">'</span><span class="php-hl-string">class</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">ext.comment-module.behaviors.CommentableBehavior</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-                </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> name of the table created in last step</span>
-                <span class="php-hl-quotes">'</span><span class="php-hl-string">mapTable</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">posts_comments_nm</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-                </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> name of column to related model id in mapTable</span>
-                <span class="php-hl-quotes">'</span><span class="php-hl-string">mapRelatedColumn</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">postId</span><span class="php-hl-quotes">'</span>
-            <span class="php-hl-brackets">)</span><span class="php-hl-code">,
-       </span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-    </span><span class="php-hl-brackets">}</span></pre></div></div>
-
-<p>Finally add comments to your view template of the commentable model:</p>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-code">&lt;</span><span class="php-hl-identifier">h1</span><span class="php-hl-code">&gt;</span><span class="php-hl-identifier">comments</span><span class="php-hl-code">&lt;/</span><span class="php-hl-identifier">h1</span><span class="php-hl-code">&gt;
- 
-&lt;?</span><span class="php-hl-identifier">php</span> <span class="php-hl-var">$this</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">renderPartial</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">comment.views.comment.commentList</span><span class="php-hl-quotes">'</span><span class="php-hl-code">, </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-    <span class="php-hl-quotes">'</span><span class="php-hl-string">model</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-var">$model</span>
-<span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-inlinetags">?&gt;</span></pre></div></div>
-
-<h2>Extending Comment-Module</h2>
-
-<p>Comment module raises <a href="http://www.yiiframework.com/doc/guide/1.1/en/basics.component#component-event">events</a>
-to which you can attach event handlers to handle them.
-See <a href="http://www.yiiframework.com/doc/guide/1.1/en/basics.component#component-event">The Definitive Guide to Yii</a> on how to do this.</p>
-
-<p>You can also attach <a href="http://www.yiiframework.com/doc/guide/1.1/en/basics.component#component-behavior">behaviors</a>
-to CommentModule by setting <code>'behaviors'=&gt;array(/* ... */)</code> in the module config described above.
-See <a href="http://www.yiiframework.com/doc/api/1.1/CModule#behaviors-detail">CModule::behaviors</a> on how to add behaviors to a module.</p>
-
-<h3>onNewComment</h3>
-
-<p>This event is raised when a new comment has been saved.
-The following attributes are available on the <code>$event</code> given as the first parameter to the event handler:</p>
-
-<ul>
-<li><code>$event-&gt;comment</code> is the ActiveRecord instance of the currently added comment.</li>
-<li><code>$event-&gt;commentedModel</code> is the model the comment was added to.</li>
-</ul>
-
-<p>Possible use cases:</p>
-
-<ul>
-<li>Send an E-Mail-Notification</li>
-</ul>
-
-<h3>onUpdateComment</h3>
-
-<p>This event is raised when a user edited a comment.
-The following attributes are available on the <code>$event</code> given as the first parameter to the event handler:</p>
-
-<ul>
-<li><code>$event-&gt;comment</code> is the ActiveRecord instance of the updated comment.</li>
-</ul>
-
-<h3>onDeleteComment</h3>
-
-<p>This event is raised when a user deleted a comment.
-The following attributes are available on the <code>$event</code> given as the first parameter to the event handler:</p>
-
-<ul>
-<li><code>$event-&gt;comment</code> is the ActiveRecord instance of the deleted comment.</li>
-</ul>
-
-    
-    <h2 id="changelog">Changelog</h2>
-
-    <h4>0.7.0 (to be released)</h4>
-
-<h4>0.6.0 (2011-12-22)</h4>
-
-<ul>
-<li>added getCommentCount() to CommentableBehavior (cebe)</li>
-<li>added delete button and action (cebe)</li>
-<li>added update button and action (cebe)</li>
-<li>fixed problem with sqlite timestamp (cebe)</li>
-</ul>
-
-<h4>0.5.0 (2011-12-19)</h4>
-
-<ul>
-<li>initial public release (cebe)</li>
-</ul>
-
-
-</div>
-
-<div id="repo-sidebar">
-    <div class="repo noreadme">
-    <div class="repo-head">
-        <h3><a href="/extensions/comment-module/index.html">comment-module</a></h3>
-    </div>
-    <p>Module that adds comments to your application. You can add comments on any AR Model you like.</p>
-
-    <div class="contributors">
-            <a href="https://github.com/cebe" title="cebe">
-            <img src="https://secure.gravatar.com/avatar/2ebfe57beabd0b9f8eb9ded1237a275d?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="cebe" style="height: 24px; width: 24px;"/>
-        </a>
-        </div>
-
-
-    </div>
-
-
-    <h2>Documentation</h2>
-    <ul>
-            <li><a href="/extensions/comment-module/readme.en.html">readme en</a></li>
-        <li><a href="/extensions/comment-module/index.html#changelog">changelog </a></li>
-    </ul>
-
-    <h2>Downloads (Tags)</h2>
-    <ul>
-            <li>0.5.0 -
-        <a href="https://github.com/yiiext/comment-module/tarball/0.5.0">tar</a>,
-        <a href="https://github.com/yiiext/comment-module/zipball/0.5.0">zip</a>
-        </li>
-            <li>0.6.0 -
-        <a href="https://github.com/yiiext/comment-module/tarball/0.6.0">tar</a>,
-        <a href="https://github.com/yiiext/comment-module/zipball/0.6.0">zip</a>
-        </li>
-        </ul>
-
-    <h2>Resources</h2>
-    <ul>
-        <li><a href="https://github.com/yiiext/comment-module">Browse Code</a></li>
-        <li><a href="https://github.com/yiiext/comment-module/issues">Issues</a> (15)</li>        <li><a href="https://github.com/yiiext/comment-module/wiki">Wiki</a></li>        <li>...</li>
-    </ul>
-
-</div>
-
-<br style="clear: both;"/>
-
-
-    </div>
-
-    <div id="footer">
-        Powered by <a href="http://www.yiiframework.com/" rel="external">Yii Framework</a>.
-    </div><!-- footer -->
+	<div id="footer">
+		Powered by <a href="http://www.yiiframework.com/" rel="external">Yii Framework</a>.
+	</div><!-- footer -->
 
 </div><!-- page -->
 </body>

@@ -15,191 +15,54 @@
 	<link rel="stylesheet" type="text/css" href="/css/web.css" />
 	<link rel="stylesheet" type="text/css" href="/css/form.css" />
 
-	<title>yiiext - RepoReadme Site</title>
+	<link rel="stylesheet" type="text/css" href="/assets/1378e3b9/listview/styles.css" />
+	<title>yiiext - Site</title>
 </head>
 
 <body>
 
-<a href="https://github.com/yiiext/comment-module"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
+<a href="https://github.com/yiiext"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
 
 <div class="container" id="page">
 
 	<div id="header">
-        <div class="extensions-count"><b>51</b> great Yii extensions!</div>
+		<div class="extensions-count"><b>55</b> great Yii extensions!</div>
 		<div id="logo">
-            <h1>yiiext</h1>
-            unofficial Yii extension repository
-        </div>
+			<h1>yiiext</h1>
+			unofficial Yii extension repository
+		</div>
 	</div><!-- header -->
 
 	<div id="mainmenu">
-		<ul id="yw0">
-<li><a href="/index.html">Extensions</a></li>
-<li><a href="/faq.html">FAQ</a></li>
-<li><a href="/contact.html">Contact</a></li>
-</ul>
+		<ul id="yw1">
+		</ul>
 	</div><!-- mainmenu -->
 
-    <div id="content">
-        <div id="repo">
-            <h2>Comment module</h2>
+	<div id="content">
+		<div id="welcome">
+			<h2>Welcome to yiiext</h2>
 
-<p>makes every entity of your application commentable.
-Features:
-* Ajax creation of comment
-* Gravatar support
-* define multiple models that can be commented
-* more coming soon...</p>
+			<p>
+				yiiext is the unofficial extension repository for the
+				<a href="http://www.yiiframework.com/">Yii Framework</a>.
+				This project was created as an alternative to zii, official extensions repository.
+				All stable extensions here are compatible with latest release version of Yii.<br/>
 
-<h2>Resources</h2>
+				If you have any questions have a look at our <a href="/faq.html">FAQ</a> page or <a href="/contact.html">contact us</a> directly.
 
-<ul>
-<li>Found a bug or want a feature? <a href="https://github.com/yiiext/comment-module/issues">Report it on github</a></li>
-<li><a href="https://github.com/yiiext/comment-module">Code on github</a></li>
-<li>E-Mail the author: CeBe &lt;<a href="mailto:mail@cebe.cc">mail@cebe.cc</a>></li>
-</ul>
+			</p>
 
-<h2>Quickstart</h2>
+			<h2>Browse Extensions</h2>
+			<p>This page is outdated, check <a href="https://github.com/yiiext">https://github.com/yiiext</a> for the list of extensions.</p>
 
-<p>Go to your application baseDir (<code>protected</code> in default yii webapp).
-Clone git repo or <a href="https://github.com/yiiext/comment-module/tags">download</a> latest release.</p>
+		</div>
+		<br style="clear: both;" />
 
-<p><code>sh
-git clone https://github.com/yiiext/comment-module.git extensions/comment-module</code>
-You can also add it to git as a submodule (run command from root of your repo):</p>
+	</div>
 
-<p><code>sh
-git submodule add https://github.com/yiiext/comment-module.git protected/extensions/comment-module</code></p>
-
-<p>Add module to your application config:</p>
-
-<p><code>php
-&lt;?php
-    // ...
-    'modules'=&gt;array(
-        // ...
-        'comment'=&gt;array(
-            'class'=&gt;'ext.comment-module.CommentModule',
-            'commentableModels'=&gt;array(
-                // define commentable Models here (key is an alias that must be lower case, value is the model class name)
-                'post'=&gt;'Post'
-            ),
-            // set this to the class name of the model that represents your users
-            'userModelClass'=&gt;'User',
-            // set this to the username attribute of User model class
-            'userNameAttribute'=&gt;'username',
-            // set this to the email attribute of User model class
-            'userEmailAttribute'=&gt;'email';
-        ),
-        // ...
-    ),
-    // ...</code></p>
-
-<p>Create database tables:
-You can use the database migration provieded by this extension or create a table (example for mysql):</p>
-
-<p><code>sql
-    CREATE TABLE IF NOT EXISTS `comments` (
-      `id`         int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-      `message`    text COLLATE utf8_unicode_ci,
-      `userId`     int(11) UNSIGNED DEFAULT NULL,
-      `createDate` datetime DEFAULT NULL,
-      PRIMARY KEY (`id`),
-      KEY `fk_comments_userId` (`userId`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;</code>
-You might also want to add a foreign key for <code>userId</code> column that references you user tables pk.</p>
-
-<p>Create a database table for every commentable Model relation:</p>
-
-<p><code>sql
-    CREATE TABLE IF NOT EXISTS `posts_comments_nm` (
-      `postId`    int(11) UNSIGNED NOT NULL,
-      `commentId` int(11) UNSIGNED NOT NULL,
-      PRIMARY KEY (`taskId`,`commentId`),
-      KEY `fk_tasks_comments_comments` (`commentId`),
-      KEY `fk_tasks_comments_tasks` (`taskId`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;</code>
-You might want to add foreign keys here too.</p>
-
-<p>Add commentable behavior to all Models you want to be commented.</p>
-
-<p><code>php
-&lt;?php
-    // ...
-    public function behaviors() {
-        return array(
-            'commentable' =&gt; array(
-                'class' =&gt; 'ext.comment-module.behaviors.CommentableBehavior',
-                // name of the table created in last step
-                'mapTable' =&gt; 'posts_comments_nm',
-                // name of column to related model id in mapTable
-                'mapRelatedColumn' =&gt; 'postId'
-            ),
-       );
-    }</code></p>
-
-<p>Finally add comments to your view template of the commentable model:</p>
-
-<p>```php</p>
-
-<h1>comments</h1>
-
-<p><?php $this->renderPartial('comment.views.comment.commentList', array(
-    'model'=>$model
-)); ?>
-```</p>
-
-<p>If there is something missing here, or you think one step should be described more detailed please <a href="https://github.com/yiiext/comment-module/issues/new">report it</a>. Thanks!</p>
-
-    
-    <h2 id="changelog">Changelog</h2>
-
-    <i>No changelog available</i>
-
-</div>
-
-<div id="repo-sidebar">
-    <div class="repo noreadme">
-    <div class="repo-head">
-        
-        <h3><a href="/extensions/comment-module/index.html">comment-module</a></h3>
-    </div>
-    <p>Module that adds comments to your application. You can add comments on any AR Model you like.</p>
-
-    <div class="contributors">
-            <a href="https://github.com/cebe" title="cebe">
-            <img src="https://secure.gravatar.com/avatar/2ebfe57beabd0b9f8eb9ded1237a275d?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="cebe" style="height: 24px; width: 24px;"/>
-        </a>
-        </div>
-</div>
-
-
-    <h2>Documentation</h2>
-    <ul>
-            <li><a href="/extensions/comment-module/readme.en.html">readme en</a></li>
-        <li><a href="/extensions/comment-module/index.html#changelog">changelog </a></li>
-    </ul>
-
-    <h2>Downloads (Tags)</h2>
-    <ul>
-        </ul>
-
-    <h2>Resources</h2>
-    <ul>
-        <li><a href="https://github.com/yiiext/comment-module">Browse Code</a></li>
-        <li><a href="https://github.com/yiiext/comment-module/issues">Issues</a> (1)</li>        <li><a href="https://github.com/yiiext/comment-module/wiki">Wiki</a></li>        <li>...</li>
-    </ul>
-
-</div>
-
-<br style="clear: both;"/>
-
-
-    </div>
-
-    <div id="footer">
-        Powered by <a href="http://www.yiiframework.com/" rel="external">Yii Framework</a>.
-    </div><!-- footer -->
+	<div id="footer">
+		Powered by <a href="http://www.yiiframework.com/" rel="external">Yii Framework</a>.
+	</div><!-- footer -->
 
 </div><!-- page -->
 </body>

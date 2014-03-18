@@ -15,256 +15,54 @@
 	<link rel="stylesheet" type="text/css" href="/css/web.css" />
 	<link rel="stylesheet" type="text/css" href="/css/form.css" />
 
-	<title>yiiext - RepoReadme Site</title>
+	<link rel="stylesheet" type="text/css" href="/assets/1378e3b9/listview/styles.css" />
+	<title>yiiext - Site</title>
 </head>
 
 <body>
 
-<a href="https://github.com/yiiext/uploadify-widget"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
+<a href="https://github.com/yiiext"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
 
 <div class="container" id="page">
 
 	<div id="header">
-        <div class="extensions-count"><b>55</b> great Yii extensions!</div>
+		<div class="extensions-count"><b>55</b> great Yii extensions!</div>
 		<div id="logo">
-            <h1>yiiext</h1>
-            unofficial Yii extension repository
-        </div>
+			<h1>yiiext</h1>
+			unofficial Yii extension repository
+		</div>
 	</div><!-- header -->
 
 	<div id="mainmenu">
-		<ul id="yw0">
-<li><a href="/index.html">Extensions</a></li>
-<li><a href="/faq.html">FAQ</a></li>
-<li><a href="/contact.html">Contact</a></li>
-</ul>
+		<ul id="yw1">
+		</ul>
 	</div><!-- mainmenu -->
 
-    <div id="content">
-        <div id="repo">
-            <h1>Обёртка для плагина jQuery Uploadify</h1>
+	<div id="content">
+		<div id="welcome">
+			<h2>Welcome to yiiext</h2>
 
-<p>Используем в представлении <code>views/form.php</code>:</p>
+			<p>
+				yiiext is the unofficial extension repository for the
+				<a href="http://www.yiiframework.com/">Yii Framework</a>.
+				This project was created as an alternative to zii, official extensions repository.
+				All stable extensions here are compatible with latest release version of Yii.<br/>
 
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$this</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">widget</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">ext.yiiext.widgets.uploadify.EUploadifyWidget</span><span class="php-hl-quotes">'</span><span class="php-hl-code">, </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-    <span class="php-hl-comment">//</span><span class="php-hl-comment"> можно использовать как для поля модели</span>
-    <span class="php-hl-quotes">'</span><span class="php-hl-string">model</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">UploadifyFile</span><span class="php-hl-code">,
-    </span><span class="php-hl-quotes">'</span><span class="php-hl-string">attribute</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">uploadifyFile</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-    </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> так и просто для элемента формы</span>
-    <span class="php-hl-quotes">'</span><span class="php-hl-string">name</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">my_input_name</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-    </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> Имя POST-параметра, через который будет посылаться ИД сессии</span>
-    <span class="php-hl-quotes">'</span><span class="php-hl-string">sessionParam</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">PHP_SESSION_ID</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-    </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> [настройки](</span><span class="php-hl-url">http://www.uploadify.com/documentation/</span><span class="php-hl-comment">) плагина</span>
-    <span class="php-hl-quotes">'</span><span class="php-hl-string">options</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-        <span class="php-hl-quotes">'</span><span class="php-hl-string">fileExt</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">*.jpg;*.png;*.gif</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-        </span><span class="php-hl-quotes">'</span><span class="php-hl-string">script</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-var">$this</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">createUrl</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">controller/action</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
-        </span><span class="php-hl-quotes">'</span><span class="php-hl-string">auto</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">false</span><span class="php-hl-code">,
-        </span><span class="php-hl-quotes">'</span><span class="php-hl-string">multi</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">true</span><span class="php-hl-code">,
-        </span><span class="php-hl-quotes">'</span><span class="php-hl-string">buttonText</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Upload Images</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-    </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
-</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
+				If you have any questions have a look at our <a href="/faq.html">FAQ</a> page or <a href="/contact.html">contact us</a> directly.
 
-<p>Использование бета-версии 3.0.0</p>
+			</p>
 
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$this</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">widget</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">ext.yiiext.widgets.uploadify.EUploadifyWidget</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-    <span class="php-hl-quotes">'</span><span class="php-hl-string">package</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-        <span class="php-hl-quotes">'</span><span class="php-hl-string">basePath</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">getPathOfAlias</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">ext.yiiext.widgets.uploadify</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">.</span><span class="php-hl-quotes">'</span><span class="php-hl-string">/vendors/jquery.uploadify-v3.0.0</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-        </span><span class="php-hl-quotes">'</span><span class="php-hl-string">js</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">jquery.uploadify</span><span class="php-hl-quotes">'</span><span class="php-hl-code">.</span><span class="php-hl-brackets">(</span><span class="php-hl-identifier">YII_DEBUG</span><span class="php-hl-code">?</span><span class="php-hl-quotes">'</span><span class="php-hl-quotes">'</span><span class="php-hl-code">:</span><span class="php-hl-quotes">'</span><span class="php-hl-string">.min</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">.</span><span class="php-hl-quotes">'</span><span class="php-hl-string">.js</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-            </span><span class="php-hl-quotes">'</span><span class="php-hl-string">swfobject.js</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-        </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
-        </span><span class="php-hl-quotes">'</span><span class="php-hl-string">css</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">uploadify.css</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-        </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
-        </span><span class="php-hl-quotes">'</span><span class="php-hl-string">depends</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">jquery</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-        </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
-    </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
-</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
+			<h2>Browse Extensions</h2>
+			<p>This page is outdated, check <a href="https://github.com/yiiext">https://github.com/yiiext</a> for the list of extensions.</p>
 
-<h2>Пример использования</h2>
+		</div>
+		<br style="clear: both;" />
 
-<p>Для использования нам нужны:</p>
+	</div>
 
-<ul>
-<li>Модель формы.</li>
-<li>Действие контроллера.</li>
-</ul>
-
-<h3>Пример модели</h3>
-
-<p><code>UploadifyFile.php</code>:</p>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-reserved">class</span> <span class="php-hl-identifier">UploadifyFile</span> <span class="php-hl-reserved">extends</span> <span class="php-hl-identifier">CFormModel</span>
-<span class="php-hl-brackets">{</span>
-    <span class="php-hl-reserved">public</span> <span class="php-hl-var">$uploadifyFile</span><span class="php-hl-code">;
- 
-    </span><span class="php-hl-reserved">public</span> <span class="php-hl-reserved">function</span> <span class="php-hl-identifier">rules</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span>
-    <span class="php-hl-brackets">{</span>
-        <span class="php-hl-reserved">return</span> <span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-            <span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-                <span class="php-hl-quotes">'</span><span class="php-hl-string">uploadifyFile</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-                </span><span class="php-hl-quotes">'</span><span class="php-hl-string">file</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-                </span><span class="php-hl-quotes">'</span><span class="php-hl-string">maxSize</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-number">1024</span><span class="php-hl-code">*</span><span class="php-hl-number">1024</span><span class="php-hl-code">*</span><span class="php-hl-number">1024</span><span class="php-hl-code">,
-                </span><span class="php-hl-quotes">'</span><span class="php-hl-string">types</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">jpg, png, gif, txt</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-            </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
-        </span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-    </span><span class="php-hl-brackets">}</span>
-<span class="php-hl-brackets">}</span></pre></div></div>
-
-<h3>Пример действия</h3>
-
-<p>Действие можно описать и как обычное действие контроллера, но здесь мы используем <a href="http://yiiframework.ru/doc/guide/ru/basics.controller">CAction, описанный в полном руководстве</a>.</p>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-reserved">class</span> <span class="php-hl-identifier">SwfUploadAction</span> <span class="php-hl-reserved">extends</span> <span class="php-hl-identifier">CAction</span>
-<span class="php-hl-brackets">{</span>
-    <span class="php-hl-reserved">public</span> <span class="php-hl-var">$folder</span><span class="php-hl-code">;
- 
-    </span><span class="php-hl-reserved">public</span> <span class="php-hl-reserved">function</span> <span class="php-hl-identifier">run</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span>
-    <span class="php-hl-brackets">{</span>
-        <span class="php-hl-var">$folder</span><span class="php-hl-code">=</span><span class="php-hl-var">$this</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">folder</span><span class="php-hl-code">;
-        </span><span class="php-hl-reserved">if</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$folder</span><span class="php-hl-code">===</span><span class="php-hl-reserved">FALSE</span><span class="php-hl-brackets">)</span>
-        <span class="php-hl-brackets">{</span>
-            <span class="php-hl-reserved">throw</span> <span class="php-hl-reserved">new</span> <span class="php-hl-identifier">CException</span><span class="php-hl-brackets">(</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">t</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">__CLASS__</span><span class="php-hl-code">,</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-string">Folder does not exists.</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-code">,</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-        </span><span class="php-hl-brackets">}</span>
-        <span class="php-hl-reserved">if</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">isset</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$_FILES</span><span class="php-hl-brackets">[</span><span class="php-hl-quotes">'</span><span class="php-hl-string">UploadifyFile</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">]</span><span class="php-hl-brackets">)</span><span class="php-hl-code">===</span><span class="php-hl-reserved">true</span><span class="php-hl-brackets">)</span>
-        <span class="php-hl-brackets">{</span>
-            <span class="php-hl-var">$model</span><span class="php-hl-code">=</span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">UploadifyFile</span><span class="php-hl-code">;
-            </span><span class="php-hl-var">$model</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">attributes</span><span class="php-hl-code">=</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">uploadifyFile</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-            </span><span class="php-hl-var">$model</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">uploadifyFile</span><span class="php-hl-code">=</span><span class="php-hl-identifier">CUploadedFile</span><span class="php-hl-code">::</span><span class="php-hl-identifier">getInstance</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$model</span><span class="php-hl-code">,</span><span class="php-hl-quotes">'</span><span class="php-hl-string">uploadifyFile</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-            </span><span class="php-hl-reserved">if</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$model</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">validate</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">===</span><span class="php-hl-reserved">false</span><span class="php-hl-brackets">)</span>
-            <span class="php-hl-brackets">{</span>
-                <span class="php-hl-reserved">throw</span> <span class="php-hl-reserved">new</span> <span class="php-hl-identifier">CException</span><span class="php-hl-brackets">(</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">t</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">__CLASS__</span><span class="php-hl-code">,</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-string">Invalid file.</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-code">,</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-            </span><span class="php-hl-brackets">}</span>
-            <span class="php-hl-reserved">if</span><span class="php-hl-brackets">(</span><span class="php-hl-code">!</span><span class="php-hl-var">$model</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">uploadifyFile</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">saveAs</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$folder</span><span class="php-hl-code">.</span><span class="php-hl-quotes">'</span><span class="php-hl-string">/</span><span class="php-hl-quotes">'</span><span class="php-hl-code">.</span><span class="php-hl-var">$model</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">uploadifyFile</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getName</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span>
-            <span class="php-hl-brackets">{</span>
-                <span class="php-hl-reserved">throw</span> <span class="php-hl-reserved">new</span> <span class="php-hl-identifier">CException</span><span class="php-hl-brackets">(</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">t</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">__CLASS__</span><span class="php-hl-code">,</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-string">Upload error.</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-code">,</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-            </span><span class="php-hl-brackets">}</span>
-            <span class="php-hl-reserved">else</span>
-            <span class="php-hl-brackets">{</span>
-                <span class="php-hl-reserved">die</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-string">Upload success</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-            </span><span class="php-hl-brackets">}</span>
-        <span class="php-hl-brackets">}</span>
-        <span class="php-hl-reserved">else</span>
-        <span class="php-hl-brackets">{</span>
-            <span class="php-hl-reserved">throw</span> <span class="php-hl-reserved">new</span> <span class="php-hl-identifier">CException</span><span class="php-hl-brackets">(</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">t</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">__CLASS__</span><span class="php-hl-code">,</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-string">File not sent.</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-code">,</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-        </span><span class="php-hl-brackets">}</span>
-        <span class="php-hl-reserved">throw</span> <span class="php-hl-reserved">new</span> <span class="php-hl-identifier">CException</span><span class="php-hl-brackets">(</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">t</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">__CLASS__</span><span class="php-hl-code">,</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Unknown error.</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-    </span><span class="php-hl-brackets">}</span>
-<span class="php-hl-brackets">}</span></pre></div></div>
-
-<p><em>Вы также можете использовать [EFileUploadAction] из yiiext.</em></p>
-
-    
-    <h2 id="changelog">Changelog</h2>
-
-    <h3>1.7</h3>
-
-<p>Warning: this version is not backwards compatible to 1.6 and required framework version 1.1.7.</p>
-
-<ul>
-<li>Add experemental JS for beta version 3.0.0. (Veaceslav Medvedev)</li>
-<li>JS updated to version 2.1.4 (Veaceslav Medvedev)</li>
-</ul>
-
-<h3>1.6</h3>
-
-<ul>
-<li>Added property $sessionParam that can be used to send session id via POST. (Veaceslav Medvedev)</li>
-<li>JS updated to version 2.1.3. (Veaceslav Medvedev)</li>
-<li>Fixed error with <code>fileDesc</code> option. (Veaceslav Medvedev)</li>
-</ul>
-
-<h3>1.5</h3>
-
-<ul>
-<li>Code optimization. (Veaceslav Medvedev)</li>
-</ul>
-
-<h3>1.4</h3>
-
-<ul>
-<li>Rename class to EUploadifyWidget (Veaceslav Medvedev)</li>
-</ul>
-
-<h3>1.3</h3>
-
-<ul>
-<li>readme_ru, readme_en. (Veaceslav Medvedev)</li>
-<li>Code style fixes. (Veaceslav Medvedev)</li>
-<li>Compatible with Yii 1.1. (Veaceslav Medvedev)</li>
-<li>New naming conventions. (Veaceslav Medvedev)</li>
-</ul>
-
-<h3>1.2</h3>
-
-<ul>
-<li>Transformed module into widget extension. (Veaceslav Medvedev)</li>
-</ul>
-
-<h3>1.1</h3>
-
-<ul>
-<li>Initial public release. (Veaceslav Medvedev)</li>
-</ul>
-
-
-</div>
-
-<div id="repo-sidebar">
-    <div class="repo noreadme">
-    <div class="repo-head">
-        <h3><a href="/extensions/uploadify-widget/index.html">uploadify-widget</a></h3>
-    </div>
-    <p>Allows to use jQuery uploadify plugin as a widget.</p>
-
-    <div class="contributors">
-            <a href="https://github.com/slavcopost" title="slavcopost">
-            <img src="https://secure.gravatar.com/avatar/7df99512d7e4f2c81f9441650c89025f?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="slavcopost" style="height: 24px; width: 24px;"/>
-        </a>
-            <a href="https://github.com/cebe" title="cebe">
-            <img src="https://secure.gravatar.com/avatar/2ebfe57beabd0b9f8eb9ded1237a275d?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="cebe" style="height: 24px; width: 24px;"/>
-        </a>
-            <a href="https://github.com/samdark" title="samdark">
-            <img src="https://secure.gravatar.com/avatar/c13375ba1016846e39bc0e48260d0bb1?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="samdark" style="height: 24px; width: 24px;"/>
-        </a>
-        </div>
-
-
-    </div>
-
-
-    <h2>Documentation</h2>
-    <ul>
-            <li><a href="/extensions/uploadify-widget/readme.en.html">readme en</a></li>
-            <li><a href="/extensions/uploadify-widget/readme.ru.html">readme ru</a></li>
-        <li><a href="/extensions/uploadify-widget/index.html#changelog">changelog </a></li>
-    </ul>
-
-    <h2>Downloads (Tags)</h2>
-    <ul>
-            <li>v1.7 -
-        <a href="https://github.com/yiiext/uploadify-widget/tarball/v1.7">tar</a>,
-        <a href="https://github.com/yiiext/uploadify-widget/zipball/v1.7">zip</a>
-        </li>
-        </ul>
-
-    <h2>Resources</h2>
-    <ul>
-        <li><a href="https://github.com/yiiext/uploadify-widget">Browse Code</a></li>
-        <li><a href="https://github.com/yiiext/uploadify-widget/issues">Issues</a> (0)</li>        <li><a href="https://github.com/yiiext/uploadify-widget/wiki">Wiki</a></li>        <li>...</li>
-    </ul>
-
-</div>
-
-<br style="clear: both;"/>
-
-
-    </div>
-
-    <div id="footer">
-        Powered by <a href="http://www.yiiframework.com/" rel="external">Yii Framework</a>.
-    </div><!-- footer -->
+	<div id="footer">
+		Powered by <a href="http://www.yiiframework.com/" rel="external">Yii Framework</a>.
+	</div><!-- footer -->
 
 </div><!-- page -->
 </body>

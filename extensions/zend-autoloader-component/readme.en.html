@@ -15,168 +15,54 @@
 	<link rel="stylesheet" type="text/css" href="/css/web.css" />
 	<link rel="stylesheet" type="text/css" href="/css/form.css" />
 
-	<title>yiiext - RepoReadme Site</title>
+	<link rel="stylesheet" type="text/css" href="/assets/1378e3b9/listview/styles.css" />
+	<title>yiiext - Site</title>
 </head>
 
 <body>
 
-<a href="https://github.com/yiiext/zend-autoloader-component"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
+<a href="https://github.com/yiiext"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
 
 <div class="container" id="page">
 
 	<div id="header">
-        <div class="extensions-count"><b>51</b> great Yii extensions!</div>
+		<div class="extensions-count"><b>55</b> great Yii extensions!</div>
 		<div id="logo">
-            <h1>yiiext</h1>
-            unofficial Yii extension repository
-        </div>
+			<h1>yiiext</h1>
+			unofficial Yii extension repository
+		</div>
 	</div><!-- header -->
 
 	<div id="mainmenu">
-		<ul id="yw0">
-<li><a href="/index.html">Extensions</a></li>
-<li><a href="/faq.html">FAQ</a></li>
-<li><a href="/contact.html">Contact</a></li>
-</ul>
+		<ul id="yw1">
+		</ul>
 	</div><!-- mainmenu -->
 
-    <div id="content">
-        <div id="repo">
-            <h1>Fast Zend Framework class loader for Yii</h1>
+	<div id="content">
+		<div id="welcome">
+			<h2>Welcome to yiiext</h2>
 
-<p>Allows to efficiently load Zend Framework classes without need to additionally call
-require_once() or Yii::import().</p>
+			<p>
+				yiiext is the unofficial extension repository for the
+				<a href="http://www.yiiframework.com/">Yii Framework</a>.
+				This project was created as an alternative to zii, official extensions repository.
+				All stable extensions here are compatible with latest release version of Yii.<br/>
 
-<h2>Installation</h2>
+				If you have any questions have a look at our <a href="/faq.html">FAQ</a> page or <a href="/contact.html">contact us</a> directly.
 
-<h3>Extension</h3>
+			</p>
 
-<p>Unpack extension to <code>protected/extensions/</code>.</p>
+			<h2>Browse Extensions</h2>
+			<p>This page is outdated, check <a href="https://github.com/yiiext">https://github.com/yiiext</a> for the list of extensions.</p>
 
-<h3>Zend Framework</h3>
+		</div>
+		<br style="clear: both;" />
 
-<p>Copy ZF directory <code>Zend</code> to <code>protected/vendors/</code>.
-You can use <a href="http://epic.codeutopia.net/pack/">special service to get only required
-ZF classes</a>.</p>
+	</div>
 
-<h3>Stripping all require_once from ZF</h3>
-
-<p>It is required for this extension and allows to load ZF classes faster.</p>
-
-<p>You can do search-replace from your IDE: search <code>require_once</code> replace to <code>//require_once</code>.</p>
-
-<p>Altenatively you can use console:</p>
-
-<p>GNU:</p>
-
-<pre>% cd path/to/ZendFramework/library
-% find . -name &#039;*.php&#039; -not -wholename &#039;*/Loader/Autoloader.php&#039; \
-  -not -wholename &#039;*/Application.php&#039; -print0 | \
-  xargs -0 sed --regexp-extended --in-place &#039;s/(require_once)/\/\/ \1/g&#039;
-</pre>
-
-<p>MacOSX:</p>
-
-<pre>% cd path/to/ZendFramework/library
-% find . -name &#039;*.php&#039; | grep -v &#039;./Loader/Autoloader.php&#039; | \
-xargs sed -E -i~ &#039;s/(require_once)/\/\/ \1/g&#039;
-% find . -name &#039;*.php~&#039; | xargs rm -f
-</pre>
-
-<h3>Updating your index.php</h3>
-
-<p>We need to register loader before application is run:</p>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-reserved">define</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">YII_DEBUG</span><span class="php-hl-quotes">'</span><span class="php-hl-code">, </span><span class="php-hl-reserved">true</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$webRoot</span><span class="php-hl-code">=</span><span class="php-hl-identifier">dirname</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">__FILE__</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-</span><span class="php-hl-reserved">require_once</span><span class="php-hl-brackets">(</span><span class="php-hl-identifier">dirname</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$webRoot</span><span class="php-hl-brackets">)</span><span class="php-hl-code">.</span><span class="php-hl-quotes">'</span><span class="php-hl-string">/framework/yii.php</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$configFile</span><span class="php-hl-code">=</span><span class="php-hl-var">$webRoot</span><span class="php-hl-code">.</span><span class="php-hl-quotes">'</span><span class="php-hl-string">/../protected/config/main.php</span><span class="php-hl-quotes">'</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$app</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">createWebApplication</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$configFile</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
- 
-</span><span class="php-hl-comment">//</span><span class="php-hl-comment"> you can load not only Zend classes but also other classes with the same naming</span>
-<span class="php-hl-comment">//</span><span class="php-hl-comment"> convention</span>
-<span class="php-hl-identifier">EZendAutoloader</span><span class="php-hl-code">::</span><span class="php-hl-var">$prefixes</span><span class="php-hl-code"> = </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Zend</span><span class="php-hl-quotes">'</span><span class="php-hl-code">, </span><span class="php-hl-quotes">'</span><span class="php-hl-string">Custom</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
- 
-</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">import</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-string">ext.yiiext.components.zendAutoloader.EZendAutoloader</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-code">, </span><span class="php-hl-reserved">true</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">registerAutoloader</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-string">EZendAutoloader</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-code">, </span><span class="php-hl-quotes">&quot;</span><span class="php-hl-string">loadClass</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-brackets">)</span><span class="php-hl-code">, </span><span class="php-hl-reserved">true</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
- 
-</span><span class="php-hl-var">$app</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">run</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
-
-    
-    <h2 id="changelog">Changelog</h2>
-
-    <h3>1.1.1</h3>
-
-<ul>
-<li>Fixed autoloader registration order in readme (Sam Dark)</li>
-</ul>
-
-<h3>1.1</h3>
-
-<ul>
-<li>Ability to load custom code that is using Zend class naming convention but
-with different prefix (Sam Dark)</li>
-</ul>
-
-<h3>1.0</h3>
-
-<ul>
-<li>Initial public release (Sam Dark)</li>
-</ul>
-
-
-</div>
-
-<div id="repo-sidebar">
-    <div class="repo noreadme">
-    <div class="repo-head">
-        
-        <h3><a href="/extensions/zend-autoloader-component/index.html">zend-autoloader-component</a></h3>
-    </div>
-    <p>Fast autoloader for Zend Framework classes.</p>
-
-    <div class="contributors">
-            <a href="https://github.com/samdark" title="samdark">
-            <img src="https://secure.gravatar.com/avatar/c13375ba1016846e39bc0e48260d0bb1?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="samdark" style="height: 24px; width: 24px;"/>
-        </a>
-            <a href="https://github.com/cebe" title="cebe">
-            <img src="https://secure.gravatar.com/avatar/2ebfe57beabd0b9f8eb9ded1237a275d?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="cebe" style="height: 24px; width: 24px;"/>
-        </a>
-        </div>
-</div>
-
-
-    <h2>Documentation</h2>
-    <ul>
-            <li><a href="/extensions/zend-autoloader-component/readme.en.html">readme en</a></li>
-            <li><a href="/extensions/zend-autoloader-component/readme.ru.html">readme ru</a></li>
-        <li><a href="/extensions/zend-autoloader-component/index.html#changelog">changelog </a></li>
-    </ul>
-
-    <h2>Downloads (Tags)</h2>
-    <ul>
-            <li>v1.1.1 -
-        <a href="https://github.com/yiiext/zend-autoloader-component/tarball/v1.1.1">tar</a>,
-        <a href="https://github.com/yiiext/zend-autoloader-component/zipball/v1.1.1">zip</a>
-        </li>
-        </ul>
-
-    <h2>Resources</h2>
-    <ul>
-        <li><a href="https://github.com/yiiext/zend-autoloader-component">Browse Code</a></li>
-        <li><a href="https://github.com/yiiext/zend-autoloader-component/issues">Issues</a> (1)</li>        <li><a href="https://github.com/yiiext/zend-autoloader-component/wiki">Wiki</a></li>        <li>...</li>
-    </ul>
-
-</div>
-
-<br style="clear: both;"/>
-
-
-    </div>
-
-    <div id="footer">
-        Powered by <a href="http://www.yiiframework.com/" rel="external">Yii Framework</a>.
-    </div><!-- footer -->
+	<div id="footer">
+		Powered by <a href="http://www.yiiframework.com/" rel="external">Yii Framework</a>.
+	</div><!-- footer -->
 
 </div><!-- page -->
 </body>

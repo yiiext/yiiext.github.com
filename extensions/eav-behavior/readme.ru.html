@@ -15,226 +15,54 @@
 	<link rel="stylesheet" type="text/css" href="/css/web.css" />
 	<link rel="stylesheet" type="text/css" href="/css/form.css" />
 
-	<title>yiiext - RepoReadme Site</title>
+	<link rel="stylesheet" type="text/css" href="/assets/1378e3b9/listview/styles.css" />
+	<title>yiiext - Site</title>
 </head>
 
 <body>
 
-<a href="https://github.com/yiiext/eav-behavior"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
+<a href="https://github.com/yiiext"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
 
 <div class="container" id="page">
 
 	<div id="header">
-        <div class="extensions-count"><b>55</b> great Yii extensions!</div>
+		<div class="extensions-count"><b>55</b> great Yii extensions!</div>
 		<div id="logo">
-            <h1>yiiext</h1>
-            unofficial Yii extension repository
-        </div>
+			<h1>yiiext</h1>
+			unofficial Yii extension repository
+		</div>
 	</div><!-- header -->
 
 	<div id="mainmenu">
-		<ul id="yw0">
-<li><a href="/index.html">Extensions</a></li>
-<li><a href="/faq.html">FAQ</a></li>
-<li><a href="/contact.html">Contact</a></li>
-</ul>
+		<ul id="yw1">
+		</ul>
 	</div><!-- mainmenu -->
 
-    <div id="content">
-        <div id="repo">
-            <h1>EAV behavior</h1>
+	<div id="content">
+		<div id="welcome">
+			<h2>Welcome to yiiext</h2>
 
-<p>Добавляет модели возможность работать с eav-моделью данных.</p>
+			<p>
+				yiiext is the unofficial extension repository for the
+				<a href="http://www.yiiframework.com/">Yii Framework</a>.
+				This project was created as an alternative to zii, official extensions repository.
+				All stable extensions here are compatible with latest release version of Yii.<br/>
 
-<h2>Установка и настройка</h2>
+				If you have any questions have a look at our <a href="/faq.html">FAQ</a> page or <a href="/contact.html">contact us</a> directly.
 
-<h3>Создать таблицу для храниениея EAV-аттрибутов</h3>
+			</p>
 
-<p>SQL для таблицы:</p>
+			<h2>Browse Extensions</h2>
+			<p>This page is outdated, check <a href="https://github.com/yiiext">https://github.com/yiiext</a> for the list of extensions.</p>
 
-<div class="hl-code"><div class="sql-hl-main"><pre><span class="sql-hl-reserved">CREATE</span> <span class="sql-hl-reserved">TABLE</span> <span class="sql-hl-identifier">IF</span> <span class="sql-hl-reserved">NOT</span> <span class="sql-hl-var">EXISTS</span> <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">eavAttr</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-brackets">(</span>
-  <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">entity</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-identifier">bigint</span><span class="sql-hl-brackets">(</span><span class="sql-hl-number">20</span><span class="sql-hl-brackets">)</span> <span class="sql-hl-identifier">unsigned</span> <span class="sql-hl-reserved">NOT</span> <span class="sql-hl-reserved">NULL</span><span class="sql-hl-code">,
-  </span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">attribute</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-reserved">varchar</span><span class="sql-hl-brackets">(</span><span class="sql-hl-number">250</span><span class="sql-hl-brackets">)</span> <span class="sql-hl-reserved">NOT</span> <span class="sql-hl-reserved">NULL</span><span class="sql-hl-code">,
-  </span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">value</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-identifier">text</span> <span class="sql-hl-reserved">NOT</span> <span class="sql-hl-reserved">NULL</span><span class="sql-hl-code">,
-  </span><span class="sql-hl-reserved">KEY</span> <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">ikEntity</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-brackets">(</span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">entity</span><span class="sql-hl-quotes">`</span><span class="sql-hl-brackets">)</span>
-<span class="sql-hl-brackets">)</span> <span class="sql-hl-identifier">ENGINE</span><span class="sql-hl-code">=</span><span class="sql-hl-identifier">MyISAM</span>  <span class="sql-hl-reserved">DEFAULT</span> <span class="sql-hl-identifier">CHARSET</span><span class="sql-hl-code">=</span><span class="sql-hl-identifier">utf8</span><span class="sql-hl-code">;</span></pre></div></div>
+		</div>
+		<br style="clear: both;" />
 
-<h3>Подключить поведение к модели</h3>
+	</div>
 
-<div class="hl-code"><div class="sql-hl-main"><pre><span class="sql-hl-reserved">function</span> <span class="sql-hl-identifier">behaviors</span><span class="sql-hl-brackets">(</span><span class="sql-hl-brackets">)</span><span class="sql-hl-code"> {
-    </span><span class="sql-hl-reserved">return</span> <span class="sql-hl-reserved">array</span><span class="sql-hl-brackets">(</span>
-        <span class="sql-hl-quotes">'</span><span class="sql-hl-string">eavAttr</span><span class="sql-hl-quotes">'</span><span class="sql-hl-code"> =&gt; </span><span class="sql-hl-reserved">array</span><span class="sql-hl-brackets">(</span>
-            <span class="sql-hl-quotes">'</span><span class="sql-hl-string">class</span><span class="sql-hl-quotes">'</span><span class="sql-hl-code"> =&gt; </span><span class="sql-hl-quotes">'</span><span class="sql-hl-string">ext.yiiext.behaviors.model.eav.EEavBehavior</span><span class="sql-hl-quotes">'</span><span class="sql-hl-code">,
-            // Имя таблицы для аттрибутов </span><span class="sql-hl-brackets">(</span><span class="sql-hl-code">обязательное свойство</span><span class="sql-hl-brackets">)</span>
-            <span class="sql-hl-quotes">'</span><span class="sql-hl-string">tableName</span><span class="sql-hl-quotes">'</span><span class="sql-hl-code"> =&gt; </span><span class="sql-hl-quotes">'</span><span class="sql-hl-string">eavAttr</span><span class="sql-hl-quotes">'</span><span class="sql-hl-code">,
-            // Имя столбца где хранится ид объекта.
-            // По умолчанию </span><span class="sql-hl-quotes">'</span><span class="sql-hl-string">entity</span><span class="sql-hl-quotes">'</span>
-            <span class="sql-hl-quotes">'</span><span class="sql-hl-string">entityField</span><span class="sql-hl-quotes">'</span><span class="sql-hl-code"> =&gt; </span><span class="sql-hl-quotes">'</span><span class="sql-hl-string">entity</span><span class="sql-hl-quotes">'</span><span class="sql-hl-code">,
-            // Имя столбца где хранится имя атрибута.
-            // По умолчанию </span><span class="sql-hl-quotes">'</span><span class="sql-hl-string">attribute</span><span class="sql-hl-quotes">'</span>
-            <span class="sql-hl-quotes">'</span><span class="sql-hl-string">attributeField</span><span class="sql-hl-quotes">'</span><span class="sql-hl-code"> =&gt; </span><span class="sql-hl-quotes">'</span><span class="sql-hl-string">attribute</span><span class="sql-hl-quotes">'</span><span class="sql-hl-code">,
-            // Имя столбца где хранится значение атрибута.
-            // По умолчанию </span><span class="sql-hl-quotes">'</span><span class="sql-hl-string">value</span><span class="sql-hl-quotes">'</span>
-            <span class="sql-hl-quotes">'</span><span class="sql-hl-string">valueField</span><span class="sql-hl-quotes">'</span><span class="sql-hl-code"> =&gt; </span><span class="sql-hl-quotes">'</span><span class="sql-hl-string">value</span><span class="sql-hl-quotes">'</span><span class="sql-hl-code">,
-            // Имя внешнего ключа модели.
-            // По умолчанию берется </span><span class="sql-hl-identifier">primaryKey</span><span class="sql-hl-code"> из свойста таблицы
-            </span><span class="sql-hl-quotes">'</span><span class="sql-hl-string">modelTableFk</span><span class="sql-hl-quotes">'</span><span class="sql-hl-code"> =&gt; </span><span class="sql-hl-identifier">primaryKey</span><span class="sql-hl-code">,
-            // Массив разрешенных атрибутов, если не указано разрешаются любые атрибуты
-            // По умолчанию не указано.
-            </span><span class="sql-hl-quotes">'</span><span class="sql-hl-string">safeAttributes</span><span class="sql-hl-quotes">'</span><span class="sql-hl-code"> =&gt; </span><span class="sql-hl-reserved">array</span><span class="sql-hl-brackets">(</span><span class="sql-hl-brackets">)</span><span class="sql-hl-code">,
-            // Префикс для атрибутов. Если для разных моделей используется одна таблица.
-            // По умолчанию не указано.
-            </span><span class="sql-hl-quotes">'</span><span class="sql-hl-string">attributesPrefix</span><span class="sql-hl-quotes">'</span><span class="sql-hl-code"> =&gt; </span><span class="sql-hl-quotes">'</span><span class="sql-hl-quotes">'</span><span class="sql-hl-code">,
-        </span><span class="sql-hl-brackets">)</span>
-    <span class="sql-hl-brackets">)</span><span class="sql-hl-code">;
-}</span></pre></div></div>
-
-<h2>Методы</h2>
-
-<h3>getEavAttributes($attributes)</h3>
-
-<p>Возвращает массив значений атрибутов, индексированные именем атрибута.</p>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$user</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">User</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$user</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getEavAttributes</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">attribute1</span><span class="php-hl-quotes">'</span><span class="php-hl-code">, </span><span class="php-hl-quotes">'</span><span class="php-hl-string">attribute2</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
-
-<h3>getEavAttribute($attribute)</h3>
-
-<p>Возвращает значение атрибута.</p>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$user</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">User</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$user</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getEavAttribute</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">attribute1</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
-
-<h3>setEavAttribute($attribute, $value, $save = FALSE)</h3>
-
-<p>Устанавливает значение атрибута.</p>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$user</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">User</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$user</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">setEavAttribute</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">attribute1</span><span class="php-hl-quotes">'</span><span class="php-hl-code">, </span><span class="php-hl-quotes">'</span><span class="php-hl-string">value1</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
-
-<h3>setEavAttributes($attribute, $save = FALSE)</h3>
-
-<p>Устанавливает значение атрибутов.</p>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$user</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">User</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$user</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">setEavAttributes</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">attribute1</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">value1</span><span class="php-hl-quotes">'</span><span class="php-hl-code">, </span><span class="php-hl-quotes">'</span><span class="php-hl-string">attribute2</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">value2</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
-
-<h3>withEavAttributes($attributes)</h3>
-
-<p>Позволяет ограничить запрос AR записями с указанными атрибутами.</p>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$users</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">User</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">withEavAttributes</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">skype</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findAll</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$usersCount</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">User</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">withEavAttributes</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">skype</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">count</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
-
-    
-    <h2 id="changelog">Changelog</h2>
-
-    <h3>0.5</h3>
-
-<p>[<em>] Fixed error on get attribute without preload.
-[</em>] Extension is now compatible only with Yii 1.1.
-[<em>] Changed translation category to 'yiiext'.
-[</em>] New naming conventions.</p>
-
-<h3>0.4</h3>
-
-<p>Warning: this version is not backwards compatible to 0.3.</p>
-
-<p>[+] Added lazy-loading attributes.
-[+] Added caching attributes, set CacheId.
-[<em>] Added additional boolean parameter $save for methods setEavAttribute, setEavAttributes, deleteEavAttributes, for save immediately.
-[+] Added method saveEavAttributes().
-[+] Added method deleteEavAttributes().
-[</em>] Deleted findByEavAttributes() and findAllByEavAttributes() method. Use withEavAttributes().
-[+] New syntax: $contacts = Contact::model()->withEavAttributes(array('skype' => 'yii'))->findAll().
-[+] Added init test.
-[+] Added setAttributes method.
-[<em>] setEavAttribute now return owner CActiveRecord.
-[</em>] Fixed deleting eav-attributes after delete models.
-[<em>] Fixed saving array of attribute values.
-[</em>] Fixed saving secondary change for attribute value.
-[<em>] Added translation for messages.
-[+] English readme.
-[</em>] Corrected english descriptions.
-[<em>] getEavAttribute now returns null if attribute is not defined.
-[</em>] Minor code improvements.</p>
-
-<h3>0.3</h3>
-
-<p>[-] Deleted method readEavAttributes
-[+] Search model by eav-attribute set
-[+] All queries in DB will generated by CDbCriteria
-[<em>] Method saveEavAttributes changed to saveEavAttribute to allow to save each attribute
-[</em>] Method getModelTableFk now returns value of primary key. To get FK name use getModelTableFkField</p>
-
-<h3>0.2</h3>
-
-<p>[-] AR for each eav-attribute</p>
-
-<h3>0.1</h3>
-
-<p>[+] Initial public release.</p>
-
-
-</div>
-
-<div id="repo-sidebar">
-    <div class="repo noreadme">
-    <div class="repo-head">
-        <h3><a href="/extensions/eav-behavior/index.html">eav-behavior</a></h3>
-    </div>
-    <p>Implements entity-attribute-value pattern.</p>
-
-    <div class="contributors">
-            <a href="https://github.com/samdark" title="samdark">
-            <img src="https://secure.gravatar.com/avatar/c13375ba1016846e39bc0e48260d0bb1?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="samdark" style="height: 24px; width: 24px;"/>
-        </a>
-            <a href="https://github.com/cebe" title="cebe">
-            <img src="https://secure.gravatar.com/avatar/2ebfe57beabd0b9f8eb9ded1237a275d?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="cebe" style="height: 24px; width: 24px;"/>
-        </a>
-            <a href="https://github.com/creocoder" title="creocoder">
-            <img src="https://secure.gravatar.com/avatar/06fd73f7c33c2255fda723aa0b0690cd?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="creocoder" style="height: 24px; width: 24px;"/>
-        </a>
-            <a href="https://github.com/slavcopost" title="slavcopost">
-            <img src="https://secure.gravatar.com/avatar/7df99512d7e4f2c81f9441650c89025f?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="slavcopost" style="height: 24px; width: 24px;"/>
-        </a>
-        </div>
-
-
-    </div>
-
-
-    <h2>Documentation</h2>
-    <ul>
-            <li><a href="/extensions/eav-behavior/readme.en.html">readme en</a></li>
-            <li><a href="/extensions/eav-behavior/readme.ru.html">readme ru</a></li>
-        <li><a href="/extensions/eav-behavior/index.html#changelog">changelog </a></li>
-    </ul>
-
-    <h2>Downloads (Tags)</h2>
-    <ul>
-            <li>v0.5 -
-        <a href="https://github.com/yiiext/eav-behavior/tarball/v0.5">tar</a>,
-        <a href="https://github.com/yiiext/eav-behavior/zipball/v0.5">zip</a>
-        </li>
-        </ul>
-
-    <h2>Resources</h2>
-    <ul>
-        <li><a href="https://github.com/yiiext/eav-behavior">Browse Code</a></li>
-        <li><a href="https://github.com/yiiext/eav-behavior/issues">Issues</a> (0)</li>        <li><a href="https://github.com/yiiext/eav-behavior/wiki">Wiki</a></li>        <li>...</li>
-    </ul>
-
-</div>
-
-<br style="clear: both;"/>
-
-
-    </div>
-
-    <div id="footer">
-        Powered by <a href="http://www.yiiframework.com/" rel="external">Yii Framework</a>.
-    </div><!-- footer -->
+	<div id="footer">
+		Powered by <a href="http://www.yiiframework.com/" rel="external">Yii Framework</a>.
+	</div><!-- footer -->
 
 </div><!-- page -->
 </body>

@@ -15,476 +15,54 @@
 	<link rel="stylesheet" type="text/css" href="/css/web.css" />
 	<link rel="stylesheet" type="text/css" href="/css/form.css" />
 
-	<title>yiiext - RepoReadme Site</title>
+	<link rel="stylesheet" type="text/css" href="/assets/1378e3b9/listview/styles.css" />
+	<title>yiiext - Site</title>
 </head>
 
 <body>
 
-<a href="https://github.com/yiiext/taggable-behavior"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
+<a href="https://github.com/yiiext"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
 
 <div class="container" id="page">
 
 	<div id="header">
-        <div class="extensions-count"><b>55</b> great Yii extensions!</div>
+		<div class="extensions-count"><b>55</b> great Yii extensions!</div>
 		<div id="logo">
-            <h1>yiiext</h1>
-            unofficial Yii extension repository
-        </div>
+			<h1>yiiext</h1>
+			unofficial Yii extension repository
+		</div>
 	</div><!-- header -->
 
 	<div id="mainmenu">
-		<ul id="yw0">
-<li><a href="/index.html">Extensions</a></li>
-<li><a href="/faq.html">FAQ</a></li>
-<li><a href="/contact.html">Contact</a></li>
-</ul>
+		<ul id="yw1">
+		</ul>
 	</div><!-- mainmenu -->
 
-    <div id="content">
-        <div id="repo">
-            <h1>Taggable Behavior</h1>
+	<div id="content">
+		<div id="welcome">
+			<h2>Welcome to yiiext</h2>
 
-<p>Позволяет модели работать с тегами.</p>
+			<p>
+				yiiext is the unofficial extension repository for the
+				<a href="http://www.yiiframework.com/">Yii Framework</a>.
+				This project was created as an alternative to zii, official extensions repository.
+				All stable extensions here are compatible with latest release version of Yii.<br/>
 
-<h2>Установка и настройка</h2>
+				If you have any questions have a look at our <a href="/faq.html">FAQ</a> page or <a href="/contact.html">contact us</a> directly.
 
-<p>Создать таблицу для хранения тегов и кросс-таблицу для связи тегов с моделью.
-Для конфигурации ниже можно воспользоваться SQL из файла <code>schema.sql</code>.</p>
+			</p>
 
-<p>Определить в модели ActiveRecord метод <code>behaviors()</code>:</p>
+			<h2>Browse Extensions</h2>
+			<p>This page is outdated, check <a href="https://github.com/yiiext">https://github.com/yiiext</a> for the list of extensions.</p>
 
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-reserved">function</span> <span class="php-hl-identifier">behaviors</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span> <span class="php-hl-brackets">{</span>
-    <span class="php-hl-reserved">return</span> <span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-        <span class="php-hl-quotes">'</span><span class="php-hl-string">tags</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">class</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">ext.yiiext.behaviors.model.taggable.ETaggableBehavior</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> Имя таблицы для хранения тегов</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">tagTable</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">Tag</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> Имя кросс-таблицы, связывающей тег с моделью.</span>
-            <span class="php-hl-comment">//</span><span class="php-hl-comment"> По умолчанию выставляется как Имя_таблицы_моделиTag</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">tagBindingTable</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">PostTag</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> Имя внешнего ключа модели в кроcc-таблице.</span>
-            <span class="php-hl-comment">//</span><span class="php-hl-comment"> По умолчанию равно имя_таблицы_моделиId</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">modelTableFk</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">post_id</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> Имя первичного ключа тега</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">tagTablePk</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">id</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> Имя поля названия тега</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">tagTableName</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">name</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> Имя поля счетчика тега</span>
-            <span class="php-hl-comment">//</span><span class="php-hl-comment"> Если устанвовлено в null (по умолчанию), то не сохраняется в базе</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">tagTableCount</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">count</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> ID тега в таблице-связке</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">tagBindingTableTagId</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">tagId</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> ID компонента, реализующего кеширование. Если false кеширование не происходит.</span>
-            <span class="php-hl-comment">//</span><span class="php-hl-comment"> По умолчанию ID равен false.</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">cacheID</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">cache</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
- 
- 
-            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> Создавать несуществующие теги автоматически.</span>
-            <span class="php-hl-comment">//</span><span class="php-hl-comment"> При значении false сохранение выкидывает исключение если добавляемый тег не существует.</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">createTagsAutomatically</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">true</span><span class="php-hl-code">,
- 
-            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> Критерий по умолчанию для выборки тегов</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">scope</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-                <span class="php-hl-quotes">'</span><span class="php-hl-string">condition</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string"> t.user_id = :user_id </span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-                </span><span class="php-hl-quotes">'</span><span class="php-hl-string">params</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span> <span class="php-hl-quotes">'</span><span class="php-hl-string">:user_id</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">user</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">id</span> <span class="php-hl-brackets">)</span><span class="php-hl-code">,
-            </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
- 
-            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> Значения, которые необходимо вставлять при записи тега</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">insertValues</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-                <span class="php-hl-quotes">'</span><span class="php-hl-string">user_id</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">user</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">id</span><span class="php-hl-code">,
-            </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
-        </span><span class="php-hl-brackets">)</span>
-    <span class="php-hl-brackets">)</span><span class="php-hl-code">;
-</span><span class="php-hl-brackets">}</span></pre></div></div>
+		</div>
+		<br style="clear: both;" />
 
-<p>Если надо использовать теги через модель (например, для назначения им своего поведения),
-используйте класс EARTaggableBehavior</p>
+	</div>
 
-<p>Добавить в секцию import настроек строку подключения директории расшриения taggable</p>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-reserved">return</span> <span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-  <span class="php-hl-comment">//</span><span class="php-hl-comment"> ...</span>
-  <span class="php-hl-quotes">'</span><span class="php-hl-string">import</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-        <span class="php-hl-quotes">'</span><span class="php-hl-string">application.models.*</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-        </span><span class="php-hl-quotes">'</span><span class="php-hl-string">application.components.*</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-        </span><span class="php-hl-quotes">'</span><span class="php-hl-string">ext.yiiext.behaviors.model.taggable.*</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-        </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> ...</span>
-        <span class="php-hl-comment">//</span><span class="php-hl-comment"> другие импорты</span>
-    <span class="php-hl-brackets">)</span><span class="php-hl-code">,
-    </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> ...</span>
-<span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
-
-<p>Определить в модели ActiveRecord метод <code>behaviors()</code>:</p>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-reserved">function</span> <span class="php-hl-identifier">behaviors</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span> <span class="php-hl-brackets">{</span>
-    <span class="php-hl-reserved">return</span> <span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-        <span class="php-hl-quotes">'</span><span class="php-hl-string">tags_with_model</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">class</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">ext.yiiext.behaviors.model.taggable.EARTaggableBehavior</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> Имя таблицы для хранения тегов</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">tagTable</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">Tag</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> Имя модели тега</span>
-            <span class="php-hl-quotes">'</span><span class="php-hl-string">tagModel</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">Tag</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-            </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> ...</span>
-            <span class="php-hl-comment">//</span><span class="php-hl-comment"> остальные нужные параметры указываются также, как и выше</span>
-        <span class="php-hl-brackets">)</span>
-    <span class="php-hl-brackets">)</span><span class="php-hl-code">;
-</span><span class="php-hl-brackets">}</span></pre></div></div>
-
-<h2>Методы</h2>
-
-<h3>setTags($tags)</h3>
-
-<p>Задаёт новые теги для модели затирая старые.</p>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$post</span><span class="php-hl-code"> = </span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">Post</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">setTags</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">tag1, tag2, tag3</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">save</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
-
-<h3>addTags($tags) или addTag($tags)</h3>
-
-<p>Добавляет один или несколько тегов к уже существующим.</p>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">addTags</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">new1, new2</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">save</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
-
-<h3>removeTags($tags) или removeTag($tags)</h3>
-
-<p>Удаляет указанные теги (если есть).</p>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">removeTags</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">new1</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">save</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
-
-<h3>removeAllTags()</h3>
-
-<p>Удаляет все теги данной модели.</p>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">removeAllTags</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">save</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
-
-<h3>getTags()</h3>
-
-<p>Отдаёт массив тегов.</p>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$tags</span><span class="php-hl-code"> = </span><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getTags</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-</span><span class="php-hl-reserved">foreach</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$tags</span> <span class="php-hl-reserved">as</span> <span class="php-hl-var">$tag</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">{</span>
-  <span class="php-hl-reserved">echo</span> <span class="php-hl-var">$tag</span><span class="php-hl-code">;
-</span><span class="php-hl-brackets">}</span></pre></div></div>
-
-<h3>hasTag($tags) или hasTags($tags)</h3>
-
-<p>Назаначены ли модели указанные теги.</p>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$post</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Post</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-</span><span class="php-hl-reserved">if</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">hasTags</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-string">yii, php</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">{</span>
-    <span class="php-hl-comment">//</span><span class="php-hl-comment">…</span>
-<span class="php-hl-brackets">}</span></pre></div></div>
-
-<h3>getAllTags()</h3>
-
-<p>Отдаёт все имеющиеся для этого класса моделей теги.</p>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$tags</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Post</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getAllTags</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-</span><span class="php-hl-reserved">foreach</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$tags</span> <span class="php-hl-reserved">as</span> <span class="php-hl-var">$tag</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">{</span>
-  <span class="php-hl-reserved">echo</span> <span class="php-hl-var">$tag</span><span class="php-hl-code">;
-</span><span class="php-hl-brackets">}</span></pre></div></div>
-
-<h3>getAllTagsWithModelsCount()</h3>
-
-<p>Отдаёт все имеющиеся для этого класса модели теги с количеством моделей для каждого.</p>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$tags</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Post</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getAllTagsWithModelsCount</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-</span><span class="php-hl-reserved">foreach</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$tags</span> <span class="php-hl-reserved">as</span> <span class="php-hl-var">$tag</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">{</span>
-  <span class="php-hl-reserved">echo</span> <span class="php-hl-var">$tag</span><span class="php-hl-brackets">[</span><span class="php-hl-quotes">'</span><span class="php-hl-string">name</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">]</span><span class="php-hl-code">.</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-string"> (</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-code">.</span><span class="php-hl-var">$tag</span><span class="php-hl-brackets">[</span><span class="php-hl-quotes">'</span><span class="php-hl-string">count</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">]</span><span class="php-hl-code">.</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-string">)</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-code">;
-</span><span class="php-hl-brackets">}</span></pre></div></div>
-
-<h3>taggedWith($tags) или withTags($tags)</h3>
-
-<p>Позволяет ограничить запрос AR записями с указанными тегами.</p>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$posts</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Post</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">taggedWith</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">php, yii</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findAll</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$postCount</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Post</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">taggedWith</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">php, yii</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">count</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
-
-<h3>resetAllTagsCache() и resetAllTagsWithModelsCountCache()</h3>
-
-<p>Используются для сборса кеша getAllTags() и getAllTagsWithModelsCount().</p>
-
-<h2>Приятные бонусы</h2>
-
-<p>Теги, разделённые запятой можно распечатать следующим образом:</p>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">addTags</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">new1, new2</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">save</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-</span><span class="php-hl-reserved">echo</span> <span class="php-hl-var">$post</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">tags</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">toString</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
-
-<h2>Использование нескольких групп тегов</h2>
-
-<p>Модели можно присвоить теги из нескольких групп. Например, для модели Software можно
-задать теги групп OS и Category.</p>
-
-<p>Для этого необходимо создать по две таблицы на каждую группу тегов:</p>
-
-<div class="hl-code"><div class="sql-hl-main"><pre><span class="sql-hl-comment">/*</span><span class="sql-hl-comment"> Tag table </span><span class="sql-hl-comment">*/</span>
-<span class="sql-hl-reserved">CREATE</span> <span class="sql-hl-reserved">TABLE</span> <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">Os</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-brackets">(</span>
-  <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">id</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-reserved">INT</span><span class="sql-hl-brackets">(</span><span class="sql-hl-number">10</span><span class="sql-hl-brackets">)</span> <span class="sql-hl-identifier">UNSIGNED</span> <span class="sql-hl-reserved">NOT</span> <span class="sql-hl-reserved">NULL</span> <span class="sql-hl-identifier">AUTO_INCREMENT</span><span class="sql-hl-code">,
-  </span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">name</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-reserved">VARCHAR</span><span class="sql-hl-brackets">(</span><span class="sql-hl-number">255</span><span class="sql-hl-brackets">)</span> <span class="sql-hl-reserved">NOT</span> <span class="sql-hl-reserved">NULL</span><span class="sql-hl-code">,
-  </span><span class="sql-hl-reserved">PRIMARY</span> <span class="sql-hl-reserved">KEY</span>  <span class="sql-hl-brackets">(</span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">id</span><span class="sql-hl-quotes">`</span><span class="sql-hl-brackets">)</span><span class="sql-hl-code">,
-  </span><span class="sql-hl-reserved">UNIQUE</span> <span class="sql-hl-reserved">KEY</span> <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">Os_name</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-brackets">(</span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">name</span><span class="sql-hl-quotes">`</span><span class="sql-hl-brackets">)</span>
-<span class="sql-hl-brackets">)</span><span class="sql-hl-code">;
- 
-</span><span class="sql-hl-comment">/*</span><span class="sql-hl-comment"> Tag binding table </span><span class="sql-hl-comment">*/</span>
-<span class="sql-hl-reserved">CREATE</span> <span class="sql-hl-reserved">TABLE</span> <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">PostOs</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-brackets">(</span>
-  <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">post_id</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-reserved">INT</span><span class="sql-hl-brackets">(</span><span class="sql-hl-number">10</span><span class="sql-hl-brackets">)</span> <span class="sql-hl-identifier">UNSIGNED</span> <span class="sql-hl-reserved">NOT</span> <span class="sql-hl-reserved">NULL</span><span class="sql-hl-code">,
-  </span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">osId</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-reserved">INT</span><span class="sql-hl-brackets">(</span><span class="sql-hl-number">10</span><span class="sql-hl-brackets">)</span> <span class="sql-hl-identifier">UNSIGNED</span> <span class="sql-hl-reserved">NOT</span> <span class="sql-hl-reserved">NULL</span><span class="sql-hl-code">,
-  </span><span class="sql-hl-reserved">PRIMARY</span> <span class="sql-hl-reserved">KEY</span>  <span class="sql-hl-brackets">(</span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">post_id</span><span class="sql-hl-quotes">`</span><span class="sql-hl-code">,</span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">osId</span><span class="sql-hl-quotes">`</span><span class="sql-hl-brackets">)</span>
-<span class="sql-hl-brackets">)</span><span class="sql-hl-code">;
- 
-</span><span class="sql-hl-comment">/*</span><span class="sql-hl-comment"> Tag table </span><span class="sql-hl-comment">*/</span>
-<span class="sql-hl-reserved">CREATE</span> <span class="sql-hl-reserved">TABLE</span> <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">Category</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-brackets">(</span>
-  <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">id</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-reserved">INT</span><span class="sql-hl-brackets">(</span><span class="sql-hl-number">10</span><span class="sql-hl-brackets">)</span> <span class="sql-hl-identifier">UNSIGNED</span> <span class="sql-hl-reserved">NOT</span> <span class="sql-hl-reserved">NULL</span> <span class="sql-hl-identifier">AUTO_INCREMENT</span><span class="sql-hl-code">,
-  </span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">name</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-reserved">VARCHAR</span><span class="sql-hl-brackets">(</span><span class="sql-hl-number">255</span><span class="sql-hl-brackets">)</span> <span class="sql-hl-reserved">NOT</span> <span class="sql-hl-reserved">NULL</span><span class="sql-hl-code">,
-  </span><span class="sql-hl-reserved">PRIMARY</span> <span class="sql-hl-reserved">KEY</span>  <span class="sql-hl-brackets">(</span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">id</span><span class="sql-hl-quotes">`</span><span class="sql-hl-brackets">)</span><span class="sql-hl-code">,
-  </span><span class="sql-hl-reserved">UNIQUE</span> <span class="sql-hl-reserved">KEY</span> <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">Category_name</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-brackets">(</span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">name</span><span class="sql-hl-quotes">`</span><span class="sql-hl-brackets">)</span>
-<span class="sql-hl-brackets">)</span><span class="sql-hl-code">;
- 
-</span><span class="sql-hl-comment">/*</span><span class="sql-hl-comment"> Tag binding table </span><span class="sql-hl-comment">*/</span>
-<span class="sql-hl-reserved">CREATE</span> <span class="sql-hl-reserved">TABLE</span> <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">PostCategory</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-brackets">(</span>
-  <span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">post_id</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-reserved">INT</span><span class="sql-hl-brackets">(</span><span class="sql-hl-number">10</span><span class="sql-hl-brackets">)</span> <span class="sql-hl-identifier">UNSIGNED</span> <span class="sql-hl-reserved">NOT</span> <span class="sql-hl-reserved">NULL</span><span class="sql-hl-code">,
-  </span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">categoryId</span><span class="sql-hl-quotes">`</span> <span class="sql-hl-reserved">INT</span><span class="sql-hl-brackets">(</span><span class="sql-hl-number">10</span><span class="sql-hl-brackets">)</span> <span class="sql-hl-identifier">UNSIGNED</span> <span class="sql-hl-reserved">NOT</span> <span class="sql-hl-reserved">NULL</span><span class="sql-hl-code">,
-  </span><span class="sql-hl-reserved">PRIMARY</span> <span class="sql-hl-reserved">KEY</span>  <span class="sql-hl-brackets">(</span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">post_id</span><span class="sql-hl-quotes">`</span><span class="sql-hl-code">,</span><span class="sql-hl-quotes">`</span><span class="sql-hl-identifier">categoryId</span><span class="sql-hl-quotes">`</span><span class="sql-hl-brackets">)</span>
-<span class="sql-hl-brackets">)</span><span class="sql-hl-code">;</span></pre></div></div>
-
-<p>Затем прописать для модели поведения:</p>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-reserved">return</span> <span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-    <span class="php-hl-quotes">'</span><span class="php-hl-string">categories</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-        <span class="php-hl-quotes">'</span><span class="php-hl-string">class</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">ext.yiiext.behaviors.model.taggable.ETaggableBehavior</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-        </span><span class="php-hl-quotes">'</span><span class="php-hl-string">tagTable</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">Category</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-        </span><span class="php-hl-quotes">'</span><span class="php-hl-string">tagBindingTable</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">PostCategory</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-        </span><span class="php-hl-quotes">'</span><span class="php-hl-string">tagBindingTableTagId</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">categoryId</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-    </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
-    </span><span class="php-hl-quotes">'</span><span class="php-hl-string">os</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-        <span class="php-hl-quotes">'</span><span class="php-hl-string">class</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">ext.yiiext.behaviors.model.taggable.ETaggableBehavior</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-        </span><span class="php-hl-quotes">'</span><span class="php-hl-string">tagTable</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">Os</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-        </span><span class="php-hl-quotes">'</span><span class="php-hl-string">tagBindingTable</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">PostOs</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-        </span><span class="php-hl-quotes">'</span><span class="php-hl-string">tagBindingTableTagId</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">osId</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-    </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
-</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
-
-<p>Далее можно писать такой код:</p>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$soft</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Software</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-</span><span class="php-hl-comment">//</span><span class="php-hl-comment"> по умолчанию идут методы подключенного выше поведения,</span>
-<span class="php-hl-comment">//</span><span class="php-hl-comment"> поэтому можно не писать $soft-&gt;categories-&gt;addTag(&quot;Antivirus&quot;),</span>
-<span class="php-hl-comment">//</span><span class="php-hl-comment"> а использовать краткую форму:</span>
-<span class="php-hl-var">$soft</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">addTag</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-string">Antivirus</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$soft</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">os</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">addTag</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-string">Windows</span><span class="php-hl-quotes">&quot;</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$soft</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">save</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
-
-<h2>Использование с CAutoComplete</h2>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-inlinetags">&lt;?</span><span class="php-hl-var">$this</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">widget</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">CAutoComplete</span><span class="php-hl-quotes">'</span><span class="php-hl-code">, </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-    <span class="php-hl-quotes">'</span><span class="php-hl-string">name</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">tags</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
-    </span><span class="php-hl-quotes">'</span><span class="php-hl-string">value</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-var">$model</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">tags</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">toString</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
-    </span><span class="php-hl-quotes">'</span><span class="php-hl-string">url</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-quotes">'</span><span class="php-hl-string">/autocomplete/tags</span><span class="php-hl-quotes">'</span><span class="php-hl-code">, </span><span class="php-hl-comment">//</span><span class="php-hl-comment">путь к URL для дополнения тегов</span>
-    <span class="php-hl-quotes">'</span><span class="php-hl-string">multiple</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">true</span><span class="php-hl-code">,
-    </span><span class="php-hl-quotes">'</span><span class="php-hl-string">mustMatch</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">false</span><span class="php-hl-code">,
-    </span><span class="php-hl-quotes">'</span><span class="php-hl-string">matchCase</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">false</span><span class="php-hl-code">,
-</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span> <span class="php-hl-inlinetags">?&gt;</span></pre></div></div>
-
-<p>Сохранение тегов будет выглядеть так:</p>
-
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-reserved">function</span> <span class="php-hl-identifier">actionUpdate</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">{</span>
-    <span class="php-hl-var">$model</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Post</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$_GET</span><span class="php-hl-brackets">[</span><span class="php-hl-quotes">'</span><span class="php-hl-string">id</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">]</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
- 
-    </span><span class="php-hl-reserved">if</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">isset</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$_POST</span><span class="php-hl-brackets">[</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Post</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">]</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">{</span>
-        <span class="php-hl-var">$model</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">attributes</span><span class="php-hl-code">=</span><span class="php-hl-var">$_POST</span><span class="php-hl-brackets">[</span><span class="php-hl-quotes">'</span><span class="php-hl-string">Post</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">]</span><span class="php-hl-code">;
-        </span><span class="php-hl-var">$model</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">setTags</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$_POST</span><span class="php-hl-brackets">[</span><span class="php-hl-quotes">'</span><span class="php-hl-string">tags</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">]</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
- 
-        </span><span class="php-hl-comment">//</span><span class="php-hl-comment"> если у вас более одной группы тегов:</span>
-        <span class="php-hl-comment">//</span><span class="php-hl-comment"> $model-&gt;tags1-&gt;setTags($_POST['tags1']);</span>
-        <span class="php-hl-comment">//</span><span class="php-hl-comment"> $model-&gt;tags1-&gt;setTags($_POST['tags2']);</span>
- 
-        <span class="php-hl-reserved">if</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$model</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">save</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span> <span class="php-hl-var">$this</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">redirect</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">index</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-    </span><span class="php-hl-brackets">}</span>
-    <span class="php-hl-var">$this</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">render</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">update</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-        <span class="php-hl-quotes">'</span><span class="php-hl-string">model</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-var">$model</span><span class="php-hl-code">,
-    </span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-</span><span class="php-hl-brackets">}</span></pre></div></div>
-
-    
-    <h2 id="changelog">Changelog</h2>
-
-    <h3>1.5</h3>
-
-<ul>
-<li>updateCount now uses proper PK name (RSol)</li>
-</ul>
-
-<h3>1.4</h3>
-
-<ul>
-<li>Change CacheID defaults to false. If false don't use cache.</li>
-<li>Fixed phpDoc</li>
-<li>Fixed cache key generation (Sam Dark)</li>
-<li>Fixed English docs (Sam Dark)</li>
-<li>#27: Fixed typos (Sam Dark)</li>
-</ul>
-
-<h3>1.3</h3>
-
-<ul>
-<li>Tag table primary key is no longer hardcoded as <code>id</code> and can be set via <code>tagTablePk</code>.</li>
-<li>Additional values inserting support (mitallast).</li>
-<li>Default scope criteria support (mitallast).</li>
-<li>Better criteria support (mitallast).</li>
-<li>Files and classnames are renamed to ETaggableBehavior and EARTaggableBehavior.</li>
-<li>Added criteria support to ETagListWidget.</li>
-<li>More flexibility for ETagListWidget url.</li>
-</ul>
-
-<h3>1.2</h3>
-
-<ul>
-<li>Fixed getting tags array from string with separator at the end or beginning of line.</li>
-<li>Fixed getting wrong ids when using withTags() or taggedWith().</li>
-<li>ETagListWidget.</li>
-<li>Added getTagsWithModelsCount().</li>
-<li>getAllTagsWithModelsCount now can accept criteria.</li>
-<li>Input is being passed through strip_tags now.</li>
-</ul>
-
-<h3>1.1</h3>
-
-<ul>
-<li>DBConnection is now saved in a private variable for better perfomance.</li>
-<li>Added tagTableName property that allows customizing name field http://code.google.com/p/yiiext/issues/detail?id=12</li>
-<li>Added tagTableCount property specifying counter field for storing tag count in database http://code.google.com/p/yiiext/issues/detail?id=17</li>
-<li>New subclass EARTaggableBehaviour for using behavior along with Tags model http://code.google.com/p/yiiext/issues/detail?id=13</li>
-</ul>
-
-<h3>1.0.2</h3>
-
-<ul>
-<li>New manual section: using taggable with CAutoComplete.</li>
-<li>Renamed __toString to toString since magic was hard to debug in case of failure.</li>
-<li>Fixed more possible cache keys overlap when using multiple tag sets within one model.</li>
-</ul>
-
-<h3>1.0.1</h3>
-
-<ul>
-<li>New naming conventions.</li>
-</ul>
-
-<h3>1.0</h3>
-
-<ul>
-<li>More PHPDoc documentation.</li>
-<li>Fixed possible cache keys overlap when using multiple tag sets within one model.</li>
-</ul>
-
-<h3>0.9</h3>
-
-<p>Warning: this version is not compatible with Yii 1.0.</p>
-
-<ul>
-<li>Added resetAllTagsCache() and resetAllTagsWithModelsCountCache().</li>
-<li>Fixed getAllTags() and getAllTagsWithModelsCount() cache issues.</li>
-<li>Now tags are saved on save() only if they were changed.</li>
-<li>Extension is now compatible only with Yii 1.1.</li>
-<li>Fixed saving empty tags.</li>
-<li>Fixed caching.</li>
-</ul>
-
-<h3>0.8</h3>
-
-<p>Warning: this version is not backwards compatible to 0.6.</p>
-
-<ul>
-<li>Now you can set tagId field name for binding table.</li>
-<li>Do not try to delete tag bindings when inserting new record.</li>
-<li>Added taggedWith() alias withTags().</li>
-<li>Removed getCountByTags(), findAllByTags(). Use taggedWith().</li>
-<li>Method chaining: $post->addTags("yii, php")->save();</li>
-<li>New syntax: $posts = Post::model()->taggedWith(array('php', 'yii'))->findAll();</li>
-<li>Added parent:: calls in event handlers.</li>
-<li>Added hasTags() and it's alias hasTag() to check if all tags specified are attached to current model.</li>
-<li>New syntax: echo $post->tags (or by what name behaviour is attached) will print comma separated tags.</li>
-<li>getTags now returns array since implode is really easy to do yourself.</li>
-<li>Removed getTagsArray().</li>
-<li>addTags(), removeTags(), setTags() are now accept both string and array.</li>
-<li>Added addTag() as alias of addTags(), removeTag() as alias of removeTags().</li>
-<li>Some methods are now protected.</li>
-<li>Added $with to findAllByTags().</li>
-<li>getAllTags().</li>
-<li>Unit tests.</li>
-<li>createTagsAutomatically option allows to throw exception when adding nonexisting tag.</li>
-</ul>
-
-<h3>0.6</h3>
-
-<ul>
-<li>Initial public release.</li>
-</ul>
-
-
-</div>
-
-<div id="repo-sidebar">
-    <div class="repo noreadme">
-    <div class="repo-head">
-        <h3><a href="/extensions/taggable-behavior/index.html">taggable-behavior</a></h3>
-    </div>
-    <p>Provides many useful methods and named scopes to work with model tags.</p>
-
-    <div class="contributors">
-            <a href="https://github.com/samdark" title="samdark">
-            <img src="https://secure.gravatar.com/avatar/c13375ba1016846e39bc0e48260d0bb1?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="samdark" style="height: 24px; width: 24px;"/>
-        </a>
-            <a href="https://github.com/cebe" title="cebe">
-            <img src="https://secure.gravatar.com/avatar/2ebfe57beabd0b9f8eb9ded1237a275d?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="cebe" style="height: 24px; width: 24px;"/>
-        </a>
-            <a href="https://github.com/creocoder" title="creocoder">
-            <img src="https://secure.gravatar.com/avatar/06fd73f7c33c2255fda723aa0b0690cd?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="creocoder" style="height: 24px; width: 24px;"/>
-        </a>
-            <a href="https://github.com/slavcopost" title="slavcopost">
-            <img src="https://secure.gravatar.com/avatar/7df99512d7e4f2c81f9441650c89025f?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="slavcopost" style="height: 24px; width: 24px;"/>
-        </a>
-            <a href="https://github.com/dec5e" title="dec5e">
-            <img src="https://secure.gravatar.com/avatar/0962916fd1eb7d4d527ab5f750642ad4?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" alt="dec5e" style="height: 24px; width: 24px;"/>
-        </a>
-        </div>
-
-
-    </div>
-
-
-    <h2>Documentation</h2>
-    <ul>
-            <li><a href="/extensions/taggable-behavior/readme.en.html">readme en</a></li>
-            <li><a href="/extensions/taggable-behavior/readme.ru.html">readme ru</a></li>
-        <li><a href="/extensions/taggable-behavior/index.html#changelog">changelog </a></li>
-    </ul>
-
-    <h2>Downloads (Tags)</h2>
-    <ul>
-            <li>v1.5 -
-        <a href="https://github.com/yiiext/taggable-behavior/tarball/v1.5">tar</a>,
-        <a href="https://github.com/yiiext/taggable-behavior/zipball/v1.5">zip</a>
-        </li>
-        </ul>
-
-    <h2>Resources</h2>
-    <ul>
-        <li><a href="https://github.com/yiiext/taggable-behavior">Browse Code</a></li>
-        <li><a href="https://github.com/yiiext/taggable-behavior/issues">Issues</a> (2)</li>        <li><a href="https://github.com/yiiext/taggable-behavior/wiki">Wiki</a></li>        <li>...</li>
-    </ul>
-
-</div>
-
-<br style="clear: both;"/>
-
-
-    </div>
-
-    <div id="footer">
-        Powered by <a href="http://www.yiiframework.com/" rel="external">Yii Framework</a>.
-    </div><!-- footer -->
+	<div id="footer">
+		Powered by <a href="http://www.yiiframework.com/" rel="external">Yii Framework</a>.
+	</div><!-- footer -->
 
 </div><!-- page -->
 </body>
